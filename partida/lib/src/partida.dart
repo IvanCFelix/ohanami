@@ -1,6 +1,10 @@
+import 'dart:convert';
+
+import 'package:collection/collection.dart';
 import 'package:partida/partida.dart';
 import 'package:partida/src/helpers.dart';
 import 'package:partida/src/puntuacion_jugador.dart';
+
 import 'puntuaciones.dart';
 const numeroMaximoJugadores = 4;
 const numeroMinimoJugadores = 2;
@@ -12,8 +16,10 @@ const puntosPorVerdes = 4;
 const puntosPorNegras = 7;
 enum FasePuntuacion{Ronda1, Ronda2, Ronda3, desenlace}
 
-class Partida{
-  Partida({required this.jugadores}){
+class Partida {
+  Partida({
+    required this.jugadores,
+  }) {
     if (jugadores.length < numeroMinimoJugadores) throw ProblemaNumeroJugadoresMenorMinimo();
     if (jugadores.length > numeroMaximoJugadores) throw ProblemaNumeroJugadoresMayorMaximo();
   }
@@ -198,6 +204,45 @@ class Partida{
     }
     _puntuacionesRonda3 = puntuaciones;
   }
+
+  Partida copyWith({
+    Set<Jugador>? jugadores,
+  }) {
+    return Partida(
+      jugadores: jugadores ?? this.jugadores,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'jugadores': jugadores.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory Partida.fromMap(Map<String, dynamic> map) {
+    return Partida(
+      jugadores: Set<Jugador>.from(map['jugadores']?.map((x) => Jugador.fromMap(x))),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Partida.fromJson(String source) => Partida.fromMap(json.decode(source));
+
+  @override
+  String toString() => 'Partida(jugadores: $jugadores)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    final setEquals = const DeepCollectionEquality().equals;
+  
+    return other is Partida &&
+      setEquals(other.jugadores, jugadores);
+  }
+
+  @override
+  int get hashCode => jugadores.hashCode;
 }
 
 

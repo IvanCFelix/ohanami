@@ -1,22 +1,30 @@
-
 import 'package:mongo_dart/mongo_dart.dart';
 
-import 'partida.dart';
-import 'jugador.dart';
-import 'rositorio_db.dart';
+import 'package:partida/partida.dart';
+import 'repositorio_db.dart';
+import 'usuario.dart';
+
+
 
 class RepsitorioMongo extends RepositorioIdeal{
-  late Db _datos;
+  late Db db;
+  late var colexion;
   RepsitorioMongo(){}
   
   void inicializar() async{
-    _datos = await Db.create('mongodb+srv://a1000kr:<hansel>@cluster0.bigji.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
-  
+    db = await Db.create('mongodb+srv://root:root@cluster0.bigji.mongodb.net/ejemplo?retryWrites=true&w=majority');
+    await db..open();
+    var colexion = db.collection('usuarios');
   }
 
   @override
-  List<Partida> recuperarPartidas(Jugador j) {
-    // TODO: implement recuperarPartidas
+  Future<List<Partida>> recuperarPartidas({ required Usuario u}) async {
+    var val = await colexion.findOne(where.eq('nombre', u.nombre));
+    var res = val!.remove('_id');
+    val = res.remove('nombre');
+    res = val.remove('telefono');
+    Usuario x = Usuario.fromMap(res);
+    print(x);
     throw UnimplementedError();
   }
 

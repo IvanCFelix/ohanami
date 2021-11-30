@@ -1,7 +1,7 @@
-import 'jugador.dart';
-import 'partida.dart';
-import 'rositorio_db.dart';
+import 'repositorio_db.dart';
+import 'package:partida/partida.dart';
 
+import 'usuario.dart';
 class RepositorioMemoria extends RepositorioIdeal{
   final List<String> _listaJugadores = [];
   final Map<String,List<Partida>> _listaPartidas = {};
@@ -28,9 +28,16 @@ class RepositorioMemoria extends RepositorioIdeal{
   }
 
   @override
-  List<Partida> recuperarPartidas(Jugador j) {
-    List<Partida> lista = _listaPartidas[j.nombre] ?? [];
-    return lista;
+  Future<List<Partida>> recuperarPartidas({required Usuario u}) {
+    // TODO: implement recuperarPartidas
+    throw UnimplementedError();
   }
+
+
+
+
+
+
+
   
 }
