@@ -2,9 +2,9 @@ import 'package:partida/partida.dart';
 import 'usuario.dart';
 
 abstract class RepositorioIdeal{
-  bool registradoJugador(Jugador j);
-  bool registrarJugador(Jugador j);
-  void registrarPartida(Partida p, Jugador j);
+  Future<bool> registradoUsuario( { required Usuario u});
+  Future<bool> registrarUsuario({ required Usuario u });
+  registrarPartida({ required Partida p, required Usuario u});
   Future<List<Partida>> recuperarPartidas({required Usuario u});
 
 }

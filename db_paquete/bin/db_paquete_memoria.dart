@@ -1,3 +1,4 @@
+/*
 import 'repositorio_db.dart';
 import 'package:partida/partida.dart';
 
@@ -8,22 +9,22 @@ class RepositorioMemoria extends RepositorioIdeal{
   RepositorioMemoria();
 
   @override
-  bool registrarJugador(Jugador j) {
+  Future<bool> registrarJugador(Jugador j) async {
     _listaJugadores.add(j.nombre);
     return true;
   }
 
   @override
-  bool registradoJugador(Jugador j) {
+  Future<bool> registradoJugador(Jugador j) async {
     return(_listaJugadores.contains(j.nombre));
   }
 
 
   @override
-  void registrarPartida(Partida p, Jugador j) {
-    List<Partida> lista = _listaPartidas[j.nombre]?? [];
+  void registrarPartida({required Partida p, required Usuario u}) {
+    List<Partida> lista = _listaPartidas[u.nombre]?? [];
     lista.add(p);
-    _listaPartidas[j.nombre] = lista;
+    _listaPartidas[u.nombre] = lista;
 
   }
 
@@ -34,8 +35,14 @@ class RepositorioMemoria extends RepositorioIdeal{
   }
 
   @override
-  Future<List<Partida>> recuperarMisPartidas({required Usuario u}) {
-    // TODO: implement recuperarMisPartidas
+  Future<bool> registradoUsuario({required Usuario u}) {
+    // TODO: implement registradoUsuario
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> registrarUsuario({required Usuario u}) {
+    // TODO: implement registrarUsuario
     throw UnimplementedError();
   }
 
@@ -47,3 +54,4 @@ class RepositorioMemoria extends RepositorioIdeal{
 
   
 }
+*/
