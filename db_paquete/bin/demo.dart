@@ -17,18 +17,19 @@ void main(List<String> args) async{
   Partida partida2 = Partida(jugadores: {paul,pepe});
   Usuario usuario = Usuario(nombre: 'Martin', telefono: 1234567891, partidas:[partida1, partida2]);
   print('Empezando');
-  print('Existe juan?');
-  print(r.registradoJugador(juan));
+  //print('Existe juan?');
+  //print(r.registradoJugador(juan));
 
-  r.registrarJugador(juan);
-  print(r.registradoJugador(juan));
+  //r.registrarJugador(juan);
+  //print(r.registradoJugador(juan));
 
-  Partida p = Partida(jugadores:{juan,maria});
-  r.registrarPartida(p, juan);
-  r.registrarPartida(p, juan);
+  //Partida p = Partida(jugadores:{juan,maria});
+  //r.registrarPartida(p, juan);
+  //r.registrarPartida(p, juan);
 
-  db.inicializar();
-  print("Terminado");
+  
+  db.recuperarPartidas(u: usuario );
+  //print("Terminado");
   //List<Partida> l = r.recuperarPartidas(juan);
   //print(l);
   /*

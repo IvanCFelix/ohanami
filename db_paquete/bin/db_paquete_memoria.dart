@@ -33,6 +33,12 @@ class RepositorioMemoria extends RepositorioIdeal{
     throw UnimplementedError();
   }
 
+  @override
+  Future<List<Partida>> recuperarMisPartidas({required Usuario u}) {
+    // TODO: implement recuperarMisPartidas
+    throw UnimplementedError();
+  }
+
 
 
 

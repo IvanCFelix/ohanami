@@ -8,24 +8,26 @@ import 'usuario.dart';
 
 class RepsitorioMongo extends RepositorioIdeal{
   late Db db;
-  late var colexion;
   RepsitorioMongo(){}
   
   void inicializar() async{
+    
     db = await Db.create('mongodb+srv://root:root@cluster0.bigji.mongodb.net/ejemplo?retryWrites=true&w=majority');
-    await db..open();
-    var colexion = db.collection('usuarios');
+    await db.open();
+    print('object');
   }
 
   @override
   Future<List<Partida>> recuperarPartidas({ required Usuario u}) async {
-    var val = await colexion.findOne(where.eq('nombre', u.nombre));
+    db = await Db.create('mongodb+srv://root:root@cluster0.bigji.mongodb.net/ejemplo?retryWrites=true&w=majority');
+    await db.open();
+    var colexion = db.collection('usuarios');
+    var val = await colexion.findOne(where.eq('nombre', u.nombre.toString()));
     var res = val!.remove('_id');
-    val = res.remove('nombre');
-    res = val.remove('telefono');
-    Usuario x = Usuario.fromMap(res);
-    print(x);
-    throw UnimplementedError();
+    Usuario x = Usuario.fromMap(val);
+    List<Partida> partidas;
+    partidas = x.partidas;
+    return partidas;
   }
 
   @override
