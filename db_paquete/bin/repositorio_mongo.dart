@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'package:mongo_dart/mongo_dart.dart';
+import 'package:mongo_dart/mongo_dart.dart' as mongo;
 
 import 'package:partida/partida.dart';
 import 'repositorio_db.dart';
@@ -27,7 +28,7 @@ class RepsitorioMongo extends RepositorioIdeal{
     await db.open();
     var colexion = db.collection('usuarios');
     var val = await colexion.findOne(where.eq('nombre', u.nombre.toString()));
-    await db.close();
+    //await db.close();
     var res = val!.remove('_id');
     Usuario x = Usuario.fromMap(val);
     partidas = x.partidas;
@@ -39,11 +40,18 @@ class RepsitorioMongo extends RepositorioIdeal{
     db = await Db.create('mongodb+srv://root:root@cluster0.bigji.mongodb.net/ejemplo?retryWrites=true&w=majority');
     await db.open();
     var colexion = db.collection('usuarios');
-    u.partidas.add(p);
-    var partidas = u.partidas;
-    colexion.update(await colexion.findOne(where.eq('nombre', u.nombre.toString())), 
-    AddFields({
-      'partida': p,
+    var partidas = jsonDecode(p.toJson());
+    List<Partida> lista = await recuperarPartidas(u: u);
+    if (lista.isEmpty) {
+    await colexion.update(await colexion.findOne(where.eq('nombre', u.nombre.toString())), 
+    SetStage({
+      'partidas': [partidas],
+    }).build()
+    );
+    }
+    await colexion.update(await colexion.findOne(where.eq('nombre', u.nombre.toString())), 
+    AddToSet({
+      'partidas': partidas,
     }).build()
     );
   }
@@ -54,7 +62,7 @@ class RepsitorioMongo extends RepositorioIdeal{
     await db.open();
     var colexion = db.collection('usuarios');
     var val = await colexion.find(where.eq('nombre', u.nombre.toString())).toList();
-    db.close();
+    //db.close();
     if (val.isEmpty) {
       return false; 
     }
@@ -67,8 +75,9 @@ class RepsitorioMongo extends RepositorioIdeal{
     await db.open();
     var colexion = db.collection('usuarios');
     await colexion.insert(jsonDecode(u.toJson()));
-    db.close();
+    //db.close();
     return true;
   }
 
 }
+
