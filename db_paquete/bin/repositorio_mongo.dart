@@ -11,7 +11,6 @@ import 'usuario.dart';
 
 class RepsitorioMongo extends RepositorioIdeal{
   late Db db;
-  late DbCollection colexion1;
   RepsitorioMongo(){}
   
   void inicializar() async{
@@ -33,25 +32,27 @@ class RepsitorioMongo extends RepositorioIdeal{
   }
 
   @override
-  void registrarPartida({ required Partida p, required Usuario usuario}) async {
+  Future<bool> registrarPartida({ required Partida partida, required Usuario usuario}) async {
+    bool check = false;
+    List<Partida> lista = await recuperarPartidas(usuario: usuario);
+    var partidas = jsonDecode(partida.toJson());
+    var index = lista.length;
     db = await Db.create(link);
     await db.open();
     var colexion = db.collection('usuarios');
-    var partidas = jsonDecode(p.toJson());
-    List<Partida> lista = await recuperarPartidas(usuario: usuario);
+  
     if (lista.isEmpty) {
     await colexion.update(await colexion.findOne(where.eq('nombre', usuario.nombre.toString())), 
     SetStage({
       'partidas': [partidas],
-    }).build()
-    );
+    }).build()).then((value) => check = true);
     }
     await colexion.update(await colexion.findOne(where.eq('nombre', usuario.nombre.toString())), 
-    AddToSet({
-      'partidas': partidas,
-    }).build()
-    );
+    Push({'partidas': partidas}
+      ).build()).then((value) => check = true);
     db.close();
+
+    return check;
   }
   ///pantalla para registrar usuario
   @override
@@ -69,23 +70,25 @@ class RepsitorioMongo extends RepositorioIdeal{
   //despues del de arriba
   @override
   Future<bool> registrarUsuario({ required Usuario usuario}) async {
+    bool check = false;
     db = await Db.create(link);
     await db.open();
     var colexion = db.collection('usuarios');
-    await colexion.insert(jsonDecode(usuario.toJson()));
+    await colexion.insert(jsonDecode(usuario.toJson())).then((value) => check = true);
     db.close();
-    return true;
+    return check;
   }
 
   @override
-  eliminarUsuario({required Usuario usuario}) async {
+  Future<bool> eliminarUsuario({required Usuario usuario}) async {
+    bool check = false;
     db = await Db.create(link);
     await db.open();
     var colexion = db.collection('usuarios');
-    var val = await colexion.find(await colexion.remove(where.eq('nombre', usuario.nombre.toString())));
-    return true;
+    colexion.find(await colexion.remove(where.eq('nombre', usuario.nombre.toString())).then((value) => check = true));
+    db.close();
+    return check;
   }
-
 
   @override
   Future<bool> verificarInicioSesion({required Usuario usuario}) async {
@@ -94,17 +97,26 @@ class RepsitorioMongo extends RepositorioIdeal{
     var conexion = db.collection('usuarios');
     var val = await conexion.findOne(
       where.eq('nombre', usuario.nombre.toString()).and(where.eq('clave', usuario.clave.toString())));
-    await db.close();
+    db.close();
     if (val == null) {
       return false;
     }
     return true;
   }
 
+  //previamente se se actualizo las partidas del usuario
   @override
-  eliminarPartida({required Partida p, required Usuario usuario}) {
-    // TODO: implement eliminarPartida
-    throw UnimplementedError();
-  }  
+  Future<bool> reescribirPartidas({required Usuario usuario}) async {
+    bool check = false;
+    db = await Db.create(link);
+    await db.open();
+    var colexion = db.collection('usuarios');
+    colexion.update(await colexion.findOne(where.eq('nombre', usuario.nombre.toString())),
+    SetStage({
+      'partidas': usuario.partidas,
+    }).build()).then((value) => check = true);
+    db.close();
+    return check;
+  } 
 }
 

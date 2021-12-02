@@ -16,12 +16,30 @@ void main(List<String> args) async{
   Partida partida1 = Partida(jugadores: {paul,jose,pepe});
   Partida partida2 = Partida(jugadores: {paul,pepe});
   Partida partida3 = Partida(jugadores: {maria,pepe});
-  Usuario martin = Usuario(clave:'asdsa',nombre:'Martin', telefono: 1234567891, partidas:[]);
-  Usuario pepeU = Usuario(clave:'asdsa',nombre: 'Pepe', telefono: 1234567891, partidas:[partida1, partida2]);
-  Usuario hansel = Usuario(clave:'asdsa',nombre: 'Hansel', telefono: 1234567891, partidas:[partida1]);
-  Usuario armando = Usuario(clave:'12345',nombre: 'Armando', telefono: 1234567891, partidas:[]);
+  Partida partida4 = Partida(jugadores: {paul,maria,pepe});
+  Partida partida5 = Partida(jugadores: {paul,juan});
+  Partida partida6 = Partida(jugadores: {maria,juan});
+  Partida partida7 = Partida(jugadores: {maria,juan});
+  Partida partida8 = Partida(jugadores: {maria,juan});
+  Partida partida9 = Partida(jugadores: {maria,juan});
+  Partida partida10 = Partida(jugadores: {maria,juan});
+  /*
+  Usuario martin = Usuario(clave:'asdsa',nombre:'Martin', telefono: 1785624371, partidas:[]);
+  Usuario pepeU = Usuario(clave:'ef7fe',nombre: 'Pepe', telefono: 1232467231, partidas:[]);
+  Usuario hansel = Usuario(clave:'helk',nombre: 'Hansel', telefono: 1232231468, partidas:[]);
+  Usuario armando = Usuario(clave:'12345',nombre: 'Armando', telefono: 1246957230, partidas:[partida1, partida2, partida3]);
+  */
+  Usuario claudia = Usuario(clave:'yebnm',nombre:'Claudia', telefono: 1785624371, partidas:[]);
+  bool check;
   print('Empezando');
-  //await db.registrarUsuario(u:armando);
-  await db.verificarInicioSesion(usuario: armando);
+  await db.registrarUsuario(usuario: claudia);
+  check =  await db.registrarPartida(partida: partida7, usuario: claudia);
+  check ? print("true") : print("false");
+  check =  await db.registrarPartida(partida: partida8, usuario: claudia);
+  check ? print("true") : print("false");
+  check =  await db.registrarPartida(partida: partida9, usuario: claudia);
+  check ? print("true") : print("false");
+  check =  await db.registrarPartida(partida: partida1, usuario: claudia);
+  check ? print("true") : print("false");
   print("Termino");
 }
