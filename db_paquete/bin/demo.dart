@@ -16,20 +16,12 @@ void main(List<String> args) async{
   Partida partida1 = Partida(jugadores: {paul,jose,pepe});
   Partida partida2 = Partida(jugadores: {paul,pepe});
   Partida partida3 = Partida(jugadores: {maria,pepe});
-  Usuario martin = Usuario(nombre: 'Martin', telefono: 1234567891, partidas:[]);
-  Usuario pepeU = Usuario(nombre: 'Pepe', telefono: 1234567891, partidas:[partida1, partida2]);
-  Usuario hansel = Usuario(nombre: 'Hansel', telefono: 1234567891, partidas:[partida1]);
-  Usuario hansel2 = Usuario(nombre: 'Hansel2', telefono: 1234567891, partidas:[]);
+  Usuario martin = Usuario(clave:'asdsa',nombre:'Martin', telefono: 1234567891, partidas:[]);
+  Usuario pepeU = Usuario(clave:'asdsa',nombre: 'Pepe', telefono: 1234567891, partidas:[partida1, partida2]);
+  Usuario hansel = Usuario(clave:'asdsa',nombre: 'Hansel', telefono: 1234567891, partidas:[partida1]);
+  Usuario armando = Usuario(clave:'12345',nombre: 'Armando', telefono: 1234567891, partidas:[]);
   print('Empezando');
-  //db.registrarUsuario(u: usuarioh);
-  //db.registrarUsuario(u: usuario);
-  //db.registrarUsuario(u: hansel2);
-
-  //db.registrarPartida(p: partida1, u: hansel2);
-
-  //db.registrarPartida(p: partida2, u: hansel2);
-  db.registrarPartida(p: partida3, u: hansel2);
-
+  //await db.registrarUsuario(u:armando);
+  await db.verificarInicioSesion(usuario: armando);
   print("Termino");
-
 }
