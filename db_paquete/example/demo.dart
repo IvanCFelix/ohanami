@@ -1,9 +1,7 @@
-import 'db_paquete_memoria.dart';
+import 'package:db_paquete/db_paquete.dart';
 import 'package:partida/partida.dart';
 import 'dart:convert';
 import 'package:mongo_dart/mongo_dart.dart';
-import 'repositorio_mongo.dart';
-import 'usuario.dart';
 
 void main(List<String> args) async{
   //RepositorioMemoria r = RepositorioMemoria();

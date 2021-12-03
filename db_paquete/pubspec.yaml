@@ -1,15 +1,17 @@
-name: db_pakete
-publish_to: none
-description: A simple command-line application.
+name: db_paquete
+description: A starting point for Dart libraries or applications.
 version: 1.0.0
 # homepage: https://www.example.com
+publish_to: none
 environment:
   sdk: '>=2.14.4 <3.0.0'
 
-# dependencies:
-#   path: ^1.8.0
+
+
 dev_dependencies:
   lints: ^1.0.0
+  test: ^1.16.0
+
 dependencies:
   mongo_dart: ^0.7.3
   partida:
