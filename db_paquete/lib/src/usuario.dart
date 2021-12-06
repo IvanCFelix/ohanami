@@ -8,6 +8,7 @@ class Usuario {
   final double telefono;
   final String clave;
   final List<Partida> partidas;
+  
   Usuario({
     required this.nombre,
     required this.telefono,

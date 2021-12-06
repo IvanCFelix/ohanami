@@ -17,6 +17,10 @@ const puntosPorNegras = 7;
 enum FasePuntuacion{Ronda1, Ronda2, Ronda3, desenlace}
 
 class Partida {
+  final Set<Jugador> jugadores;
+  List<PRonda1> _puntuacionesRonda1 = [];
+  List<PRonda2> _puntuacionesRonda2 = [];
+  List<PRonda3> _puntuacionesRonda3 = [];
   Partida({
     required this.jugadores,
   }) {
@@ -24,10 +28,6 @@ class Partida {
     if (jugadores.length > numeroMaximoJugadores) throw ProblemaNumeroJugadoresMayorMaximo();
   }
   
-  final Set<Jugador> jugadores;
-  List<PRonda1> _puntuacionesRonda1 = [];
-  List<PRonda2> _puntuacionesRonda2 = [];
-  List<PRonda3> _puntuacionesRonda3 = [];
   var puntosRosas = {0,1,3,6,10,15,21,28,36,45,55,66,78,91,105,120}.toList();
   
   ///Regresa una Lista de [PuntuacionJugador] con las puntuaciones espefificas de la ronda que le mandes como parametro
@@ -205,6 +205,7 @@ class Partida {
     _puntuacionesRonda3 = puntuaciones;
   }
 
+
   Partida copyWith({
     Set<Jugador>? jugadores,
   }) {
@@ -216,6 +217,9 @@ class Partida {
   Map<String, dynamic> toMap() {
     return {
       'jugadores': jugadores.map((x) => x.toMap()).toList(),
+      'puntuacionesRonda1': _puntuacionesRonda1.map((x) => x.toMap()).toList(),
+      'puntuacionesRonda2': _puntuacionesRonda2.map((x) => x.toMap()).toList(),
+      'puntuacionesRonda3': _puntuacionesRonda3.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -230,19 +234,29 @@ class Partida {
   factory Partida.fromJson(String source) => Partida.fromMap(json.decode(source));
 
   @override
-  String toString() => 'Partida(jugadores: $jugadores)';
+  String toString() {
+    return 'Partida(jugadores: $jugadores, puntuacionesRonda1: $_puntuacionesRonda1, puntuacionesRonda2: $_puntuacionesRonda2, puntuacionesRonda3: $_puntuacionesRonda3)';
+  }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    final setEquals = const DeepCollectionEquality().equals;
+    final collectionEquals = const DeepCollectionEquality().equals;
   
     return other is Partida &&
-      setEquals(other.jugadores, jugadores);
+      collectionEquals(other.jugadores, jugadores) &&
+      collectionEquals(other._puntuacionesRonda1, _puntuacionesRonda1) &&
+      collectionEquals(other._puntuacionesRonda2, _puntuacionesRonda2) &&
+      collectionEquals(other._puntuacionesRonda3, _puntuacionesRonda3);
   }
 
   @override
-  int get hashCode => jugadores.hashCode;
+  int get hashCode {
+    return jugadores.hashCode ^
+      _puntuacionesRonda1.hashCode ^
+      _puntuacionesRonda2.hashCode ^
+      _puntuacionesRonda3.hashCode;
+  }
 }
 
 

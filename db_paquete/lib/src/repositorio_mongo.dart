@@ -2,13 +2,9 @@
 import 'dart:convert';
 import 'package:db_paquete/src/repositorio_.dart';
 import 'package:mongo_dart/mongo_dart.dart';
-
 import 'package:partida/partida.dart';
 import 'constantes.dart';
-
 import 'usuario.dart';
-
-
 
 class RepsitorioMongo extends RepositorioIdeal{
   late Db db;
@@ -26,7 +22,7 @@ class RepsitorioMongo extends RepositorioIdeal{
     var colexion = db.collection('usuarios');
     var val = await colexion.findOne(where.eq('nombre', usuario.nombre.toString()));
     await db.close();
-    var res = val!.remove('_id');
+    val!.remove('_id');
     Usuario x = Usuario.fromMap(val);
     partidas = x.partidas;
     return partidas;
@@ -105,7 +101,7 @@ class RepsitorioMongo extends RepositorioIdeal{
     return true;
   }
 
-  //previamente se se actualizo las partidas del usuario
+  //previamente se actualizo las partidas del usuario
   @override
   Future<bool> reescribirPartidas({required Usuario usuario}) async {
     bool check = false;

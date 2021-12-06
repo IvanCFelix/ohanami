@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:florescerezo/db_local.dart';
 import 'package:flutter/material.dart';
-import 'package:partida/partida.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:db_paquete/db_paquete.dart';
 void main() {
@@ -37,7 +36,6 @@ class SharedPreferencesDemoState extends State<SharedPreferencesDemo> {
     super.initState();
     _usuario = dbL.regresarUsuario();
     print(_usuario);
-
   }
 
   @override
