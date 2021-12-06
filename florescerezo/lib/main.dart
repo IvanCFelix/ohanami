@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:florescerezo/db_local.dart';
+import 'package:florescerezo/db/db_local.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:db_paquete/db_paquete.dart';

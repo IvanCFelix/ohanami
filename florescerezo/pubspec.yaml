@@ -1,28 +1,33 @@
 name: florescerezo
 description: A new Flutter project.
 
-publish_to: 'none' 
+publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
-
 dependencies:
-  flutter:
-    sdk: flutter
-  shared_preferences: ^2.0.9
-  partida:
-    path: ../partida
+  bloc: ^8.0.1
+  cupertino_icons: ^1.0.2
   db_paquete:
     path: ../db_paquete
-  cupertino_icons: ^1.0.2
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.0.0
+  fpdart: ^0.0.12
+  partida:
+    path: ../partida
+  shared_preferences: ^2.0.9
 
 dev_dependencies:
+  flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
-
-  flutter_lints: ^1.0.0
+  freezed: ^1.0.2
+  freezed_annotation: ^1.0.0
+  build_runner: ^2.1.5
+  
 flutter:
   uses-material-design: true

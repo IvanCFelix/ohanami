@@ -6,14 +6,13 @@ import 'package:partida/partida.dart';
 import 'constantes.dart';
 import 'usuario.dart';
 
-class RepsitorioMongo extends RepositorioIdeal{
+class RepsitorioMongo extends Repositorio {
   late Db db;
   RepsitorioMongo(){}
   
   void inicializar() async{
     db = await Db.create(link);
   }
-
   @override
   Future<List<Partida>> recuperarPartidas({ required Usuario usuario}) async {
     List<Partida> partidas;
@@ -27,7 +26,6 @@ class RepsitorioMongo extends RepositorioIdeal{
     partidas = x.partidas;
     return partidas;
   }
-
   @override
   Future<bool> registrarPartida({ required Partida partida, required Usuario usuario}) async {
     bool check = false;
