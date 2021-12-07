@@ -100,7 +100,7 @@ class RepsitorioMongo extends Repositorio {
   }
 
   //previamente se actualizo las partidas del usuario
-  @override
+  
   Future<bool> reescribirPartidas({required Usuario usuario}) async {
     bool check = false;
     db = await Db.create(link);
@@ -112,6 +112,9 @@ class RepsitorioMongo extends Repositorio {
     }).build()).then((value) => check = true);
     db.close();
     return check;
-  } 
+  }
+
+
+  
 }
 

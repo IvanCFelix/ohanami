@@ -15,12 +15,13 @@ const puntosPorAzules = 3;
 const puntosPorVerdes = 4;
 const puntosPorNegras = 7;
 enum FasePuntuacion{Ronda1, Ronda2, Ronda3, desenlace}
-
 class Partida {
   final Set<Jugador> jugadores;
+//Cambiar los nombres de las bariables
   List<PRonda1> _puntuacionesRonda1 = [];
   List<PRonda2> _puntuacionesRonda2 = [];
   List<PRonda3> _puntuacionesRonda3 = [];
+
   Partida({
     required this.jugadores,
   }) {
