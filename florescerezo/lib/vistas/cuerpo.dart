@@ -34,7 +34,7 @@ class VistaIniciandome extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: (){
-            context.read<OhanamiBloc>().add(Login());
+            context.read<OhanamiBloc>().add(Entrar());
           },
           child: Text('Inicia Sesion'),
         ),
@@ -67,7 +67,7 @@ class VistaLogin extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     onPressed: (){
-                      context.read<OhanamiBloc>().add(Login());
+                      context.read<OhanamiBloc>().add(Entrar());
                     }, 
                     child: Text('Inicia Sesion'),
                     ),
