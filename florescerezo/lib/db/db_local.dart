@@ -2,10 +2,9 @@ import 'dart:convert';
 import 'package:db_paquete/db_paquete.dart';
 import 'package:partida/src/partida.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-class RepositorioLocal extends Repositorio{
+class RepositorioLocal{
   
-  @override
-  Future<bool> eliminarUsuario({required Usuario usuario}) async {
+  Future<bool> eliminarUsuario() async {
     bool check = false;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     check = await prefs.clear().then((bool success) {
@@ -14,7 +13,6 @@ class RepositorioLocal extends Repositorio{
     return check;
   }
 
-  @override
   Future<List<Partida>> recuperarPartidas({required Usuario usuario}) async {
     List<Partida> partidas;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -24,19 +22,17 @@ class RepositorioLocal extends Repositorio{
     return partidas = usuario.partidas;
   }
 
-  @override
   Future<bool> registradoUsuario({required Usuario usuario}) async {
 
     throw UnimplementedError();
   }
 
-  @override
   Future<bool> registrarPartida({required Partida partida, required Usuario usuario}) {
     // TODO: implement registrarPartida
     throw UnimplementedError();
   }
 
-  @override
+
   Future<bool> registrarUsuario({required Usuario usuario}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool check;
@@ -46,7 +42,7 @@ class RepositorioLocal extends Repositorio{
     return check;
   }
 
-  @override
+
   Future<bool> verificarInicioSesion({required Usuario usuario}) {
     // TODO: implement verificarInicioSesion
     throw UnimplementedError();

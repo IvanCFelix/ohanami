@@ -4,28 +4,15 @@ import 'package:florescerezo/db/db_local.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:db_paquete/db_paquete.dart';
-void main() {
-  runApp(MyApp());
-}
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'SharedPreferences Demo',
-      home: SharedPreferencesDemo(),
-    );
-  }
-}
-
-class SharedPreferencesDemo extends StatefulWidget {
-  const SharedPreferencesDemo({Key? key}) : super(key: key);
+class VistaListaPartidas extends StatefulWidget {
+  const VistaListaPartidas({Key? key}) : super(key: key);
 
   @override
-  SharedPreferencesDemoState createState() => SharedPreferencesDemoState();
+  VistaListaPartidasState createState() => VistaListaPartidasState();
 }
 
-class SharedPreferencesDemoState extends State<SharedPreferencesDemo> {
+class VistaListaPartidasState extends State<VistaListaPartidas> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   late Future<int> _counter;
   late Future<Usuario> _usuario; 
@@ -35,15 +22,23 @@ class SharedPreferencesDemoState extends State<SharedPreferencesDemo> {
   @override
   void initState() {
     super.initState();
-    _usuario = dbL.recuperarUsuario();
+    _usuario =dbL.recuperarUsuario();
     print(_usuario);
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      floatingActionButton:FloatingActionButton(
+      child: const Icon(Icons.add),
+      onPressed: () {
+        /*
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const AgregarPartida()));
+          */
+      }
+      ),
       appBar: AppBar(
-        title: const Text('Demo'),
       ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
@@ -72,7 +67,7 @@ class SharedPreferencesDemoState extends State<SharedPreferencesDemo> {
                           return const CircularProgressIndicator();
                         default:
                           if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
+                          return Text('No cuenta con ninguna partida creada ');
                         } 
                         else 
                         {
@@ -139,9 +134,10 @@ class SharedPreferencesDemoState extends State<SharedPreferencesDemo> {
                         textStyle: const TextStyle(fontSize: 10),
                         ),
                         onPressed: () {
+                          dbL.eliminarUsuario();
                                         
                         },
-                        child: const Text('Buscar U'),
+                        child: const Text('Eliminar U'),
                       ), 
                     ],
                   ),

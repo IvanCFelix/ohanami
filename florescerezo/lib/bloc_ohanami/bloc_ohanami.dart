@@ -5,7 +5,6 @@ import 'package:bloc/bloc.dart';
 
 class OhanamiBloc extends Bloc<Evento, Estado> {
   OhanamiBloc() : super(Iniciando()){
-  //on<Inicializado>(_onInicializado2 );
   on<Entrar>(_onLogin);
   }
 }

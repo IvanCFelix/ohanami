@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:florescerezo/bloc_ohanami/bloc_ohanami.dart';
 import 'package:florescerezo/bloc_ohanami/estados.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +11,10 @@ class Cuerpo extends StatelessWidget {
   Widget build(BuildContext context) {
     final estado = context.watch<OhanamiBloc>().state;
     if(estado is Iniciando){
-      return const VistaIniciandome();
+      return Container();  //VistaIniciandome();
     }
     if(estado is Login){
-      return VistaLogin();
+      return Container(); // VistaLogin();
     }
     return Container();
   }
