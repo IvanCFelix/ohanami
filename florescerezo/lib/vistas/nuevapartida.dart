@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
 class NuevaPartida extends StatefulWidget {
   const NuevaPartida({Key? key}) : super(key: key);
 
@@ -10,23 +7,35 @@ class NuevaPartida extends StatefulWidget {
 }
 
 class _NuevaPartidaState extends State<NuevaPartida> {
-  late int _count;
-  late String _result;
-  late bool agregar, agregar2, eliminar, comenzar;
+  late bool agregar, eliminar, comenzar;
+  late int _contador;
 
-  late final List<TextEditingController> _controllers =
-      List.generate(4, (i) => TextEditingController());
+  late String _result;
+
+  late final List<TextEditingController> _lista =
+  List.generate(4, (i) => TextEditingController());
 
   @override
   void initState() {
     super.initState();
-    _count = 2;
+    _contador = 2;
     _result = '';
-    agregar = false;
-    agregar2 = false;
     eliminar = false;
     comenzar = false;
   }
+  void checar(){
+    bool check = true;  
+    for (var i = 0; i < _contador; i++) {
+      print(_lista[i].text.isEmpty);
+        if (_lista[i].text.isEmpty){
+          check = false;
+        } 
+    }
+    setState(() {
+      comenzar = check;
+    }
+    );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -41,70 +50,63 @@ class _NuevaPartidaState extends State<NuevaPartida> {
             children: [
               ListView.builder(
                   shrinkWrap: true,
-                  itemCount: _count,
+                  itemCount: _contador,
                   itemBuilder: (context, index) {
-                    return _row(index);
+                    return _campoDeTexto(index);
                   }),
               const SizedBox(height: 15),
               Row(
                 children: [
-                  _count == 4
+                  _contador == 4
                       ? const ElevatedButton(
                           onPressed: null,
                           child: Text("Añadir Jugador"),
                         )
                       : ElevatedButton(
                           onPressed: () => {
-                            if (_count < 4)
+                            if (_contador < 4)
                               {
                                 setState(() {
-                                  _count++;
+                                  _contador++;
+                                  comenzar = false;
                                 }),
                               }
                           },
                           child: const Text("Añadir Jugador"),
                         ),
                   const SizedBox(width: 5),
-                  _count == 2
+                  _contador == 2
                       ? const ElevatedButton(
                           onPressed: null,
                           child: Text("Eliminar Jugador"),
                         )
                       : ElevatedButton(
                           onPressed: () => {
-                            if (_count > 2)
+                            if (_contador > 2)
                               {
-                                if (_count >= 3)
+                                if (_contador >= 3)
                                   {
-                                    _controllers[_count - 1].clear(),
+                                    _lista[_contador - 1].clear(),
                                   },
                                 setState(() {
-                                  _count--;
-                                  print(_count);
+                                  _contador--;
+
                                 }),
-                              }
+                                  checar()
+                              },
                           },
                           child: const Text("Eliminar Jugador"),
                         ),
                   const SizedBox(width: 5),
-                  (agregar == false)
+                  (comenzar == false)
                       ? const ElevatedButton(
                           onPressed: null,
                           child: Text("Comenzar"),
                         )
                       : ElevatedButton(
                           onPressed: () {
-                            for (int i = 0; _count + 0 > i; i++) {
-                              String val = _controllers[i].text.toString();
-
-                              Map<String, dynamic> json = {
-                                'id': i,
-                                'nombre': _controllers[i].text
-                              };
-                              // print("jugador enviado:" + json.toString());
-                              // print(val);
-                              // print(json);
-                            }
+                            
+                            
                           },
                           child: const Text("Comenzar"),
                         ),
@@ -116,19 +118,19 @@ class _NuevaPartidaState extends State<NuevaPartida> {
     );
   }
 
-  _row(int key) {
+  _campoDeTexto(int key) {
     return Row(
       children: [
         Text('Jugador ' + (key + 1).toString() + ':'),
         const SizedBox(width: 30),
         Expanded(
-            child: TextFormField(
-                controller: _controllers[key],
-                onChanged: (_) {
-                  // for (int i = 0; _count - 1 >= i; i++) {
-                  //   Map<String, dynamic> json = {'id': i, 'nombre': _controllers[i].text};
-                  // }
-                })),
+          child: TextFormField(
+            controller: _lista[key],
+            onChanged: (_) {
+              checar();
+            }
+          )
+        ),
       ],
     );
   }

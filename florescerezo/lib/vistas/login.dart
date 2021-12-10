@@ -62,9 +62,7 @@ class VistaLogin extends StatelessWidget {
                 builder: (BuildContext context, AsyncSnapshot snapshot){
                   return ElevatedButton(
                     onPressed: (){
-                      Navigator.push(
-                          context,
-                      MaterialPageRoute(builder: (context) => const VistaListaPartidas()));
+                      
                     },
                     child: Container(
                       padding: EdgeInsets.all(15.0),
