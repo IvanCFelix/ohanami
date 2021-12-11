@@ -13,14 +13,17 @@ class VistaLogin extends StatelessWidget {
     TextEditingController clave = TextEditingController();
     RepositorioLocal local = RepositorioLocal();
     
-    void sinconexion() async{
+    void gurdarUsuario() async{
       Usuario usuario = Usuario(nombre: correo.text.toString() ,clave: clave.text.toString() , partidas: [],telefono: 0);
       local.registrarUsuario(usuario: usuario);
       print(usuario.toString());
     }
-
+    void sinconexion() async{
+      Usuario usuario = Usuario(nombre: correo.text.toString() ,clave: clave.text.toString() , partidas: [],telefono: 0);
+      local.registrarUsuario(usuario: usuario);
+    }
+//gurdarUsuario
     return Scaffold(
-      appBar: AppBar(),
       body: Center(
         child: Column(
           children: [
@@ -82,7 +85,7 @@ class VistaLogin extends StatelessWidget {
                   return ElevatedButton(
                     onPressed: () async{
                       
-                      sinconexion();
+                      gurdarUsuario();
                       Navigator.push( context, MaterialPageRoute(builder: (context) => Splash()));
                     },
                     child: Container(
@@ -113,7 +116,7 @@ class VistaLogin extends StatelessWidget {
                     onPressed: () async {
                       sinconexion();
                       Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => VistaListaPartidas()),);
+                      MaterialPageRoute(builder: (context) => VistaListaPartidas()));
                     },
                     child: Container(
                       padding: EdgeInsets.all(15.0),

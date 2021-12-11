@@ -7,26 +7,23 @@ import 'package:florescerezo/vistas/login.dart';
 import 'package:flutter/material.dart';
 
 class Splash extends StatefulWidget {
-  const Splash({ Key? key,/* this.usuario */}) : super(key: key);
-  //final usuario;
+  const Splash({ Key? key,}) : super(key: key);
+
 
   @override
-  State<Splash> createState() => _SplashState( /*usuario: usuario */);
+  State<Splash> createState() => _SplashState();
 }
 
 class _SplashState extends State<Splash> {
-  /*Usuario usuario;
-  */
   bool check = false;
-  //_SplashState({required this.usuario});
   @override
   void initState() {
     validacion().whenComplete(() async {
       Timer(Duration(),
       (){
         check == false ? 
-      Navigator.push( context, MaterialPageRoute( builder: (context) =>VistaLogin())) :
-      Navigator.push( context, MaterialPageRoute(builder: (context) =>VistaListaPartidas()));
+      Navigator.push( context, MaterialPageRoute( builder: (context) => VistaLogin())) :
+      Navigator.push( context, MaterialPageRoute(builder: (context) => VistaListaPartidas()));
       });
     });
     super.initState();
@@ -35,18 +32,31 @@ class _SplashState extends State<Splash> {
   Future validacion() async{
     RepositorioMongo mongo = RepositorioMongo();
     RepositorioLocal local = RepositorioLocal();
-    Usuario usuario = await local.recuperarUsuario();
-    if (usuario == null) {
-      Navigator.push( context, MaterialPageRoute( builder: (context) => VistaLogin()));
-    }
-    Usuario u = await mongo.recuperarUsuario(usuario: usuario);
-    local.registrarUsuario(usuario: usuario);
+    bool mongocheck = await mongo.inicializar();
+    bool checkv = await local.registradoUsuario();
 
-    setState(() {
-      check = true;
-    });
+    if (mongocheck == true && checkv == true) {
+      Usuario usuario = await local.recuperarUsuario();
+      checkv = await mongo.registradoUsuario(usuario: usuario);
+      if (checkv == true) {
+        Usuario u = await mongo.recuperarUsuario(usuario: usuario);
+        checkv = await local.registrarUsuario(usuario: u);
+        setState(() {
+          check = checkv;
+        });
+      }
+      setState(() {
+        check = true;
+      });
+    }
+    if (mongocheck == false && checkv == true) {
+      setState(() {
+        check = checkv;
+      });
+    }
   }
   
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
