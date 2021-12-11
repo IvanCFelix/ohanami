@@ -114,6 +114,17 @@ class RepositorioMongo extends Repositorio {
     return check;
   }
 
+  Future<Usuario> recuperarUsuario({ required Usuario usuario}) async {
+    db = await Db.create(link);
+    await db.open();
+    var colexion = db.collection('usuarios');
+    var val = await colexion.findOne(where.eq('nombre', usuario.nombre.toString()));
+    await db.close();
+    val!.remove('_id');
+    Usuario x = Usuario.fromMap(val);
+    return x;
+  }
+
 
   
 }

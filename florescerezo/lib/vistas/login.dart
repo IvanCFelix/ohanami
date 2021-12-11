@@ -1,7 +1,7 @@
 import 'package:db_paquete/db_paquete.dart';
 import 'package:florescerezo/db/db_local.dart';
-import 'package:florescerezo/vistas/bloc.dart';
 import 'package:florescerezo/vistas/lista.dart';
+import 'package:florescerezo/vistas/splash.dart';
 import 'package:flutter/material.dart';
 class VistaLogin extends StatelessWidget {
   const VistaLogin({ Key? key }) : super(key: key);
@@ -11,12 +11,14 @@ class VistaLogin extends StatelessWidget {
     
     TextEditingController correo = TextEditingController();
     TextEditingController clave = TextEditingController();
-    RepositorioMongo mongo = RepositorioMongo();
     RepositorioLocal local = RepositorioLocal();
+    
     void sinconexion() async{
       Usuario usuario = Usuario(nombre: correo.text.toString() ,clave: clave.text.toString() , partidas: [],telefono: 0);
       local.registrarUsuario(usuario: usuario);
+      print(usuario.toString());
     }
+
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -79,8 +81,9 @@ class VistaLogin extends StatelessWidget {
                 builder: (BuildContext context, AsyncSnapshot snapshot){
                   return ElevatedButton(
                     onPressed: () async{
-                      Usuario usuario = Usuario(nombre: correo.text.toString() ,clave: clave.text.toString() , partidas: [],telefono: 0);
                       
+                      sinconexion();
+                      Navigator.push( context, MaterialPageRoute(builder: (context) => Splash()));
                     },
                     child: Container(
                       padding: EdgeInsets.all(15.0),

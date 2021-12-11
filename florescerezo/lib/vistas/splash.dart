@@ -2,50 +2,64 @@ import 'dart:async';
 
 import 'package:db_paquete/db_paquete.dart';
 import 'package:florescerezo/db/db_local.dart';
-import 'package:florescerezo/vistas/cuerpo.dart';
 import 'package:florescerezo/vistas/lista.dart';
+import 'package:florescerezo/vistas/login.dart';
 import 'package:flutter/material.dart';
+
 class Splash extends StatefulWidget {
-  const Splash({ Key? key }) : super(key: key);
+  const Splash({ Key? key,/* this.usuario */}) : super(key: key);
+  //final usuario;
 
   @override
-  _SplashState createState() => _SplashState();
-}
- late Usuario usuario;  
- RepositorioMongo mongo = RepositorioMongo();
-void initState(){
-  validacion().whenComplete(() async{
-    Timer(Duration(seconds: 2), ()=> (usuario == null ? VistaListaPartidas() : VistaLogin()));
-
-  });
-
+  State<Splash> createState() => _SplashState( /*usuario: usuario */);
 }
 
-Future validacion() async{
-  bool check = await mongo.verificarInicioSesion(usuario: usuario);
-      print(check);
-      if (check == true) {
-        
-        
-      }
-}
 class _SplashState extends State<Splash> {
+  /*Usuario usuario;
+  */
+  bool check = false;
+  //_SplashState({required this.usuario});
+  @override
+  void initState() {
+    validacion().whenComplete(() async {
+      Timer(Duration(),
+      (){
+        check == false ? 
+      Navigator.push( context, MaterialPageRoute( builder: (context) =>VistaLogin())) :
+      Navigator.push( context, MaterialPageRoute(builder: (context) =>VistaListaPartidas()));
+      });
+    });
+    super.initState();
+  }
+
+  Future validacion() async{
+    RepositorioMongo mongo = RepositorioMongo();
+    RepositorioLocal local = RepositorioLocal();
+    Usuario usuario = await local.recuperarUsuario();
+    if (usuario == null) {
+      Navigator.push( context, MaterialPageRoute( builder: (context) => VistaLogin()));
+    }
+    Usuario u = await mongo.recuperarUsuario(usuario: usuario);
+    local.registrarUsuario(usuario: usuario);
+
+    setState(() {
+      check = true;
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              child: Icon(Icons.local_activity
-              ),
-              radius: 50.0,
-            ),
-            CircularProgressIndicator(
-            )
-          ],
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(
+              )
+            ],
+          ),
         ),
       ),
     );

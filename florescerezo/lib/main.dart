@@ -1,5 +1,7 @@
-import 'package:florescerezo/vistas/login.dart';
-import 'package:florescerezo/vistas/nuevapartida.dart';
+
+import 'package:florescerezo/vistas/splash.dart';
+
+import 'vistas/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Ohanami',
-      home: VistaLogin(),
+      home: Splash(),
     );
   }
 }

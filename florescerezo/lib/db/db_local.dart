@@ -22,9 +22,14 @@ class RepositorioLocal{
     return partidas = usuario.partidas;
   }
 
-  Future<bool> registradoUsuario({required Usuario usuario}) async {
-
-    throw UnimplementedError();
+  Future<bool> registradoUsuario() async {
+    bool check = true;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var respuesta =  prefs.getString('usuario');
+    if (respuesta!.isEmpty){
+      check == false;
+    }
+    return check;
   }
 
   Future<bool> registrarPartida({required Partida partida, required Usuario usuario}) {

@@ -3,7 +3,7 @@ import 'package:florescerezo/bloc_ohanami/estados.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:florescerezo/bloc_ohanami/eventos.dart';
-
+/*
 class Cuerpo extends StatelessWidget {
   const Cuerpo({ Key? key }) : super(key: key);
 
@@ -78,3 +78,4 @@ class VistaLogin extends StatelessWidget {
     );
   }
 }
+*/
