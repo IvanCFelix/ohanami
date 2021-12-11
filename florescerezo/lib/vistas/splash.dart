@@ -7,18 +7,15 @@ import 'package:florescerezo/vistas/login.dart';
 import 'package:flutter/material.dart';
 
 class Splash extends StatefulWidget {
-  const Splash({ Key? key,/* this.usuario */}) : super(key: key);
-  //final usuario;
+  const Splash({ Key? key,}) : super(key: key);
+
 
   @override
-  State<Splash> createState() => _SplashState( /*usuario: usuario */);
+  State<Splash> createState() => _SplashState();
 }
 
 class _SplashState extends State<Splash> {
-  /*Usuario usuario;
-  */
   bool check = false;
-  //_SplashState({required this.usuario});
   @override
   void initState() {
     validacion().whenComplete(() async {
@@ -35,16 +32,24 @@ class _SplashState extends State<Splash> {
   Future validacion() async{
     RepositorioMongo mongo = RepositorioMongo();
     RepositorioLocal local = RepositorioLocal();
+    check = await local.registradoUsuario();
+    print(check);
+
+    if(check == true){
     Usuario usuario = await local.recuperarUsuario();
     if (usuario == null) {
       Navigator.push( context, MaterialPageRoute( builder: (context) => VistaLogin()));
     }
+    check = await mongo.registradoUsuario(usuario: usuario);
+    if (check == true) {
     Usuario u = await mongo.recuperarUsuario(usuario: usuario);
-    local.registrarUsuario(usuario: usuario);
+    check = await local.registrarUsuario(usuario: u);
+    }
+          setState(() {
+        check = true;
+      });
+  }
 
-    setState(() {
-      check = true;
-    });
   }
   
   @override

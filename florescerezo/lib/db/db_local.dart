@@ -23,13 +23,13 @@ class RepositorioLocal{
   }
 
   Future<bool> registradoUsuario() async {
-    bool check = true;
+     late bool check;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var respuesta =  prefs.getString('usuario');
-    if (respuesta!.isEmpty){
-      check == false;
+    if (respuesta == null){
+     return check = false;
     }
-    return check;
+    return check = true;
   }
 
   Future<bool> registrarPartida({required Partida partida, required Usuario usuario}) {

@@ -20,7 +20,8 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
   @override
   void initState() {
     super.initState();
-    _counter =  local.recuperarUsuario()as Future<Usuario> ;
+    //local.eliminarUsuario();
+    //_counter =  local.recuperarUsuario() ;
   }
 
   @override
@@ -31,24 +32,31 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
         ),
         body: Center(
             child: FutureBuilder<Usuario>(
-                future: _counter,
+                future: local.recuperarUsuario(),
                 builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
                   
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
                       return const CircularProgressIndicator();
                     default:
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
+                      if (snapshot.data!.partidas.length == 0) {
+                        return Text("No hay partidas");
                       } else {
                         return ListView.builder(
-                          itemCount: snapshot.data!.partidas.length,
-                          itemBuilder: (BuildContext context, int index){
-                            return ListTile(
-                              title: Text(snapshot.data!.partidas[index].toString()),
-                            );
-                          },
-                          );
+                              itemCount: snapshot.data!.partidas.length,
+                              itemBuilder: (BuildContext context, int index) {
+                              return Card(
+                                      color: Colors.amber[600],
+                                      child:Center(child: Column(
+                                        children: [
+                                          Text(snapshot.data!.partidas[index].jugadores.toString()),
+                                        ]
+                                      ),
+                                      )
+                                      );
+                            }    
+                        );
+
                       }
                   }
                 })),
