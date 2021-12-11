@@ -18,9 +18,9 @@ enum FasePuntuacion{Ronda1, Ronda2, Ronda3, desenlace}
 class Partida {
   final Set<Jugador> jugadores;
 //Cambiar los nombres de las bariables
-  List<PRonda1> _puntuacionesRonda1 = [];
-  List<PRonda2> _puntuacionesRonda2 = [];
-  List<PRonda3> _puntuacionesRonda3 = [];
+  List<CRonda1> _puntuacionesRonda1 = [];
+  List<CRonda2> _puntuacionesRonda2 = [];
+  List<CRonda3> _puntuacionesRonda3 = [];
 
   Partida({
     required this.jugadores,
@@ -131,7 +131,7 @@ class Partida {
   ///del juego tira [ProblemaJugadoresNoConcuerdan]
   ///
   ///No se puede ingresar mas de 10 cartas azules, de lo contrario arrojara [ProblemaDemasiadasAzules]
-  void cartasRonda1(List<PRonda1> puntuaciones){
+  void cartasRonda1(List<CRonda1> puntuaciones){
     Set<Jugador> jugadoresR1 = puntuaciones.map((e) => e.jugador).toSet();
     if(!setEquals(jugadores,jugadoresR1))throw ProblemaJugadoresNoConcuerdan();
 
@@ -147,21 +147,21 @@ class Partida {
   ///No se puede ingresar mas de 20 en total, en su defecto arrojara [ProblemaExcesoCartas]
   ///
   ///No puedes ingresar un numero menor de cartas al de la ronda anterior puesto que se lanzara [ProblemaDisminucionAzules] 
-  void cartasRonda2(List<PRonda2> puntuaciones){
+  void cartasRonda2(List<CRonda2> puntuaciones){
     if(_puntuacionesRonda1.isEmpty) throw ProblemaOrdenIncorrecto();
 
     Set<Jugador> jugadoresR2 = puntuaciones.map((e) => e.jugador).toSet();
     if(!setEquals(jugadores,jugadoresR2))throw ProblemaJugadoresNoConcuerdan();
     
-    for(PRonda2 segundaPuntuacion in puntuaciones){
-      PRonda1 primeraPuntuacion = _puntuacionesRonda1.firstWhere((element) => 
+    for(CRonda2 segundaPuntuacion in puntuaciones){
+      CRonda1 primeraPuntuacion = _puntuacionesRonda1.firstWhere((element) => 
       element.jugador == segundaPuntuacion.jugador);
       if (primeraPuntuacion.cuantasAzules > segundaPuntuacion.cuantasAzules){
         throw ProblemaDisminucionAzules();
       }
     }
 
-    for(PRonda2 p in puntuaciones ){
+    for(CRonda2 p in puntuaciones ){
       if ( p.cuantasAzules > maximoCartasR2) throw ProblemaDemasiadasAzules();
       if ( p.cuantasVerdes > maximoCartasR2) throw ProblemaDemasiadasVerdes(); 
       if ( (p.cuantasAzules + p.cuantasVerdes) > maximoCartasR2) throw ProblemaExcesoCartas();
@@ -179,15 +179,15 @@ class Partida {
   ///No se puede ingresar mas de 30 en total, en su defecto lanzara [ProblemaExcesoCartas]
   ///
   ///No puedes ingresar un numero menor de cartas al de la ronda anterior puesto que se lanzara [ProblemaDisminucionAzules] y/o [ProblemaDisminucionVerdes]
-  void cartasRonda3(List<PRonda3> puntuaciones){
+  void cartasRonda3(List<CRonda3> puntuaciones){
 
     if (_puntuacionesRonda2.isEmpty) throw ProblemaOrdenIncorrecto();
 
     Set<Jugador> jugadoresR3 = puntuaciones.map((e) => e.jugador).toSet();
     if(!setEquals(jugadores,jugadoresR3))throw ProblemaJugadoresNoConcuerdan();
 
-    for(PRonda3 terceraPuntuacion in puntuaciones){
-      PRonda2 segundaPuntuacion = _puntuacionesRonda2.firstWhere((element) => 
+    for(CRonda3 terceraPuntuacion in puntuaciones){
+      CRonda2 segundaPuntuacion = _puntuacionesRonda2.firstWhere((element) => 
       element.jugador == terceraPuntuacion.jugador);
       if(segundaPuntuacion.cuantasAzules > terceraPuntuacion.cuantasAzules){
         throw ProblemaDisminucionAzules();
@@ -196,7 +196,7 @@ class Partida {
         throw ProblemaDisminucionVerdes();
       }
     }
-    for(PRonda3 p in puntuaciones ){
+    for(CRonda3 p in puntuaciones ){
       if ( p.cuantasAzules > maximoCartasR3) throw ProblemaDemasiadasAzules();
       if ( p.cuantasVerdes > maximoCartasR3) throw ProblemaDemasiadasVerdes();
       if ( p.cuantasRosas > maximoCartasR3) throw ProblemaDemasiadasRosas();

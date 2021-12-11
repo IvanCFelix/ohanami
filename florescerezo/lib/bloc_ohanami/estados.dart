@@ -4,9 +4,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 class Estado{}
 
-class Partida1 extends Estado{}
-class Partida2 extends Estado{}
-class Partida3 extends Estado{}
+class Ronda1 extends Estado{}
+class Ronda2 extends Estado{}
+class Ronda3 extends Estado{}
 
 /*
 part 'estados.freezed.dart';

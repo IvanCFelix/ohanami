@@ -30,14 +30,14 @@ void main() {
    });
   group('Puntuaciones ronda 1', () {
      late Jugador j1, j2, j3;
-     late PRonda1 p1, p2, p3;
+     late CRonda1 p1, p2, p3;
      setUp((){
        j1 = Jugador(nombre: 'Pancho');
        j2 = Jugador(nombre: 'Paco');
        j3 = Jugador(nombre: 'Pedro');
-       p1 = PRonda1(jugador: j1, cuantasAzules: 3);
-       p3 = PRonda1(jugador: j3, cuantasAzules: 5);
-       p2 = PRonda1(jugador: j2, cuantasAzules: 6);
+       p1 = CRonda1(jugador: j1, cuantasAzules: 3);
+       p3 = CRonda1(jugador: j3, cuantasAzules: 5);
+       p2 = CRonda1(jugador: j2, cuantasAzules: 6);
        
      });
      test('Jugadores diferentes no se debe', (){
@@ -53,24 +53,24 @@ void main() {
    });
   group('Puntuaciones Ronda 2', () {
     late Jugador j1, j2, j3;
-    late PRonda1 p11, p12, p13;
-    late PRonda2 p21, p22, p23;
-    late PRonda1 p11mal, p12mal;
+    late CRonda1 p11, p12, p13;
+    late CRonda2 p21, p22, p23;
+    late CRonda1 p11mal, p12mal;
     setUp((){
       j1 = Jugador( nombre: 'Pancho');
       j2 = Jugador( nombre: 'Paco');
       j3 = Jugador( nombre: 'Pepe');
 
-      p11 = PRonda1(jugador: j1, cuantasAzules: 0);
-      p12 = PRonda1(jugador: j2, cuantasAzules: 0);
-      p13 = PRonda1(jugador: j3, cuantasAzules: 7);
+      p11 = CRonda1(jugador: j1, cuantasAzules: 0);
+      p12 = CRonda1(jugador: j2, cuantasAzules: 0);
+      p13 = CRonda1(jugador: j3, cuantasAzules: 7);
       
-      p11mal = PRonda1(jugador: j1, cuantasAzules: 10);
-      p12mal = PRonda1(jugador: j2, cuantasAzules: 10);
+      p11mal = CRonda1(jugador: j1, cuantasAzules: 10);
+      p12mal = CRonda1(jugador: j2, cuantasAzules: 10);
 
-      p21 = PRonda2(jugador: j1, cuantasAzules: 1, cuantasVerdes: 1);
-      p22 = PRonda2(jugador: j2, cuantasAzules: 2, cuantasVerdes: 2);
-      p23 = PRonda2(jugador: j3, cuantasAzules: 1, cuantasVerdes: 1);
+      p21 = CRonda2(jugador: j1, cuantasAzules: 1, cuantasVerdes: 1);
+      p22 = CRonda2(jugador: j2, cuantasAzules: 2, cuantasVerdes: 2);
+      p23 = CRonda2(jugador: j3, cuantasAzules: 1, cuantasVerdes: 1);
     });
     test('Jugadores diferentes manda error', () {
       Partida p = Partida(jugadores: {j1, j2});
@@ -110,8 +110,8 @@ void main() {
     test('Maximo de cartas verdes es 20', (){
       Partida p = Partida(jugadores: {j1,j2});
       p.cartasRonda1([p11, p12]);
-      expect(()=> p.cartasRonda2([PRonda2(jugador: j1, cuantasAzules: 1, cuantasVerdes: 30),
-      PRonda2(jugador: j2, cuantasAzules: 0, cuantasVerdes: 0)]),
+      expect(()=> p.cartasRonda2([CRonda2(jugador: j1, cuantasAzules: 1, cuantasVerdes: 30),
+      CRonda2(jugador: j2, cuantasAzules: 0, cuantasVerdes: 0)]),
       throwsA(TypeMatcher<ProblemaDemasiadasVerdes>()) );
     });
 
@@ -120,8 +120,8 @@ void main() {
       p.cartasRonda1([p11, p12]);
       expect(() => p.cartasRonda2(
         [
-          PRonda2(jugador: j1, cuantasAzules: 21, cuantasVerdes: 0),
-          PRonda2(jugador: j2, cuantasAzules: 3, cuantasVerdes: 0)
+          CRonda2(jugador: j1, cuantasAzules: 21, cuantasVerdes: 0),
+          CRonda2(jugador: j2, cuantasAzules: 3, cuantasVerdes: 0)
         ]
       ),
       throwsA(TypeMatcher<ProblemaDemasiadasAzules>()));
@@ -131,8 +131,8 @@ void main() {
       p.cartasRonda1([p11, p12]);
       expect(() => p.cartasRonda2(
         [
-          PRonda2(jugador: j1, cuantasAzules: 11, cuantasVerdes: 11),
-          PRonda2(jugador: j2, cuantasAzules: 0, cuantasVerdes: 0)
+          CRonda2(jugador: j1, cuantasAzules: 11, cuantasVerdes: 11),
+          CRonda2(jugador: j2, cuantasAzules: 0, cuantasVerdes: 0)
         ]
       ),
       throwsA(TypeMatcher<ProblemaExcesoCartas>()));
@@ -140,27 +140,27 @@ void main() {
   });
   group('Puntuaciones Ronda 3', () {
     late Jugador j1, j2, j3;
-    late PRonda1 p11, p12, p13;
-    late PRonda2 p21, p22, p23;
-    late PRonda3 p31, p32, p33;
-    late PRonda3 p31mal, p32mal;
+    late CRonda1 p11, p12, p13;
+    late CRonda2 p21, p22, p23;
+    late CRonda3 p31, p32, p33;
+    late CRonda3 p31mal, p32mal;
 
     setUp((){
       j1 = Jugador( nombre: 'Pancho');
       j2 = Jugador( nombre: 'Paco');
       j3 = Jugador( nombre: 'Pepe');
 
-      p11 = PRonda1(jugador: j1, cuantasAzules: 0);
-      p12 = PRonda1(jugador: j2, cuantasAzules: 0);
-      p13 = PRonda1(jugador: j3, cuantasAzules: 7);
+      p11 = CRonda1(jugador: j1, cuantasAzules: 0);
+      p12 = CRonda1(jugador: j2, cuantasAzules: 0);
+      p13 = CRonda1(jugador: j3, cuantasAzules: 7);
 
-      p21 = PRonda2(jugador: j1, cuantasAzules: 1, cuantasVerdes: 1);
-      p22 = PRonda2(jugador: j2, cuantasAzules: 2, cuantasVerdes: 2);
-      p23 = PRonda2(jugador: j3, cuantasAzules: 1, cuantasVerdes: 1);
+      p21 = CRonda2(jugador: j1, cuantasAzules: 1, cuantasVerdes: 1);
+      p22 = CRonda2(jugador: j2, cuantasAzules: 2, cuantasVerdes: 2);
+      p23 = CRonda2(jugador: j3, cuantasAzules: 1, cuantasVerdes: 1);
 
-      p31 = PRonda3(jugador: j1, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
-      p32 = PRonda3(jugador: j2, cuantasAzules: 3, cuantasVerdes: 3, cuantasRosas: 3, cuantasNegras: 3);
-      p33 = PRonda3(jugador: j3, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
+      p31 = CRonda3(jugador: j1, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
+      p32 = CRonda3(jugador: j2, cuantasAzules: 3, cuantasVerdes: 3, cuantasRosas: 3, cuantasNegras: 3);
+      p33 = CRonda3(jugador: j3, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
       
     });
 
@@ -192,7 +192,7 @@ void main() {
       Partida p = Partida(jugadores: {j1,j2});
       p.cartasRonda1([p11,p12]);
       p.cartasRonda2([p21,p22]);
-      p31mal = PRonda3(jugador: j1, cuantasAzules: 0, cuantasVerdes: 3, cuantasNegras: 3, cuantasRosas: 3);
+      p31mal = CRonda3(jugador: j1, cuantasAzules: 0, cuantasVerdes: 3, cuantasNegras: 3, cuantasRosas: 3);
       expect(()=> p.cartasRonda3([p31mal,p32]),
       throwsA(TypeMatcher<ProblemaDisminucionAzules>()));
     });
@@ -206,7 +206,7 @@ void main() {
       Partida p = Partida(jugadores: {j1,j2});
       p.cartasRonda1([p11,p12]);
       p.cartasRonda2([p21,p22]);
-      p32mal = PRonda3(jugador: j2, cuantasAzules: 4, cuantasVerdes: 0, cuantasNegras: 4, cuantasRosas: 4);
+      p32mal = CRonda3(jugador: j2, cuantasAzules: 4, cuantasVerdes: 0, cuantasNegras: 4, cuantasRosas: 4);
       expect(()=> p.cartasRonda3([p31,p32mal]),
       throwsA(TypeMatcher<ProblemaDisminucionVerdes>()));
     });
@@ -220,7 +220,7 @@ void main() {
       Partida p = Partida(jugadores: {j1,j2});
       p.cartasRonda1([p11,p12]);
       p.cartasRonda2([p21,p22]);
-      p31 = PRonda3(jugador: j1, cuantasAzules: 31, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
+      p31 = CRonda3(jugador: j1, cuantasAzules: 31, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
       expect(()=> p.cartasRonda3([p31,p32]),
       throwsA(TypeMatcher<ProblemaDemasiadasAzules>()));
     });
@@ -228,7 +228,7 @@ void main() {
       Partida p = Partida(jugadores: {j1,j2});
       p.cartasRonda1([p11,p12]);
       p.cartasRonda2([p21,p22]);
-      p31 = PRonda3(jugador: j1, cuantasAzules: 3, cuantasVerdes: 31, cuantasRosas: 2, cuantasNegras: 2);
+      p31 = CRonda3(jugador: j1, cuantasAzules: 3, cuantasVerdes: 31, cuantasRosas: 2, cuantasNegras: 2);
       expect(()=> p.cartasRonda3([p31,p32]),
       throwsA(TypeMatcher<ProblemaDemasiadasVerdes>()));
     });
@@ -236,7 +236,7 @@ void main() {
       Partida p = Partida(jugadores: {j1,j2});
       p.cartasRonda1([p11,p12]);
       p.cartasRonda2([p21,p22]);
-      p31 = PRonda3(jugador: j1, cuantasAzules: 3, cuantasVerdes: 3, cuantasRosas: 31, cuantasNegras: 2);
+      p31 = CRonda3(jugador: j1, cuantasAzules: 3, cuantasVerdes: 3, cuantasRosas: 31, cuantasNegras: 2);
       expect(()=> p.cartasRonda3([p31,p32]),
       throwsA(TypeMatcher<ProblemaDemasiadasRosas>()));
     });
@@ -244,7 +244,7 @@ void main() {
       Partida p = Partida(jugadores: {j1,j2});
       p.cartasRonda1([p11,p12]);
       p.cartasRonda2([p21,p22]);
-      p31 = PRonda3(jugador: j1, cuantasAzules: 3, cuantasVerdes: 4, cuantasRosas: 2, cuantasNegras: 31);
+      p31 = CRonda3(jugador: j1, cuantasAzules: 3, cuantasVerdes: 4, cuantasRosas: 2, cuantasNegras: 31);
       expect(()=> p.cartasRonda3([p31,p32]),
       throwsA(TypeMatcher<ProblemaDemasiadasNegras>()));
     });
@@ -252,7 +252,7 @@ void main() {
       Partida p = Partida(jugadores: {j1,j2});
       p.cartasRonda1([p11,p12]);
       p.cartasRonda2([p21,p22]);
-      p31 = PRonda3(jugador: j1, cuantasAzules: 29, cuantasVerdes: 29, cuantasRosas: 29, cuantasNegras: 29);
+      p31 = CRonda3(jugador: j1, cuantasAzules: 29, cuantasVerdes: 29, cuantasRosas: 29, cuantasNegras: 29);
       expect(()=> p.cartasRonda3([p31,p32]),
       throwsA(TypeMatcher<ProblemaExcesoCartas>()));
     });
@@ -261,10 +261,10 @@ void main() {
   group('Puntos', () {
 
     late Jugador j1, j2, j3;
-    late PRonda1 p11, p12, p13;
-    late PRonda2 p21, p22, p23;
-    late PRonda3 p31, p32, p33;
-    late PRonda3 p31mal, p32mal;
+    late CRonda1 p11, p12, p13;
+    late CRonda2 p21, p22, p23;
+    late CRonda3 p31, p32, p33;
+    late CRonda3 p31mal, p32mal;
     late var ronda1, ronda2, ronda3, rondafinal;
 
     setUp((){
@@ -272,17 +272,17 @@ void main() {
       j2 = Jugador( nombre: 'Paco');
       j3 = Jugador( nombre: 'Pepe');
 
-      p11 = PRonda1(jugador: j1, cuantasAzules: 1);
-      p12 = PRonda1(jugador: j2, cuantasAzules: 0);
-      p13 = PRonda1(jugador: j3, cuantasAzules: 0);
+      p11 = CRonda1(jugador: j1, cuantasAzules: 1);
+      p12 = CRonda1(jugador: j2, cuantasAzules: 0);
+      p13 = CRonda1(jugador: j3, cuantasAzules: 0);
 
-      p21 = PRonda2(jugador: j1, cuantasAzules: 1, cuantasVerdes: 1);
-      p22 = PRonda2(jugador: j2, cuantasAzules: 2, cuantasVerdes: 2);
-      p23 = PRonda2(jugador: j3, cuantasAzules: 1, cuantasVerdes: 1);
+      p21 = CRonda2(jugador: j1, cuantasAzules: 1, cuantasVerdes: 1);
+      p22 = CRonda2(jugador: j2, cuantasAzules: 2, cuantasVerdes: 2);
+      p23 = CRonda2(jugador: j3, cuantasAzules: 1, cuantasVerdes: 1);
 
-      p31 = PRonda3(jugador: j1, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
-      p32 = PRonda3(jugador: j2, cuantasAzules: 3, cuantasVerdes: 3, cuantasRosas: 3, cuantasNegras: 3);
-      p33 = PRonda3(jugador: j3, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
+      p31 = CRonda3(jugador: j1, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
+      p32 = CRonda3(jugador: j2, cuantasAzules: 3, cuantasVerdes: 3, cuantasRosas: 3, cuantasNegras: 3);
+      p33 = CRonda3(jugador: j3, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
       
       ronda1 = FasePuntuacion.Ronda1;
       ronda2 = FasePuntuacion.Ronda2;
@@ -294,6 +294,7 @@ void main() {
     test('Probar puntuaciones ronda 1', (){
       Partida p = Partida(jugadores: {j1,j2});
       p.cartasRonda1([p11,p12]);
+      p.cartasRonda1([]);
       expect(p.puntos(ronda: ronda1) , isA<List<PuntuacionJugador>>() );
     });
     test('Probar puntuaciones ronda 2', (){

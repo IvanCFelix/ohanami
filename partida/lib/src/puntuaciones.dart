@@ -6,11 +6,11 @@ import 'package:partida/src/jugador.dart';
 const int ninguna = 0;
 const int maximoCartasPR1 = 10; 
 
-class PRonda1 {
+class CRonda1 {
   final Jugador jugador;
   final int cuantasAzules;
 
-  PRonda1({ required this.jugador, required this.cuantasAzules}){
+  CRonda1({ required this.jugador, required this.cuantasAzules}){
     if (cuantasAzules < ninguna ) throw ProblemaAzulesNegativas();
     if (cuantasAzules > maximoCartasPR1)throw ProblemaDemasiadasAzules();
   }
@@ -22,8 +22,8 @@ class PRonda1 {
     };
   }
 
-  factory PRonda1.fromMap(Map<String, dynamic> map) {
-    return PRonda1(
+  factory CRonda1.fromMap(Map<String, dynamic> map) {
+    return CRonda1(
       jugador: Jugador.fromMap(map['jugador']),
       cuantasAzules: map['cuantasAzules'],
     );
@@ -31,14 +31,14 @@ class PRonda1 {
 
   String toJson() => json.encode(toMap());
 
-  factory PRonda1.fromJson(String source) => PRonda1.fromMap(json.decode(source));
+  factory CRonda1.fromJson(String source) => CRonda1.fromMap(json.decode(source));
 }
 
-class PRonda2 {
+class CRonda2 {
   final Jugador jugador;
   final int cuantasAzules;
   final int cuantasVerdes;
-  PRonda2({
+  CRonda2({
     required this.jugador,
     required this.cuantasAzules,
     required this.cuantasVerdes,
@@ -55,8 +55,8 @@ class PRonda2 {
     };
   }
 
-  factory PRonda2.fromMap(Map<String, dynamic> map) {
-    return PRonda2(
+  factory CRonda2.fromMap(Map<String, dynamic> map) {
+    return CRonda2(
       jugador: Jugador.fromMap(map['jugador']),
       cuantasAzules: map['cuantasAzules'],
       cuantasVerdes: map['cuantasVerdes'],
@@ -65,16 +65,16 @@ class PRonda2 {
 
   String toJson() => json.encode(toMap());
 
-  factory PRonda2.fromJson(String source) => PRonda2.fromMap(json.decode(source));
+  factory CRonda2.fromJson(String source) => CRonda2.fromMap(json.decode(source));
 }
 
-class PRonda3 {
+class CRonda3 {
   final Jugador jugador;
   final int cuantasAzules;
   final int cuantasVerdes;
   final int cuantasNegras;
   final int cuantasRosas;
-  PRonda3({
+  CRonda3({
     required this.jugador,
     required this.cuantasAzules,
     required this.cuantasVerdes,
@@ -97,8 +97,8 @@ class PRonda3 {
     };
   }
 
-  factory PRonda3.fromMap(Map<String, dynamic> map) {
-    return PRonda3(
+  factory CRonda3.fromMap(Map<String, dynamic> map) {
+    return CRonda3(
       jugador: Jugador.fromMap(map['jugador']),
       cuantasAzules: map['cuantasAzules'],
       cuantasVerdes: map['cuantasVerdes'],
@@ -109,6 +109,6 @@ class PRonda3 {
 
   String toJson() => json.encode(toMap());
 
-  factory PRonda3.fromJson(String source) => PRonda3.fromMap(json.decode(source));
+  factory CRonda3.fromJson(String source) => CRonda3.fromMap(json.decode(source));
 }
 

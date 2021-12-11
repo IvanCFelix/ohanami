@@ -4,6 +4,8 @@ import 'package:florescerezo/vistas/nuevapartida.dart';
 import 'package:flutter/material.dart';
 import 'package:db_paquete/db_paquete.dart';
 
+import 'mostrar_partida.dart';
+
 class VistaListaPartidas extends StatefulWidget {
   const VistaListaPartidas({Key? key}) : super(key: key);
 
@@ -78,16 +80,46 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
                         return ListView.builder(
                           itemCount: snapshot.data!.partidas.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return Card(
-                              color: Colors.amber[600],
-                              child:Center(
-                                child: Column(
-                                  children: [
-                                    Text(snapshot.data!.partidas[index].jugadores.toString()),
-                                  ]
-                                ),
-                              )
-                            );
+                            return             Card(
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.arrow_drop_down_circle),
+                    title: const Text('Card title 1'),
+                    subtitle: Text(
+                      'Secondary Text',
+                      style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      'Greyhound divisively hello coldly wonderfully marginally far upon excluding.',
+                      style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                    ),
+                  ),
+                  ButtonBar(
+                    alignment: MainAxisAlignment.start,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute( builder: (context) => Mostrar_Partida()));
+                        },
+                        child: const Text('ACTION 1'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Perform some action
+                        },
+                        child: const Text('ACTION 2'),
+                      ),
+                    ],
+                  ),
+                  Image.asset('assets/card-sample-image.jpg'),
+                ],
+              ),
+            );
                           }    
                         );
                       }

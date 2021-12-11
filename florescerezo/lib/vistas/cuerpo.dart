@@ -12,22 +12,21 @@ class Cuerpo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final estado = context.watch<OhanamiBloc>().state;
-    if(estado is Partida1){
-      return VistaPartida1();
+    if(estado is Ronda1){
+      return VistaRonda1();
     }
-    if(estado is Partida2){
-      return VistaPartida2();
+    if(estado is Ronda2){
+      return VistaRonda2();
     }
-    if(estado is Partida3){
-      return VistaPartida3(); 
+    if(estado is Ronda3){
+      return VistaRonda3(); 
     }
     return Container();
   }
 }
 
-class VistaPartida1 extends StatelessWidget {
-  const VistaPartida1({ Key? key }) : super(key: key);
-
+class VistaRonda1 extends StatelessWidget {
+  const VistaRonda1({ Key? key }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -38,7 +37,7 @@ class VistaPartida1 extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: (){
-               context.read<OhanamiBloc>().add(Sigientepartida2());
+               context.read<OhanamiBloc>().add(SiguienteRonda2());
             }, 
             child: Text("Partida 2"),
           )
@@ -48,8 +47,8 @@ class VistaPartida1 extends StatelessWidget {
   }
 }
 
-class VistaPartida2 extends StatelessWidget {
-  const VistaPartida2({ Key? key }) : super(key: key);
+class VistaRonda2 extends StatelessWidget {
+  const VistaRonda2({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +60,7 @@ class VistaPartida2 extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: (){
-               context.read<OhanamiBloc>().add(Sigientepartida3());
+               context.read<OhanamiBloc>().add(SiguienteRonda3());
             }, 
             child: Text("Partida 3"),
           )
@@ -71,8 +70,8 @@ class VistaPartida2 extends StatelessWidget {
   }
 }
 
-class VistaPartida3 extends StatelessWidget {
-  const VistaPartida3({ Key? key }) : super(key: key);
+class VistaRonda3 extends StatelessWidget {
+  const VistaRonda3({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +83,7 @@ class VistaPartida3 extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: (){
-              Navigator.push(context, MaterialPageRoute( builder: (context) => DetallePartida() ));
+              Navigator.push(context, MaterialPageRoute( builder: (context) => DetallePartida(check:false) ));
             }, 
             child: Text("Informacion"),
           )

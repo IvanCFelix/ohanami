@@ -5,20 +5,15 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'lista.dart';
 import 'nuevapartida.dart';
-class DetallePartida extends StatefulWidget {
-  const DetallePartida({required this.check }) : super();
-  final bool check;
+class Mostrar_Partida extends StatefulWidget {
+  const Mostrar_Partida({Key? key}) : super(key: key);
+
   @override
-  _DetallePartidaState createState() => _DetallePartidaState(check);
+  _Mostrar_PartidaState createState() => _Mostrar_PartidaState();
 }
 
-class _DetallePartidaState extends State<DetallePartida> {
+class _Mostrar_PartidaState extends State<Mostrar_Partida> {
   List<charts.Series<Partida, String>> _infromacionPartida = [];
-  int i =0;
-  final bool check;
-
-  _DetallePartidaState(this.check);
-
 
   @override
   void initState(){
@@ -36,31 +31,6 @@ class _DetallePartidaState extends State<DetallePartida> {
           onPressed: (){
             Navigator.push(context, MaterialPageRoute( builder: (context) => NuevaPartida()));
           }
-        ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Text("Data"),
-              ),
-              ListTile(
-                title: Text("Lista de partidas"),
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute( builder: (context) => VistaListaPartidas() ));
-                },
-              ),
-              ListTile(
-                title: Text("Nueva Partida"),
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute( builder: (context) => NuevaPartida() ));
-                },
-              ),
-            ],
-          ),
         ),
           appBar: AppBar(
             backgroundColor: Colors.cyan,

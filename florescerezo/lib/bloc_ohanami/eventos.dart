@@ -1,4 +1,4 @@
 
 class Evento {}
-class Sigientepartida2 extends Evento{}
-class Sigientepartida3 extends Evento{}
+class SiguienteRonda2 extends Evento{}
+class SiguienteRonda3 extends Evento{}

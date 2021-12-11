@@ -7,26 +7,26 @@ void main(List<String> args) async{
   //RepositorioMemoria r = RepositorioMemoria();
   RepositorioMongo db = RepositorioMongo();
   late Jugador j1, j2, j3;
-  late PRonda1 p11, p12, p13;
-  late PRonda2 p21, p22, p23;
-  late PRonda3 p31, p32, p33;
-  late PRonda3 p31mal, p32mal;
+  late CRonda1 p11, p12, p13;
+  late CRonda2 p21, p22, p23;
+  late CRonda3 p31, p32, p33;
+  late CRonda3 p31mal, p32mal;
 
   j1 = Jugador( nombre: 'Pancho');
   j2 = Jugador( nombre: 'Paco');
   j3 = Jugador( nombre: 'Pepe');
 
-  p11 = PRonda1(jugador: j1, cuantasAzules: 1);
-  p12 = PRonda1(jugador: j2, cuantasAzules: 0);
-  p13 = PRonda1(jugador: j3, cuantasAzules: 0);
+  p11 = CRonda1(jugador: j1, cuantasAzules: 1);
+  p12 = CRonda1(jugador: j2, cuantasAzules: 0);
+  p13 = CRonda1(jugador: j3, cuantasAzules: 0);
 
-  p21 = PRonda2(jugador: j1, cuantasAzules: 1, cuantasVerdes: 1);
-  p22 = PRonda2(jugador: j2, cuantasAzules: 2, cuantasVerdes: 2);
-  p23 = PRonda2(jugador: j3, cuantasAzules: 1, cuantasVerdes: 1);
+  p21 = CRonda2(jugador: j1, cuantasAzules: 1, cuantasVerdes: 1);
+  p22 = CRonda2(jugador: j2, cuantasAzules: 2, cuantasVerdes: 2);
+  p23 = CRonda2(jugador: j3, cuantasAzules: 1, cuantasVerdes: 1);
 
-  p31 = PRonda3(jugador: j1, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
-  p32 = PRonda3(jugador: j2, cuantasAzules: 3, cuantasVerdes: 3, cuantasRosas: 3, cuantasNegras: 3);
-  p33 = PRonda3(jugador: j3, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
+  p31 = CRonda3(jugador: j1, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
+  p32 = CRonda3(jugador: j2, cuantasAzules: 3, cuantasVerdes: 3, cuantasRosas: 3, cuantasNegras: 3);
+  p33 = CRonda3(jugador: j3, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
   bool check = await db.inicializar();
   print(check);
   Partida p = Partida(jugadores: {j1,j2});

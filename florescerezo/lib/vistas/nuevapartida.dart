@@ -105,7 +105,8 @@ class _NuevaPartidaState extends State<NuevaPartida> {
                         )
                       : ElevatedButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute( builder: (context) => Blocvista() ));
+
+                            Navigator.push(context, MaterialPageRoute( builder: (context) => Blocvista()));
                           },
                           child: const Text("Comenzar"),
                         ),
