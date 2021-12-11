@@ -23,53 +23,56 @@ class _DetallePartidaState extends State<DetallePartida> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.cyan,
-        title: Text("Partida"),
-      ),
-      body:Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Container(
-                  child: Center(
-                    child: Column(
-                      children:[
-                        Container(
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('Se creo: 22/11/20'),
-                            ),
-                          ),
-                        ),
-                        posiciones(),
-                        Container(
-                          
-                          child: Text(
-                              'Cartas',
-                              style: TextStyle(
-                                fontSize: 24.0,
-                                fontWeight: 
-                                FontWeight.bold),
+    return MaterialApp(
+      home: 
+        Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.cyan,
+            title: Text("Partida"),
+          ),
+          body:Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Container(
+                      child: Center(
+                        child: Column(
+                          children:[
+                            Container(
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text('Se creo: 22/11/20'),
                                 ),
-                        ),
-                        Container(
-                          child: Expanded(
-                            child: charts.BarChart(
-                              _infromacionPartida,
-                              animate: true,
-                              barGroupingType: charts.BarGroupingType.groupedStacked,
-                              animationDuration: Duration(seconds: 1),
+                              ),
                             ),
-                          ),
+                            posiciones(),
+                            Container(
+                              
+                              child: Text(
+                                  'Cartas',
+                                  style: TextStyle(
+                                    fontSize: 24.0,
+                                    fontWeight: 
+                                    FontWeight.bold),
+                                    ),
+                            ),
+                            Container(
+                              child: Expanded(
+                                child: charts.BarChart(
+                                  _infromacionPartida,
+                                  animate: true,
+                                  barGroupingType: charts.BarGroupingType.groupedStacked,
+                                  animationDuration: Duration(seconds: 1),
+                                ),
+                              ),
+                            ),
+                            descripcion(),
+                          ],
                         ),
-                        descripcion(),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
+        ),
     ); 
   }
 Widget posiciones(){

@@ -1,4 +1,5 @@
 
+import 'package:florescerezo/vistas/nuevapartida.dart';
 import 'package:florescerezo/vistas/splash.dart';
 
 //import 'vistas/login.dart';
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Ohanami',
-      home: Splash(),
+      home: NuevaPartida(),
     );
   }
 }

@@ -4,11 +4,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 class Estado{}
 
+class Partida1 extends Estado{}
+class Partida2 extends Estado{}
+class Partida3 extends Estado{}
 
-class Iniciando extends Estado{}
-class Login extends Estado{}
-class Registro extends Estado{}
-class Bienvenida extends Estado{}
 /*
 part 'estados.freezed.dart';
 
