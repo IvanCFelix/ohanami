@@ -27,16 +27,16 @@ void main(List<String> args) async{
   p31 = PRonda3(jugador: j1, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
   p32 = PRonda3(jugador: j2, cuantasAzules: 3, cuantasVerdes: 3, cuantasRosas: 3, cuantasNegras: 3);
   p33 = PRonda3(jugador: j3, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
-
+  bool check = await db.inicializar();
+  print(check);
   Partida p = Partida(jugadores: {j1,j2});
   p.cartasRonda1([p11,p12]);
   p.cartasRonda2([p21,p22]);
   p.cartasRonda3([p31,p32]);
   print('Empezando');
-  Usuario hansel = Usuario(nombre: 'Hansel', telefono: 1456781249, clave: "ewgui", partidas: [p]);
+  Usuario hansel = Usuario(nombre: 'Jose', telefono: 1456781249, clave: "12345", partidas: [p,p,p,p,p,p,p,p]);
   await db.registrarUsuario(usuario:hansel);
   List<Partida> partidas =  await db.recuperarPartidas(usuario: hansel);
   print(partidas);
   print("Termino");
-  
 }

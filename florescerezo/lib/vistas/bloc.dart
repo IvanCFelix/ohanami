@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/*
+
 class Blocvista extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -13,9 +13,7 @@ class Blocvista extends StatelessWidget {
       child: MiAplicacion(),
     );
   }
-
 }
-
 class MiAplicacion extends StatelessWidget {
   const MiAplicacion({ Key? key }) : super(key: key);
 
@@ -24,11 +22,10 @@ class MiAplicacion extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Bloc"),
+          title: Text("Partida"),
         ),
         body: Cuerpo(),
       ),
     );
   }
 }
-*/

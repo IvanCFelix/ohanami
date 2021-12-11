@@ -22,8 +22,8 @@ class _SplashState extends State<Splash> {
       Timer(Duration(),
       (){
         check == false ? 
-      Navigator.push( context, MaterialPageRoute( builder: (context) =>VistaLogin())) :
-      Navigator.push( context, MaterialPageRoute(builder: (context) =>VistaListaPartidas()));
+      Navigator.push( context, MaterialPageRoute( builder: (context) => VistaLogin())) :
+      Navigator.push( context, MaterialPageRoute(builder: (context) => VistaListaPartidas()));
       });
     });
     super.initState();
@@ -32,26 +32,31 @@ class _SplashState extends State<Splash> {
   Future validacion() async{
     RepositorioMongo mongo = RepositorioMongo();
     RepositorioLocal local = RepositorioLocal();
-    check = await local.registradoUsuario();
-    print(check);
+    bool mongocheck = await mongo.inicializar();
+    bool checkv = await local.registradoUsuario();
 
-    if(check == true){
-    Usuario usuario = await local.recuperarUsuario();
-    if (usuario == null) {
-      Navigator.push( context, MaterialPageRoute( builder: (context) => VistaLogin()));
-    }
-    check = await mongo.registradoUsuario(usuario: usuario);
-    if (check == true) {
-    Usuario u = await mongo.recuperarUsuario(usuario: usuario);
-    check = await local.registrarUsuario(usuario: u);
-    }
-          setState(() {
+    if (mongocheck == true && checkv == true) {
+      Usuario usuario = await local.recuperarUsuario();
+      checkv = await mongo.registradoUsuario(usuario: usuario);
+      if (checkv == true) {
+        Usuario u = await mongo.recuperarUsuario(usuario: usuario);
+        checkv = await local.registrarUsuario(usuario: u);
+        setState(() {
+          check = checkv;
+        });
+      }
+      setState(() {
         check = true;
       });
-  }
-
+    }
+    if (mongocheck == false && checkv == true) {
+      setState(() {
+        check = checkv;
+      });
+    }
   }
   
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -1,7 +1,7 @@
 
 import 'package:florescerezo/vistas/splash.dart';
 
-import 'vistas/login.dart';
+//import 'vistas/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {

@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'dart:io';
 import 'package:db_paquete/src/repositorio_.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:partida/partida.dart';
@@ -10,9 +11,16 @@ class RepositorioMongo extends Repositorio {
   late Db db;
   RepositorioMongo(){}
   
-   inicializar() async{
-    db = await Db.create(link);
+  Future<bool> inicializar() async{
+  bool check = false;
+  try {
+    await Db.create(link).then((value) => check = true);
+  } on SocketException catch (_) {
+    check = false;
   }
+    return check;
+  }
+
   @override
   Future<List<Partida>> recuperarPartidas({ required Usuario usuario}) async {
     List<Partida> partidas;
