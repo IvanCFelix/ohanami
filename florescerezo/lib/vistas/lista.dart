@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:florescerezo/db/db_local.dart';
 import 'package:flutter/material.dart';
 import 'package:db_paquete/db_paquete.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VistaListaPartidas extends StatefulWidget {
   const VistaListaPartidas({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class VistaListaPartidas extends StatefulWidget {
 }
 
 class VistaListaPartidasState extends State<VistaListaPartidas> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   RepositorioLocal local = RepositorioLocal();
   late Future<Usuario> _counter;
 
@@ -18,7 +20,7 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
   @override
   void initState() {
     super.initState();
-    _counter = local.recuperarUsuario();
+    _counter =  local.recuperarUsuario()as Future<Usuario> ;
   }
 
   @override
@@ -31,6 +33,7 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
             child: FutureBuilder<Usuario>(
                 future: _counter,
                 builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
+                  
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
                       return const CircularProgressIndicator();
@@ -38,8 +41,14 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
                       if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       } else {
-                        return Text(snapshot.data!.nombre.toString(),
-                        );
+                        return ListView.builder(
+                          itemCount: snapshot.data!.partidas.length,
+                          itemBuilder: (BuildContext context, int index){
+                            return ListTile(
+                              title: Text(snapshot.data!.partidas[index].toString()),
+                            );
+                          },
+                          );
                       }
                   }
                 })),

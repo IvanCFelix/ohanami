@@ -13,7 +13,7 @@ class RepositorioLocal{
     return check;
   }
 
-  Future<List<Partida>> recuperarPartidas({required Usuario usuario}) async {
+  Future<List<Partida>> recuperarPartidas() async {
     List<Partida> partidas;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var respuesta =  prefs.getString('usuario');
