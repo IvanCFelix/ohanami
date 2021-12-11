@@ -1,3 +1,6 @@
+import 'package:db_paquete/db_paquete.dart';
+import 'package:florescerezo/db/db_local.dart';
+import 'package:florescerezo/vistas/bloc.dart';
 import 'package:florescerezo/vistas/lista.dart';
 import 'package:flutter/material.dart';
 class VistaLogin extends StatelessWidget {
@@ -5,15 +8,26 @@ class VistaLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    TextEditingController correo = TextEditingController();
+    TextEditingController clave = TextEditingController();
+    RepositorioMongo mongo = RepositorioMongo();
+    RepositorioLocal local = RepositorioLocal();
+    void sinconexion() async{
+      Usuario usuario = Usuario(nombre: correo.text.toString() ,clave: clave.text.toString() , partidas: [],telefono: 0);
+      local.registrarUsuario(usuario: usuario);
+    }
     return Scaffold(
       appBar: AppBar(),
       body: Center(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Image.network('https://cdn-icons-png.flaticon.com/512/678/678890.png',
-              height: 300.0,
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Image.network('https://cdn-icons-png.flaticon.com/512/678/678890.png',
+                height: 200.0,
+                ),
               ),
             ),
             Padding(
@@ -22,6 +36,7 @@ class VistaLogin extends StatelessWidget {
                 builder: (BuildContext context, AsyncSnapshot snapshot){
                   return  Container(
                     child: TextField(
+                      controller: correo,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         icon: Icon(Icons.account_circle),
@@ -42,6 +57,8 @@ class VistaLogin extends StatelessWidget {
                 builder: (BuildContext context, AsyncSnapshot snapshot){
                   return  Container(
                     child: TextField(
+                      controller: clave,
+                      obscureText: true,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                         icon: Icon(Icons.password),
@@ -61,12 +78,43 @@ class VistaLogin extends StatelessWidget {
               child: StreamBuilder(
                 builder: (BuildContext context, AsyncSnapshot snapshot){
                   return ElevatedButton(
-                    onPressed: (){
+                    onPressed: () async{
+                      Usuario usuario = Usuario(nombre: correo.text.toString() ,clave: clave.text.toString() , partidas: [],telefono: 0);
                       
                     },
                     child: Container(
                       padding: EdgeInsets.all(15.0),
                       child: Text('Iniciar Sesion',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      ),
+                    ),
+                    style:ElevatedButton.styleFrom(
+                      elevation: 10.0, 
+                      textStyle: const TextStyle(
+                        fontSize: 20,
+                        
+                        )
+                        ),
+                    );
+                }
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: StreamBuilder(
+                builder: (BuildContext context, AsyncSnapshot snapshot){
+                  return ElevatedButton(
+                    onPressed: () async {
+                      sinconexion();
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => VistaListaPartidas()),);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(15.0),
+                      child: Text('Sin conexion',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,

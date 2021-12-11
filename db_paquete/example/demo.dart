@@ -5,7 +5,7 @@ import 'package:mongo_dart/mongo_dart.dart';
 
 void main(List<String> args) async{
   //RepositorioMemoria r = RepositorioMemoria();
-  RepsitorioMongo db = RepsitorioMongo();
+  RepositorioMongo db = RepositorioMongo();
   late Jugador j1, j2, j3;
   late PRonda1 p11, p12, p13;
   late PRonda2 p21, p22, p23;

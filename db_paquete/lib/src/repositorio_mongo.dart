@@ -6,11 +6,11 @@ import 'package:partida/partida.dart';
 import 'constantes.dart';
 import 'usuario.dart';
 
-class RepsitorioMongo extends Repositorio {
+class RepositorioMongo extends Repositorio {
   late Db db;
-  RepsitorioMongo(){}
+  RepositorioMongo(){}
   
-  void inicializar() async{
+   inicializar() async{
     db = await Db.create(link);
   }
   @override

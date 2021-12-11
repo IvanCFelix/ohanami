@@ -31,10 +31,6 @@ class _NuevaPartidaState extends State<NuevaPartida> {
           check = false;
         } 
     }
-    setState(() {
-      comenzar = check;
-    }
-    );
 }
 
   @override
