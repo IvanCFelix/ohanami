@@ -3,31 +3,24 @@ import 'package:florescerezo/vistas/cuerpo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:partida/partida.dart';
 
 
 class Blocvista extends StatelessWidget {
-  const Blocvista({Key? key}) : super(key: key);
-
+  const Blocvista({Key? key, required this.partida}) : super(key: key);
+  final Partida partida;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => OhanamiBloc(),
-      child: MiAplicacion(),
-    );
-  }
-}
-class MiAplicacion extends StatelessWidget {
-  const MiAplicacion({ Key? key }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+      child: MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text("Partida"),
         ),
-        body: Cuerpo(),
+        body: Cuerpo(partida: partida,),
       ),
+    ),
     );
   }
 }

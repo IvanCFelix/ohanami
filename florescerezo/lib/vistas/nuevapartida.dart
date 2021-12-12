@@ -1,5 +1,6 @@
 import 'package:florescerezo/vistas/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:partida/partida.dart';
 class NuevaPartida extends StatefulWidget {
   const NuevaPartida({Key? key}) : super(key: key);
 
@@ -105,8 +106,8 @@ class _NuevaPartidaState extends State<NuevaPartida> {
                         )
                       : ElevatedButton(
                           onPressed: () {
-
-                            Navigator.push(context, MaterialPageRoute( builder: (context) => Blocvista()));
+                            Partida partida = Partida(jugadores:{} );
+                            Navigator.push(context, MaterialPageRoute( builder: (context) => Blocvista(partida: partida,)));
                           },
                           child: const Text("Comenzar"),
                         ),

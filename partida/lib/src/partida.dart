@@ -15,19 +15,28 @@ const puntosPorAzules = 3;
 const puntosPorVerdes = 4;
 const puntosPorNegras = 7;
 enum FasePuntuacion{Ronda1, Ronda2, Ronda3, desenlace}
-class Partida {
-  final Set<Jugador> jugadores;
-//Cambiar los nombres de las bariables
-  List<CRonda1> _puntuacionesRonda1 = [];
-  List<CRonda2> _puntuacionesRonda2 = [];
-  List<CRonda3> _puntuacionesRonda3 = [];
 
+class Partida {
+//Cambiar los nombres de las bariables
+  final Set<Jugador> jugadores;
+   List<CRonda1> puntuacionesRonda1 = [];
+   List<CRonda2> puntuacionesRonda2 = [];
+   List<CRonda3> puntuacionesRonda3 = [];
   Partida({
     required this.jugadores,
-  }) {
+  }){
     if (jugadores.length < numeroMinimoJugadores) throw ProblemaNumeroJugadoresMenorMinimo();
     if (jugadores.length > numeroMaximoJugadores) throw ProblemaNumeroJugadoresMayorMaximo();
   }
+
+  Partida.constructor({
+    required this.jugadores,
+    required this.puntuacionesRonda1,
+    required this.puntuacionesRonda2,
+    required this.puntuacionesRonda3,
+  });
+
+  
   
   var puntosRosas = {0,1,3,6,10,15,21,28,36,45,55,66,78,91,105,120}.toList();
   
@@ -36,7 +45,7 @@ class Partida {
   List<PuntuacionJugador> _PJ = [];
       switch (ronda) {
         case FasePuntuacion.Ronda1:
-        for (var i in _puntuacionesRonda1) {
+        for (var i in puntuacionesRonda1) {
           _PJ.add(PuntuacionJugador(
             jugador: i.jugador, 
             porAzules: i.cuantasAzules * puntosPorAzules, 
@@ -50,7 +59,7 @@ class Partida {
         case FasePuntuacion.Ronda2:
 
 
-        for (var i in _puntuacionesRonda2) {
+        for (var i in puntuacionesRonda2) {
           _PJ.add(PuntuacionJugador(
             jugador: i.jugador, 
             porAzules: i.cuantasAzules * puntosPorAzules, 
@@ -63,7 +72,7 @@ class Partida {
 
         case FasePuntuacion.Ronda3:
 
-        for (var i in _puntuacionesRonda3) {
+        for (var i in puntuacionesRonda3) {
           _PJ.add(PuntuacionJugador(
             jugador: i.jugador,
             porAzules:i.cuantasAzules*puntosPorAzules, 
@@ -135,7 +144,7 @@ class Partida {
     Set<Jugador> jugadoresR1 = puntuaciones.map((e) => e.jugador).toSet();
     if(!setEquals(jugadores,jugadoresR1))throw ProblemaJugadoresNoConcuerdan();
 
-    _puntuacionesRonda1 = puntuaciones; 
+    puntuacionesRonda1 = puntuaciones; 
   }
   
   ///Guarda los datos de la segunda ronda de puntuación de Ohanami
@@ -148,13 +157,13 @@ class Partida {
   ///
   ///No puedes ingresar un numero menor de cartas al de la ronda anterior puesto que se lanzara [ProblemaDisminucionAzules] 
   void cartasRonda2(List<CRonda2> puntuaciones){
-    if(_puntuacionesRonda1.isEmpty) throw ProblemaOrdenIncorrecto();
+    if(puntuacionesRonda1.isEmpty) throw ProblemaOrdenIncorrecto();
 
     Set<Jugador> jugadoresR2 = puntuaciones.map((e) => e.jugador).toSet();
     if(!setEquals(jugadores,jugadoresR2))throw ProblemaJugadoresNoConcuerdan();
     
     for(CRonda2 segundaPuntuacion in puntuaciones){
-      CRonda1 primeraPuntuacion = _puntuacionesRonda1.firstWhere((element) => 
+      CRonda1 primeraPuntuacion = puntuacionesRonda1.firstWhere((element) => 
       element.jugador == segundaPuntuacion.jugador);
       if (primeraPuntuacion.cuantasAzules > segundaPuntuacion.cuantasAzules){
         throw ProblemaDisminucionAzules();
@@ -167,7 +176,7 @@ class Partida {
       if ( (p.cuantasAzules + p.cuantasVerdes) > maximoCartasR2) throw ProblemaExcesoCartas();
     }
 
-    _puntuacionesRonda2 = puntuaciones;
+    puntuacionesRonda2 = puntuaciones;
   }
 
   ///Guarda los datos de la tercera ronda de puntuación de Ohanami
@@ -181,13 +190,13 @@ class Partida {
   ///No puedes ingresar un numero menor de cartas al de la ronda anterior puesto que se lanzara [ProblemaDisminucionAzules] y/o [ProblemaDisminucionVerdes]
   void cartasRonda3(List<CRonda3> puntuaciones){
 
-    if (_puntuacionesRonda2.isEmpty) throw ProblemaOrdenIncorrecto();
+    if (puntuacionesRonda2.isEmpty) throw ProblemaOrdenIncorrecto();
 
     Set<Jugador> jugadoresR3 = puntuaciones.map((e) => e.jugador).toSet();
     if(!setEquals(jugadores,jugadoresR3))throw ProblemaJugadoresNoConcuerdan();
 
     for(CRonda3 terceraPuntuacion in puntuaciones){
-      CRonda2 segundaPuntuacion = _puntuacionesRonda2.firstWhere((element) => 
+      CRonda2 segundaPuntuacion = puntuacionesRonda2.firstWhere((element) => 
       element.jugador == terceraPuntuacion.jugador);
       if(segundaPuntuacion.cuantasAzules > terceraPuntuacion.cuantasAzules){
         throw ProblemaDisminucionAzules();
@@ -203,30 +212,38 @@ class Partida {
       if ( p.cuantasNegras > maximoCartasR3) throw ProblemaDemasiadasNegras();
       if ( (p.cuantasAzules + p.cuantasVerdes + p.cuantasRosas + p.cuantasNegras) > maximoCartasR3) throw ProblemaExcesoCartas();
     }
-    _puntuacionesRonda3 = puntuaciones;
+    puntuacionesRonda3 = puntuaciones;
   }
-
 
   Partida copyWith({
     Set<Jugador>? jugadores,
+    List<CRonda1>? puntuacionesRonda1,
+    List<CRonda2>? puntuacionesRonda2,
+    List<CRonda3>? puntuacionesRonda3,
   }) {
-    return Partida(
+    return Partida.constructor(
       jugadores: jugadores ?? this.jugadores,
+      puntuacionesRonda1: puntuacionesRonda1 ?? this.puntuacionesRonda1,
+      puntuacionesRonda2: puntuacionesRonda2 ?? this.puntuacionesRonda2,
+      puntuacionesRonda3: puntuacionesRonda3 ?? this.puntuacionesRonda3,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'jugadores': jugadores.map((x) => x.toMap()).toList(),
-      'puntuacionesRonda1': _puntuacionesRonda1.map((x) => x.toMap()).toList(),
-      'puntuacionesRonda2': _puntuacionesRonda2.map((x) => x.toMap()).toList(),
-      'puntuacionesRonda3': _puntuacionesRonda3.map((x) => x.toMap()).toList(),
+      'puntuacionesRonda1': puntuacionesRonda1.map((x) => x.toMap()).toList(),
+      'puntuacionesRonda2': puntuacionesRonda2.map((x) => x.toMap()).toList(),
+      'puntuacionesRonda3': puntuacionesRonda3.map((x) => x.toMap()).toList(),
     };
   }
 
   factory Partida.fromMap(Map<String, dynamic> map) {
-    return Partida(
+    return Partida.constructor(
       jugadores: Set<Jugador>.from(map['jugadores']?.map((x) => Jugador.fromMap(x))),
+      puntuacionesRonda1: List<CRonda1>.from(map['puntuacionesRonda1']?.map((x) => CRonda1.fromMap(x))),
+      puntuacionesRonda2: List<CRonda2>.from(map['puntuacionesRonda2']?.map((x) => CRonda2.fromMap(x))),
+      puntuacionesRonda3: List<CRonda3>.from(map['puntuacionesRonda3']?.map((x) => CRonda3.fromMap(x))),
     );
   }
 
@@ -236,7 +253,7 @@ class Partida {
 
   @override
   String toString() {
-    return 'Partida(jugadores: $jugadores, puntuacionesRonda1: $_puntuacionesRonda1, puntuacionesRonda2: $_puntuacionesRonda2, puntuacionesRonda3: $_puntuacionesRonda3)';
+    return 'Partida(jugadores: $jugadores, puntuacionesRonda1: $puntuacionesRonda1, puntuacionesRonda2: $puntuacionesRonda2, puntuacionesRonda3: $puntuacionesRonda3)';
   }
 
   @override
@@ -246,17 +263,17 @@ class Partida {
   
     return other is Partida &&
       collectionEquals(other.jugadores, jugadores) &&
-      collectionEquals(other._puntuacionesRonda1, _puntuacionesRonda1) &&
-      collectionEquals(other._puntuacionesRonda2, _puntuacionesRonda2) &&
-      collectionEquals(other._puntuacionesRonda3, _puntuacionesRonda3);
+      collectionEquals(other.puntuacionesRonda1, puntuacionesRonda1) &&
+      collectionEquals(other.puntuacionesRonda2, puntuacionesRonda2) &&
+      collectionEquals(other.puntuacionesRonda3, puntuacionesRonda3);
   }
 
   @override
   int get hashCode {
     return jugadores.hashCode ^
-      _puntuacionesRonda1.hashCode ^
-      _puntuacionesRonda2.hashCode ^
-      _puntuacionesRonda3.hashCode;
+      puntuacionesRonda1.hashCode ^
+      puntuacionesRonda2.hashCode ^
+      puntuacionesRonda3.hashCode;
   }
 }
 

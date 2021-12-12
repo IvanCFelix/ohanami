@@ -20,7 +20,7 @@ class RepositorioMongo extends Repositorio {
   }
     return check;
   }
-
+ 
   @override
   Future<List<Partida>> recuperarPartidas({ required Usuario usuario}) async {
     List<Partida> partidas;
@@ -32,6 +32,8 @@ class RepositorioMongo extends Repositorio {
     val!.remove('_id');
     Usuario x = Usuario.fromMap(val);
     partidas = x.partidas;
+
+    print(partidas.toString());
     return partidas;
   }
   @override
@@ -132,8 +134,4 @@ class RepositorioMongo extends Repositorio {
     Usuario x = Usuario.fromMap(val);
     return x;
   }
-
-
-  
 }
-
