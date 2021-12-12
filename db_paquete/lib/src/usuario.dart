@@ -9,6 +9,7 @@ class Usuario {
   final String clave;
   final List<Partida> partidas;
   
+  Set<Partida> o =  {};
   Usuario({
     required this.nombre,
     required this.telefono,

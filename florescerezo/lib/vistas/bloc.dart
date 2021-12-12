@@ -12,13 +12,13 @@ class Blocvista extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => OhanamiBloc(),
+      create: (context) => OhanamiBloc(partida),
       child: MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text("Partida"),
         ),
-        body: Cuerpo(partida: partida,),
+        body: Cuerpo(),
       ),
     ),
     );

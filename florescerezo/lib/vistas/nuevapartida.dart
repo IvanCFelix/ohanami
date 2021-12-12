@@ -42,7 +42,7 @@ class _NuevaPartidaState extends State<NuevaPartida> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Agregar partida"),
+        title: const Text("Nueva Partida"),
       ),
       body: Container(
           alignment: Alignment.topCenter,
@@ -106,7 +106,11 @@ class _NuevaPartidaState extends State<NuevaPartida> {
                         )
                       : ElevatedButton(
                           onPressed: () {
-                            Partida partida = Partida(jugadores:{} );
+                            Set<Jugador> jugadores = {};
+                            for (var i = 0; i < _contador; i++) {
+                               jugadores.add(Jugador(nombre: _lista[i].text));
+                              }
+                            Partida partida = Partida(jugadores: jugadores);
                             Navigator.push(context, MaterialPageRoute( builder: (context) => Blocvista(partida: partida,)));
                           },
                           child: const Text("Comenzar"),
