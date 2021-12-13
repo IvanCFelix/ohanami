@@ -1,4 +1,5 @@
 
+import 'package:florescerezo/db/db_local.dart';
 import 'package:flutter/material.dart';
 import 'package:partida/partida.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -21,6 +22,14 @@ class _Mostrar_PartidaState extends State<Mostrar_Partida> {
     //_llenarLista();
   }
 
+  Future<bool> actualizar({required Partida partida})async{
+    bool check = false;
+    RepositorioLocal local = RepositorioLocal();
+    check = await local.registrarPartida(partida: partida);
+    return check;
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     
@@ -28,8 +37,14 @@ class _Mostrar_PartidaState extends State<Mostrar_Partida> {
         Scaffold(
           floatingActionButton: FloatingActionButton(
           child: Icon(Icons.my_library_add_outlined),
-          onPressed: (){
+          onPressed: () async {
+            Jugador ped = Jugador(nombre: 'Pedro');
+            Jugador hans = Jugador(nombre: 'Hansel');
+            Partida p = Partida(jugadores:{ped, hans});
+            bool check = await actualizar(partida: p);
+            if(check == true){
             Navigator.push(context, MaterialPageRoute( builder: (context) => NuevaPartida()));
+            }
           }
         ),
           appBar: AppBar(

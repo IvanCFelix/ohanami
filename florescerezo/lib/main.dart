@@ -1,4 +1,5 @@
 
+import 'package:florescerezo/vistas/detalle_partida.dart';
 import 'package:florescerezo/vistas/lista.dart';
 import 'package:florescerezo/vistas/nuevapartida.dart';
 import 'package:florescerezo/vistas/splash.dart';

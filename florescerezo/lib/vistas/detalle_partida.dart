@@ -1,4 +1,5 @@
 
+import 'package:florescerezo/db/db_local.dart';
 import 'package:flutter/material.dart';
 import 'package:partida/partida.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -6,18 +7,19 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'lista.dart';
 import 'nuevapartida.dart';
 class DetallePartida extends StatefulWidget {
-  const DetallePartida({required this.check }) : super();
-  final bool check;
+  const DetallePartida({Key? key}) : super(key: key);
+
+
   @override
-  _DetallePartidaState createState() => _DetallePartidaState(check);
+  _DetallePartidaState createState() => _DetallePartidaState();
 }
 
 class _DetallePartidaState extends State<DetallePartida> {
   List<charts.Series<Partida, String>> _infromacionPartida = [];
   int i =0;
-  final bool check;
 
-  _DetallePartidaState(this.check);
+
+  _DetallePartidaState();
 
 
   @override
@@ -25,7 +27,6 @@ class _DetallePartidaState extends State<DetallePartida> {
     super.initState();
     //_llenarLista();
   }
-
   @override
   Widget build(BuildContext context) {
     

@@ -32,9 +32,15 @@ class RepositorioLocal{
     return check = true;
   }
 
-  Future<bool> registrarPartida({required Partida partida, required Usuario usuario}) {
-    // TODO: implement registrarPartida
-    throw UnimplementedError();
+  Future<bool> registrarPartida({required Partida partida}) async {
+    bool check;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var respuesta =  prefs.getString('usuario');
+    var usuarioJson = jsonDecode(respuesta!);
+    Usuario usuario = Usuario.fromJson(usuarioJson);
+    usuario.partidas.add(partida);
+    check = await registrarUsuario(usuario: usuario);
+    return check;
   }
 
 
@@ -46,13 +52,7 @@ class RepositorioLocal{
       });
     return check;
   }
-
-
-  Future<bool> verificarInicioSesion({required Usuario usuario}) {
-    // TODO: implement verificarInicioSesion
-    throw UnimplementedError();
-  }
-
+  
   Future<Usuario> recuperarUsuario() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var respuesta =  prefs.getString('usuario');
