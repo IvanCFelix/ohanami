@@ -116,7 +116,6 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
                       ),
                     ],
                   ),
-                  Image.asset('assets/card-sample-image.jpg'),
                 ],
               ),
             );

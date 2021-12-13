@@ -48,14 +48,20 @@ class _VistaRonda1State extends State<VistaRonda1> {
                                       //print(_cartasAzules[i].text.toString());
                                       int azules =int.parse(_cartasAzules[i].text);
                                       //print(_cartasVerdes[i].text.toString());
+                                      
                                       //print(azules);
-                                      int verdes =int.parse(_cartasVerdes[i].text);
+                                      
+                                      //int verdes =int.parse(_cartasVerdes[i].text);
+                                      
                                       //print(_cartasRosas[i].text.toString());
                                       //print(verdes);
-                                      int rosas =int.parse(_cartasRosas[i].text);
+
+                                      //int rosas =int.parse(_cartasRosas[i].text);
+
                                       //print(_cartasGrises[i].text.toString());
                                       //print(rosas);
-                                      int grises =int.parse(_cartasGrises[i].text);
+                                      
+                                      //int grises =int.parse(_cartasGrises[i].text);
 
                                       //print(grises);
 
@@ -99,9 +105,9 @@ class _VistaRonda1State extends State<VistaRonda1> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       _campoDeTexto(_cartasAzules, Colors.blue, index, "Azules",),
-                                      _campoDeTexto(_cartasVerdes, Colors.green, index, "Verdes"),
-                                      _campoDeTexto(_cartasRosas, Colors.pink, index, "Rosas"),
-                                      _campoDeTexto(_cartasGrises, Colors.grey, index, "Grises"),
+                                      //_campoDeTexto(_cartasVerdes, Colors.green, index, "Verdes"),
+                                      //_campoDeTexto(_cartasRosas, Colors.pink, index, "Rosas"),
+                                      //_campoDeTexto(_cartasGrises, Colors.grey, index, "Grises"),
                           ],
                         ),
                       ),

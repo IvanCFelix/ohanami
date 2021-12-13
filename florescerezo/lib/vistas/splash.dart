@@ -32,6 +32,7 @@ class _SplashState extends State<Splash> {
   Future validacion() async{
     RepositorioMongo mongo = RepositorioMongo();
     RepositorioLocal local = RepositorioLocal();
+    //local.eliminarUsuario();
     bool mongocheck = await mongo.inicializar();
     bool checkv = await local.registradoUsuario();
 

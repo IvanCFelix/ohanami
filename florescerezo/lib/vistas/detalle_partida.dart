@@ -7,19 +7,20 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'lista.dart';
 import 'nuevapartida.dart';
 class DetallePartida extends StatefulWidget {
-  const DetallePartida({Key? key}) : super(key: key);
-
+  const DetallePartida({Key? key, required this.partida}) : super(key: key);
+  final Partida partida;
 
   @override
-  _DetallePartidaState createState() => _DetallePartidaState();
+  _DetallePartidaState createState() => _DetallePartidaState(partida);
 }
 
 class _DetallePartidaState extends State<DetallePartida> {
+  Partida partida;
   List<charts.Series<Partida, String>> _infromacionPartida = [];
   int i =0;
 
 
-  _DetallePartidaState();
+  _DetallePartidaState(this.partida);
 
 
   @override

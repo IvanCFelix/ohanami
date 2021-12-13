@@ -50,7 +50,7 @@ class _VistaRonda3State extends State<VistaRonda3> {
                       ? Container(
                           child: Center(
                               child: ElevatedButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                       List<CRonda3> lista = [];
                                     for (var i = 0; i < index; i++) {
 
@@ -81,7 +81,10 @@ class _VistaRonda3State extends State<VistaRonda3> {
                                       lista.add(cr1);
                                     }
                                       partida.cartasRonda3(lista);
-                                      Navigator.push(context, MaterialPageRoute( builder: (context) => DetallePartida()));
+                                      bool check = await actualizar(partida: partida);
+                                      if (check == true) {
+                                      Navigator.push(context, MaterialPageRoute( builder: (context) => DetallePartida(partida: partida,)));
+                                      }
                                   },
                                   child: Text("data"))),
                         )
