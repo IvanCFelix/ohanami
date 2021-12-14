@@ -113,21 +113,23 @@ class RepositorioMongo extends Repositorio {
   //previamente se actualizo las partidas del usuario
   
 
-  Future<bool> reescribirPartidas({required Usuario usuario}) async {
+    Future<bool> reescribirPartidas({required Usuario usuario}) async {
     bool check = false;
-    print(usuario.partidas);
-    var partidasJson = jsonEncode(usuario.partidas);
+    List<Partida> partidas = usuario.partidas;
+
+    var partidasJson2 = jsonDecode(json.encode(partidas.map((x) => x.toMap()).toList()));
+
+    print(partidasJson2);
+
     db = await Db.create(link);
     await db.open();
     var colexion = db.collection('usuarios');
-    await colexion.update(await colexion.findOne(where.eq('nombre', usuario.nombre.toString())), 
-    SetStage({
-      'partidas': partidasJson,
-    }).build()).then((value) => check = true);
+    await colexion.updateOne(where.eq('nombre', usuario.nombre.toString()),
+        modify.set('partidas', partidasJson2));
+
     db.close();
     return check;
   }
-
   Future<Usuario> recuperarUsuario({ required Usuario usuario}) async {
     db = await Db.create(link);
     await db.open();
