@@ -1,6 +1,7 @@
 
 import 'package:florescerezo/db/db_local.dart';
 import 'package:florescerezo/vistas/detalle_partida.dart';
+import 'package:florescerezo/vistas/login.dart';
 import 'package:florescerezo/vistas/nuevapartida.dart';
 import 'package:florescerezo/vistas/registro.dart';
 import 'package:flutter/material.dart';
@@ -76,32 +77,36 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
                   child: Text(snapshot.data!.nombre.toString()),
                 ),
                 snapshot.data!.nombre.isNotEmpty ?
-                ListTile(
-                  title: Text("Cerrar Sesion"),
-                  onTap: () async{
-                    bool check = await local.eliminarUsuario();
-                    if (check == true) {
-                      print("Se elimino el usuario");
-                    }
-                    Navigator.pop(context);
-                  },
+                Column(
+                  children: [
+                    ListTile(
+                      title: Text("Cerrar Sesion"),
+                      onTap: () async{
+                        print("Estas seguro de eliminar el usuario");
+                        print("Se eliminara todo si no sincronizaste al db");
+                        bool check = await local.eliminarUsuario();
+                        if (check == true) {
+                          print("Se elimino el usuario");
+                        }
+                        Navigator.push(context,MaterialPageRoute( builder: (context) => const VistaLogin())); 
+                      },
+                    ),
+                    Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed:(){
+                      sincronizarDB();
+                    } , 
+                    child:Text("Sincronizar DB")
+                  ),
+                ),
+                  ],
                 ): 
                 ListTile(
                   title: Text("Registrarse"),
                   onTap: (){
                     Navigator.push(context,MaterialPageRoute( builder: (context) => const VistaRegistro() ));        
                   },
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed:(){
-                      sincronizarDB();
-
-
-                    } , 
-                    child:Text("Sincronizar DB")
-                  ),
                 ),
               ],
             ),
@@ -126,61 +131,75 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
                 } 
                 else
                 {
-                  return ListView.builder(
-                    itemCount: snapshot.data!.partidas.length,
-                    itemBuilder: (BuildContext context, int index) {
-                       FasePuntuacion.Ronda1;
-                       FasePuntuacion.Ronda2;
-                       FasePuntuacion.Ronda3;
-                      snapshot.data!.partidas[0].puntos(ronda:FasePuntuacion.Ronda1);
-                      List<String> nombres = [];
-                      for (var i = 0; i < snapshot.data!.partidas[index].jugadores.length; i++) {
-                        nombres.add(snapshot.data!.partidas[index].jugadores.elementAt(i).nombre.toString());
-                      }
-                      do{
-                        nombres.add("");
-                      }while(nombres.length < 4);
-                      return Card(
-                        clipBehavior: Clip.antiAlias,
-                        child: Column(
-                          children: [
-                            ListTile(
-                              leading: Icon(Icons.auto_awesome),
-                              title: const Text('Nombre de la partida (Opcional)'),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                  return Align(
+                    alignment: Alignment.topCenter,
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.partidas.length,
+                      itemBuilder: (BuildContext context, int index) {
+                         FasePuntuacion.Ronda1;
+                         FasePuntuacion.Ronda2;
+                         FasePuntuacion.Ronda3;
+                        snapshot.data!.partidas[0].puntos(ronda:FasePuntuacion.Ronda1);
+                        List<String> nombres = [];
+                        for (var i = 0; i < snapshot.data!.partidas[index].jugadores.length; i++) {
+                          nombres.add(snapshot.data!.partidas[index].jugadores.elementAt(i).nombre.toString());
+                        }
+                        do{
+                          nombres.add("");
+                        }while(nombres.length < 4);
+                        return Card(
+                          clipBehavior: Clip.antiAlias,
+                          child: Column(
+                            children: [
+                              ListTile(
+                                leading: Icon(Icons.auto_awesome),
+                                title: const Text('Nombre de la partida (Opcional)'),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Jugadores',
+                                    style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                    ),
+                                    
+                              Text(nombres[0]),
+                              Text(nombres[1]),
+                              Text(nombres[2]),
+                              Text(nombres[3]),
+                                  ],
+                                ),
+                              ),
+                              ButtonBar(
+                                alignment: MainAxisAlignment.start,
                                 children: [
-                                  Text('Jugadores',
-                                  style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(context, 
+                                      MaterialPageRoute( builder: (context) => 
+                                      DetallePartida(partida: snapshot.data!.partidas[index]
+                                      )
+                                      )
+                                      );
+                                    },
+                                    child: const Text('Ver Partida'),
                                   ),
-                                  
-                            Text(nombres[0]),
-                            Text(nombres[1]),
-                            Text(nombres[2]),
-                            Text(nombres[3]),
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      print(index);
+                                      await local.eliminarPartida(indice:index).whenComplete((){
+                                        setState(() {
+                                          snapshot.data!.partidas.removeAt(index);
+                                        });
+                                      });
+                                    },
+                                    child: const Text('Eliminar partida'),
+                                  ),
                                 ],
                               ),
-                            ),
-                            ButtonBar(
-                              alignment: MainAxisAlignment.start,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(context, 
-                                    MaterialPageRoute( builder: (context) => 
-                                    DetallePartida(partida: snapshot.data!.partidas[index]
-                                    )
-                                    )
-                                    );
-                                  },
-                                  child: const Text('Ver Partida'),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    }
+                            ],
+                          ),
+                        );
+                      }
+                    ),
                   );
                 }
               }

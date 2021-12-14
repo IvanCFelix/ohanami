@@ -60,7 +60,8 @@ class RepositorioLocal{
     return usuario;
   }
     
-  Future<bool> reescribirUsuario({required Usuario usuario})async{
+  Future<bool> 
+  reescribirUsuario({required Usuario usuario})async{
     bool check = false;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     check = await prefs.clear().then((bool success) {
@@ -73,7 +74,7 @@ class RepositorioLocal{
     }
     return check;
   }
-
+// cuando te registras
   Future<bool> actualizarDatosUsuario(
     {required Usuario usuarioNuevo}
     ) async{
@@ -88,4 +89,15 @@ class RepositorioLocal{
     check = await  reescribirUsuario(usuario: usuarioViejo);
     return check;
   }
+
+  Future<bool> eliminarPartida({required int indice}) async{
+    bool check = false;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var respuesta =  prefs.getString('usuario');
+    var usuarioJson = jsonDecode(respuesta!);
+    Usuario usuarioViejo = Usuario.fromJson(usuarioJson);
+    usuarioViejo.partidas.removeAt(indice);
+    check = await  reescribirUsuario(usuario: usuarioViejo);
+    return check;
+  } 
 }

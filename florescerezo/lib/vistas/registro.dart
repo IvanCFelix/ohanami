@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:db_paquete/db_paquete.dart';
 import 'package:florescerezo/db/db_local.dart';
+import 'package:florescerezo/vistas/lista_partida.dart';
 import 'package:flutter/material.dart';
 
 class VistaRegistro extends StatefulWidget {
@@ -24,6 +25,7 @@ class _VistaRegistroState extends State<VistaRegistro> {
     RepositorioMongo mongo = RepositorioMongo();
     RepositorioLocal local = RepositorioLocal();
     local.eliminarUsuario();
+    
     bool mongocheck = await mongo.inicializar();
     bool checkv = await local.registradoUsuario();
 
@@ -66,6 +68,7 @@ class _VistaRegistroState extends State<VistaRegistro> {
 
         bool usuarioRegistradoConExito= await mongo.registrarUsuario(usuario: usuarioLocal);
             usuarioRegistradoConExito == true ? print("usuario registrado en mongo") : print("hubo un error al registrar");
+      Navigator.push( context, MaterialPageRoute(builder: (context) => VistaListaPartidas()));
       }
     }
   }  

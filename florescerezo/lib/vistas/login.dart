@@ -12,12 +12,31 @@ class VistaLogin extends StatelessWidget {
     TextEditingController nombre = TextEditingController();
     TextEditingController clave = TextEditingController();
     RepositorioLocal local = RepositorioLocal();
+    RepositorioMongo mongo = RepositorioMongo();
     
-    void gurdarUsuario() async{
-      Usuario usuario = Usuario(nombre: nombre.text.toString() ,clave: clave.text.toString() , partidas: [], correo: "");
-      local.registrarUsuario(usuario: usuario);
-      print(usuario.toString());
+    void IniciarSesion() async{
+      bool check = await mongo.inicializar();
+      if (check == true) {
+        Usuario usuario = Usuario(nombre: nombre.text.toString() ,clave: clave.text.toString() , partidas: [], correo: "");
+        bool sesionIniciada = await mongo.verificarInicioSesion(usuario: usuario);
+        if (sesionIniciada == true) {
+        Usuario usuarioMongo = await  mongo.recuperarUsuario(usuario: usuario);
+        local.registrarUsuario(usuario: usuarioMongo);
+        print(usuarioMongo.toString());
+        Navigator.push( context, MaterialPageRoute(builder: (context) => VistaListaPartidas()));
+        }
+        else
+        {
+        print("Datos de inicio de sesion incorrectos");
+        }
+      }
+      else
+      {
+        print("No hay conexion");
+
+      }
     }
+
     void sinconexion() async{
       Usuario usuario =Usuario(nombre: "", correo: "", clave: clave.text, partidas: []);
       local.registrarUsuario(usuario: usuario);
@@ -84,9 +103,7 @@ class VistaLogin extends StatelessWidget {
                 builder: (BuildContext context, AsyncSnapshot snapshot){
                   return ElevatedButton(
                     onPressed: () async{
-                      
-                      gurdarUsuario();
-                      Navigator.push( context, MaterialPageRoute(builder: (context) => Splash()));
+                      IniciarSesion();
                     },
                     child: Container(
                       padding: EdgeInsets.all(15.0),
