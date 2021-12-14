@@ -80,6 +80,7 @@ class _VistaRonda3State extends State<VistaRonda3> {
                                         );
                                       lista.add(cr1);
                                     }
+                                    List<PuntuacionJugador> j;
                                       partida.cartasRonda3(lista);
                                       bool check = await actualizar(partida: partida);
                                       if (check == true) {

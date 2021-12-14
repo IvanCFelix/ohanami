@@ -4,26 +4,27 @@ import 'package:collection/collection.dart';
 import 'package:partida/partida.dart';
 
 class Usuario {
-  final String nombre;
-  final double telefono;
-  final String clave;
+   String nombre;
+   String correo;
+   String clave;
   final List<Partida> partidas;
   Usuario({
     required this.nombre,
-    required this.telefono,
+    required this.correo,
     required this.clave,
     required this.partidas,
   });
 
+
   Usuario copyWith({
     String? nombre,
-    double? telefono,
+    String? correo,
     String? clave,
     List<Partida>? partidas,
   }) {
     return Usuario(
       nombre: nombre ?? this.nombre,
-      telefono: telefono ?? this.telefono,
+      correo: correo ?? this.correo,
       clave: clave ?? this.clave,
       partidas: partidas ?? this.partidas,
     );
@@ -32,7 +33,7 @@ class Usuario {
   Map<String, dynamic> toMap() {
     return {
       'nombre': nombre,
-      'telefono': telefono,
+      'correo': correo,
       'clave': clave,
       'partidas': partidas.map((x) => x.toMap()).toList(),
     };
@@ -41,7 +42,7 @@ class Usuario {
   factory Usuario.fromMap(Map<String, dynamic> map) {
     return Usuario(
       nombre: map['nombre'],
-      telefono: map['telefono'],
+      correo: map['correo'],
       clave: map['clave'],
       partidas: List<Partida>.from(map['partidas']?.map((x) => Partida.fromMap(x))),
     );
@@ -53,7 +54,7 @@ class Usuario {
 
   @override
   String toString() {
-    return 'Usuario(nombre: $nombre, telefono: $telefono, clave: $clave, partidas: $partidas)';
+    return 'Usuario(nombre: $nombre, correo: $correo, clave: $clave, partidas: $partidas)';
   }
 
   @override
@@ -63,7 +64,7 @@ class Usuario {
   
     return other is Usuario &&
       other.nombre == nombre &&
-      other.telefono == telefono &&
+      other.correo == correo &&
       other.clave == clave &&
       listEquals(other.partidas, partidas);
   }
@@ -71,7 +72,7 @@ class Usuario {
   @override
   int get hashCode {
     return nombre.hashCode ^
-      telefono.hashCode ^
+      correo.hashCode ^
       clave.hashCode ^
       partidas.hashCode;
   }

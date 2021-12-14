@@ -43,7 +43,6 @@ class RepositorioLocal{
     return check;
   }
 
-
   Future<bool> registrarUsuario({required Usuario usuario}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool check;
@@ -73,6 +72,20 @@ class RepositorioLocal{
       });
     }
     return check;
-  } 
+  }
 
+  Future<bool> actualizarDatosUsuario(
+    {required Usuario usuarioNuevo}
+    ) async{
+    bool check = false;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var respuesta =  prefs.getString('usuario');
+    var usuarioJson = jsonDecode(respuesta!);
+    Usuario usuarioViejo = Usuario.fromJson(usuarioJson);
+    usuarioViejo.nombre = usuarioNuevo.nombre;
+    usuarioViejo.clave = usuarioNuevo.clave;
+    usuarioViejo.correo = usuarioNuevo.correo;
+    check = await  reescribirUsuario(usuario: usuarioViejo);
+    return check;
+  }
 }

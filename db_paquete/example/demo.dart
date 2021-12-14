@@ -5,7 +5,7 @@ import 'package:mongo_dart/mongo_dart.dart';
 
 void main(List<String> args) async{
   //RepositorioMemoria r = RepositorioMemoria();
-  RepositorioMongo db = RepositorioMongo();
+  RepositorioMongo mongo = RepositorioMongo();
   late Jugador j1, j2, j3;
   late CRonda1 p11, p12, p13;
   late CRonda2 p21, p22, p23;
@@ -38,8 +38,8 @@ void main(List<String> args) async{
   p.puntos(ronda:FasePuntuacion.Ronda2);
   p.puntos(ronda:FasePuntuacion.Ronda3);
   print('Empezando');
-  Usuario hansel = Usuario(nombre: 'Jose', telefono: 1456781249, clave: "12345", partidas: [p,p,p,p,p,p,p,p]);
-  await db.registrarUsuario(usuario: hansel);
-  await db.recuperarPartidas(usuario: hansel);
+  Usuario hansel = Usuario(nombre: 'Pacocharte', correo: "wueyb", clave: "4897", partidas: [p,p,p,p,p,p,p,p]);
+  await mongo.registrarUsuario(usuario: hansel);
+  //await db.recuperarPartidas(usuario: hansel);
   print("Termino");
 }

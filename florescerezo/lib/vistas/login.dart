@@ -1,6 +1,6 @@
 import 'package:db_paquete/db_paquete.dart';
 import 'package:florescerezo/db/db_local.dart';
-import 'package:florescerezo/vistas/lista.dart';
+import 'package:florescerezo/vistas/lista_partida.dart';
 import 'package:florescerezo/vistas/splash.dart';
 import 'package:flutter/material.dart';
 class VistaLogin extends StatelessWidget {
@@ -9,17 +9,17 @@ class VistaLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    TextEditingController correo = TextEditingController();
+    TextEditingController nombre = TextEditingController();
     TextEditingController clave = TextEditingController();
     RepositorioLocal local = RepositorioLocal();
     
     void gurdarUsuario() async{
-      Usuario usuario = Usuario(nombre: correo.text.toString() ,clave: clave.text.toString() , partidas: [],telefono: 0);
+      Usuario usuario = Usuario(nombre: nombre.text.toString() ,clave: clave.text.toString() , partidas: [], correo: "");
       local.registrarUsuario(usuario: usuario);
       print(usuario.toString());
     }
     void sinconexion() async{
-      Usuario usuario = Usuario(nombre: correo.text.toString() ,clave: clave.text.toString() , partidas: [],telefono: 0);
+      Usuario usuario = Usuario(nombre: nombre.text.toString() ,clave: clave.text.toString() , partidas: [], correo: "");
       local.registrarUsuario(usuario: usuario);
     }
 //gurdarUsuario
@@ -41,7 +41,7 @@ class VistaLogin extends StatelessWidget {
                 builder: (BuildContext context, AsyncSnapshot snapshot){
                   return  Container(
                     child: TextField(
-                      controller: correo,
+                      controller: nombre,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         icon: Icon(Icons.account_circle),

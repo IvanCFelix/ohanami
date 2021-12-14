@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:partida/partida.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-import 'lista.dart';
+import 'lista_partida.dart';
 import 'nuevapartida.dart';
 class DetallePartida extends StatefulWidget {
   const DetallePartida({Key? key, required this.partida}) : super(key: key);
@@ -26,7 +26,16 @@ class _DetallePartidaState extends State<DetallePartida> {
   @override
   void initState(){
     super.initState();
-    //_llenarLista();
+    calcularPuntuacionesPartida();
+    
+  }
+  void calcularPuntuacionesPartida(){
+    List<PuntuacionJugador> j;
+    partida.puntos(ronda: FasePuntuacion.Ronda1);
+    partida.puntos(ronda: FasePuntuacion.Ronda2);
+    partida.puntos(ronda: FasePuntuacion.Ronda3);
+    j = partida.puntos(ronda: FasePuntuacion.desenlace);
+    print(j[2].total);
   }
   @override
   Widget build(BuildContext context) {
@@ -38,31 +47,6 @@ class _DetallePartidaState extends State<DetallePartida> {
           onPressed: (){
             Navigator.push(context, MaterialPageRoute( builder: (context) => NuevaPartida()));
           }
-        ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Text("Data"),
-              ),
-              ListTile(
-                title: Text("Lista de partidas"),
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute( builder: (context) => VistaListaPartidas() ));
-                },
-              ),
-              ListTile(
-                title: Text("Nueva Partida"),
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute( builder: (context) => NuevaPartida() ));
-                },
-              ),
-            ],
-          ),
         ),
           appBar: AppBar(
             backgroundColor: Colors.cyan,
@@ -79,7 +63,7 @@ class _DetallePartidaState extends State<DetallePartida> {
                                 alignment: Alignment.topLeft,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text('Se creo: 22/11/20'),
+                                  child: Text(partida.toString()),
                                 ),
                               ),
                             ),

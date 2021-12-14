@@ -314,7 +314,10 @@ void main() {
       Partida p = Partida(jugadores: {j1,j2});
       p.cartasRonda1([p11,p12]);
       p.cartasRonda2([p21,p22]);
-      p.cartasRonda3([p31,p32]);
+      p.cartasRonda3([p31,]);
+
+      p.puntos(ronda: ronda3);
+
       expect(p.puntos(ronda: rondafinal) , isA<List<PuntuacionJugador>>());
     });  
    });
