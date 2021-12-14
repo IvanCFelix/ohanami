@@ -8,7 +8,11 @@ class ProblemaJugadoresRepetidos extends Error {}
 
 class ProblemaAzulesNegativas extends Error {}
 
-class ProblemaDemasiadasAzules extends Error {}
+class ProblemaDemasiadasAzules extends Error {
+  String mensaje(){
+    return "Halo";
+  }
+}
 
 class ProblemaJugadoresNoConcuerdan extends Error {}
 

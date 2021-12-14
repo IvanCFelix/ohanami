@@ -44,35 +44,34 @@ class _VistaRonda1State extends State<VistaRonda1> {
                                     for (var i = 0; i < index; i++) {
 
                                       print("jugador " + (i + 1).toString());
-
-                                      //print(_cartasAzules[i].text.toString());
                                       int azules =int.parse(_cartasAzules[i].text);
-                                      //print(_cartasVerdes[i].text.toString());
-                                      
-                                      //print(azules);
-                                      
-                                      //int verdes =int.parse(_cartasVerdes[i].text);
-                                      
-                                      //print(_cartasRosas[i].text.toString());
-                                      //print(verdes);
-
-                                      //int rosas =int.parse(_cartasRosas[i].text);
-
-                                      //print(_cartasGrises[i].text.toString());
-                                      //print(rosas);
-                                      
-                                      //int grises =int.parse(_cartasGrises[i].text);
-
-                                      //print(grises);
-
-                                      //print(partida.jugadores.elementAt(i).nombre.toString());
                                       CRonda1 cr1 = CRonda1(
                                         jugador: partida.jugadores.elementAt(i), 
                                         cuantasAzules: azules, 
                                         );
                                       lista.add(cr1);
                                     }
-                                      partida.cartasRonda1(lista);
+                                    try {
+                                     partida.cartasRonda1(lista); 
+                                     }on ProblemaDemasiadasAzules {
+                                        return print('Sin conexion a internet');
+                                      } on ProblemaAzulesNegativas {
+                                        return print('No se pudo encontrar el post');
+                                      } on FormatException {
+                                        return print('Formato de respuesta incorrecto');
+                                      } catch (e){
+                                        return print('Problemas en la conexion al repositorio remoto');
+                                      }
+                                    /*
+                                    } on ProblemaDemasiadasAzules catch (e) {
+                                      print(e.mensaje());
+                                      rethrow;
+                                      
+                                    } finally{
+                                      print("object");
+                                    }*/
+                                    
+
                                       context.read<OhanamiBloc>().add(SiguienteRonda2(partida: partida));
                                   },
                                   child: Text("data"))),
@@ -128,6 +127,7 @@ _campoDeTexto(_var, _color, index, cartas) {
   _var.add(TextEditingController());
   return Container(
     color: _color,
+
     height: 80,
     width: 80,
     child: TextFormField(
