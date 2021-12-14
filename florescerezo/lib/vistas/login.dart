@@ -19,7 +19,7 @@ class VistaLogin extends StatelessWidget {
       print(usuario.toString());
     }
     void sinconexion() async{
-      Usuario usuario = Usuario(nombre: nombre.text.toString() ,clave: clave.text.toString() , partidas: [], correo: "");
+      Usuario usuario =Usuario(nombre: "", correo: "", clave: clave.text, partidas: []);
       local.registrarUsuario(usuario: usuario);
     }
 //gurdarUsuario

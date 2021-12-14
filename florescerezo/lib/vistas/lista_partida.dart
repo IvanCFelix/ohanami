@@ -2,6 +2,7 @@
 import 'package:florescerezo/db/db_local.dart';
 import 'package:florescerezo/vistas/detalle_partida.dart';
 import 'package:florescerezo/vistas/nuevapartida.dart';
+import 'package:florescerezo/vistas/registro.dart';
 import 'package:flutter/material.dart';
 import 'package:db_paquete/db_paquete.dart';
 import 'package:partida/partida.dart';
@@ -16,10 +17,36 @@ class VistaListaPartidas extends StatefulWidget {
 
 class VistaListaPartidasState extends State<VistaListaPartidas> {
   RepositorioLocal local = RepositorioLocal();
+
+  late Future<Usuario> usuario;
   @override
-  void initState() {
+  void initState(){
+    usuario = local.recuperarUsuario();
     super.initState();
 
+  }
+  
+  void sincronizarDB() async{
+    RepositorioLocal local = RepositorioLocal();
+    RepositorioMongo mongo = RepositorioMongo();
+    Usuario usuarioLocal = await local.recuperarUsuario();
+    bool check = await mongo.inicializar();
+    if (check == true) {
+     check = await mongo.registradoUsuario(usuario: usuarioLocal);
+      if (check == true) {
+        bool checo = await mongo.reescribirPartidas(usuario: usuarioLocal);
+        print("Si se pudo");
+      }
+      else
+      {
+        bool check2 = await mongo.registrarUsuario(usuario: usuarioLocal);
+        print("Se pudo mejor");
+      }
+    }
+    else
+    {
+    print("No hay conexion");
+    }
   }
 
   @override
@@ -29,39 +56,60 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.my_library_add_outlined),
           onPressed: (){
-            Navigator.push(context, MaterialPageRoute( builder: (context) => NuevaPartida() ));
+            Navigator.push(context, MaterialPageRoute( builder: (context) => const NuevaPartida() ));
           }
         ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
+        drawer: FutureBuilder(
+          future: usuario,
+          builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
+            return snapshot.hasData ? snapshot.hasError ?
+            Text("Error")
+            // vista error
+            : Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                  ),
+                  child: Text(snapshot.data!.nombre.toString()),
                 ),
-                child: Text("Data"),
-              ),
-              ListTile(
-                title: Text("Iniciar sesion"),
-                onTap: (){
+                snapshot.data!.nombre.isNotEmpty ?
+                ListTile(
+                  title: Text("Cerrar Sesion"),
+                  onTap: () async{
+                    bool check = await local.eliminarUsuario();
+                    if (check == true) {
+                      print("Se elimino el usuario");
+                    }
+                    Navigator.pop(context);
+                  },
+                ): 
+                ListTile(
+                  title: Text("Registrarse"),
+                  onTap: (){
+                    Navigator.push(context,MaterialPageRoute( builder: (context) => const VistaRegistro() ));        
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed:(){
+                      sincronizarDB();
 
-                },
-              ),
-              ListTile(
-                title: Text("Registrarse"),
-                onTap: (){
-                  
-                },
-              ),
-              ElevatedButton(
-                onPressed:(){
 
-                } , 
-                child:Text("Sincronizar DB")
-              ),
-            ],
-          ),
+                    } , 
+                    child:Text("Sincronizar DB")
+                  ),
+                ),
+              ],
+            ),
+          )           
+            //Lista
+            : CircularProgressIndicator();
+            // cargando
+          },
         ),
         appBar: AppBar(
         ),

@@ -36,6 +36,7 @@ class RepositorioMongo extends Repositorio {
     print(partidas.toString());
     return partidas;
   }
+
   @override
   Future<bool> registrarPartida({ required Partida partida, required Usuario usuario}) async {
     bool check = false;
@@ -111,14 +112,17 @@ class RepositorioMongo extends Repositorio {
 
   //previamente se actualizo las partidas del usuario
   
+
   Future<bool> reescribirPartidas({required Usuario usuario}) async {
     bool check = false;
+    print(usuario.partidas);
+    var partidasJson = jsonEncode(usuario.partidas);
     db = await Db.create(link);
     await db.open();
     var colexion = db.collection('usuarios');
-    colexion.update(await colexion.findOne(where.eq('nombre', usuario.nombre.toString())),
+    await colexion.update(await colexion.findOne(where.eq('nombre', usuario.nombre.toString())), 
     SetStage({
-      'partidas': usuario.partidas,
+      'partidas': partidasJson,
     }).build()).then((value) => check = true);
     db.close();
     return check;
@@ -133,5 +137,14 @@ class RepositorioMongo extends Repositorio {
     val!.remove('_id');
     Usuario x = Usuario.fromMap(val);
     return x;
+  }
+
+  Future<bool> sincronizarUsuario({required Usuario usuario}) async{
+    bool check = await eliminarUsuario(usuario: usuario);
+    if (check == true) {
+     bool check2 = await registrarUsuario(usuario: usuario);
+     check = check2;
+    }
+    return check;
   }
 }

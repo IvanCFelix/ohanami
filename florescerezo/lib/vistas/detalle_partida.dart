@@ -35,13 +35,14 @@ class _DetallePartidaState extends State<DetallePartida> {
     partida.puntos(ronda: FasePuntuacion.Ronda2);
     partida.puntos(ronda: FasePuntuacion.Ronda3);
     j = partida.puntos(ronda: FasePuntuacion.desenlace);
-    print(j[2].total);
+    //print(j[].total);
   }
   @override
   Widget build(BuildContext context) {
     
     return 
         Scaffold(
+          primary: true,
           floatingActionButton: FloatingActionButton(
           child: Icon(Icons.my_library_add_outlined),
           onPressed: (){
@@ -49,6 +50,9 @@ class _DetallePartidaState extends State<DetallePartida> {
           }
         ),
           appBar: AppBar(
+            leading: IconButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute( builder: (context) => VistaListaPartidas()));
+            }, icon: Icon(Icons.error)),
             backgroundColor: Colors.cyan,
             title: Text("Detalle Partida"),
           ),

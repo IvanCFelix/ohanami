@@ -21,7 +21,6 @@ class _SplashState extends State<Splash> {
   TextEditingController clave = TextEditingController();
   @override
   void initState() {
-    /*
     validacion().whenComplete(() async {
       Timer(Duration(),
       (){
@@ -30,7 +29,7 @@ class _SplashState extends State<Splash> {
       Navigator.push( context, MaterialPageRoute(builder: (context) => VistaListaPartidas()));
       });
     });
-    */
+    
     super.initState();
   }
 
@@ -43,14 +42,20 @@ class _SplashState extends State<Splash> {
 
     if (mongocheck == true && checkv == true) {
       Usuario usuario = await local.recuperarUsuario();
-      checkv = await mongo.registradoUsuario(usuario: usuario);
+      /*
+      //checkv = await mongo.registradoUsuario(usuario: usuario);
+
       if (checkv == true) {
-        Usuario u = await mongo.recuperarUsuario(usuario: usuario);
+        print("Sos");
+        /*
+        //Usuario u = await mongo.recuperarUsuario(usuario: usuario);
         checkv = await local.registrarUsuario(usuario: u);
         setState(() {
           check = checkv;
-        });
-      }
+        });*/
+    }
+      print("No se ");*/
+      
       setState(() {
         check = true;
       });
@@ -61,65 +66,11 @@ class _SplashState extends State<Splash> {
       });
     }
   }
-
-  void validarRegistro() async{
-    RepositorioMongo mongo = RepositorioMongo();
-    Usuario u = Usuario(nombre: nombre.text, correo: correo.text, clave: clave.text, partidas: []);
-    bool check = await mongo.registradoUsuario(usuario:u);
-    if (check == true) {
-      print("Este nombre de usuario ya esta registrado");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Este nombre de usuario ya esta registrado"),
-      ));
-    }
-    else
-    {
-      RepositorioLocal local = RepositorioLocal();
-      bool check2 = await local.actualizarDatosUsuario(usuarioNuevo:u);
-      if (check2 == true) {
-        print("Usuario registrado");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Usuario registrado"),
-      )); 
-      }
-    }
-  }
-  
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children:
-               [
-                TextFormField(
-                  controller: nombre,
-
-                ),
-                TextFormField(
-                  controller: correo,
-                  
-                ),
-                TextFormField( 
-                  controller: clave,
-
-                ),
-                ElevatedButton(
-                  onPressed: (){
-                    print("empezo");
-                    validarRegistro();
-
-                  }, 
-                  child:Text("Registrar"),
-                  )
-              ],
-            ),
-          ),
-          /*
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -127,7 +78,7 @@ class _SplashState extends State<Splash> {
               CircularProgressIndicator(
               )
             ],
-          ),*/
+          ),
         ),
       ),
     );

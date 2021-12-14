@@ -38,8 +38,8 @@ void main(List<String> args) async{
   p.puntos(ronda:FasePuntuacion.Ronda2);
   p.puntos(ronda:FasePuntuacion.Ronda3);
   print('Empezando');
-  Usuario hansel = Usuario(nombre: 'Pacocharte', correo: "wueyb", clave: "4897", partidas: [p,p,p,p,p,p,p,p]);
-  await mongo.registrarUsuario(usuario: hansel);
+  Usuario u = Usuario(nombre: 'Pedro', correo: "anal@hotmail.com", clave: "145268", partidas: [p,p,p,p,p,p,p,p]);
+  await mongo.reescribirPartidas(usuario: u);
   //await db.recuperarPartidas(usuario: hansel);
   print("Termino");
 }
