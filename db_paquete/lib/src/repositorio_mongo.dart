@@ -130,6 +130,7 @@ class RepositorioMongo extends Repositorio {
     db.close();
     return check;
   }
+  
   Future<Usuario> recuperarUsuario({ required Usuario usuario}) async {
     db = await Db.create(link);
     await db.open();

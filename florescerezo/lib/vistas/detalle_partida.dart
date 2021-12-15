@@ -1,13 +1,9 @@
 
-import 'package:florescerezo/db/db_local.dart';
 import 'package:flutter/material.dart';
 import 'package:partida/partida.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 import 'lista_partida.dart';
-import 'nuevapartida.dart';
 class DetallePartida extends StatefulWidget {
   const DetallePartida({Key? key, required this.partida}) : super(key: key);
   final Partida partida;
@@ -18,7 +14,9 @@ class DetallePartida extends StatefulWidget {
 
 class _DetallePartidaState extends State<DetallePartida> {
   Partida partida;
-  List<charts.Series<CRonda1, String>> _seriesData = [];
+  List<charts.Series<CRonda1, String>> _seriesData1 = [];
+  List<charts.Series<CRonda2, String>> _seriesData2 = [];
+  List<charts.Series<CRonda3, String>> _seriesData3 = [];
   List<PuntuacionJugador> puntuacionesrondaDesenlace = [];
   List<PuntuacionJugador> puntuacionesronda1 = [];
   List<PuntuacionJugador> puntuacionesronda2 = [];
@@ -34,7 +32,6 @@ class _DetallePartidaState extends State<DetallePartida> {
   void initState(){
     super.initState();
     calcularPuntuacionesPartida();
-    _generarData();
     
   }
   void calcularPuntuacionesPartida(){
@@ -45,9 +42,8 @@ class _DetallePartidaState extends State<DetallePartida> {
   }
 
 
-  _generarData() {
-      
-    _seriesData.add(
+  _generarDataR1() {
+    _seriesData1.add(
       charts.Series(
         domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
         measureFn: (partida, _) =>partida.cuantasAzules ,
@@ -59,375 +55,166 @@ class _DetallePartidaState extends State<DetallePartida> {
             charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
       ), 
     );
-    /*
-    _seriesData.add(
-      charts.Series(
-        domainFn: (PuntuacionJugador puntuacion, _) => puntuacion.jugador.nombre.toString(),
-        measureFn: (PuntuacionJugador puntuacion, _) => puntuacion.porAzules/3,
-        id: '2',
-        data: puntuacionesronda2,
-        seriesCategory: '1',
-        fillPatternFn: (_, __) => charts.FillPatternType.solid,
-        fillColorFn: (PuntuacionJugador partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF2D98DA)),
-      ), 
-    );
-    _seriesData.add(
-      charts.Series(
-        domainFn: (PuntuacionJugador puntuacion, _) => puntuacion.jugador.nombre.toString(),
-        measureFn: (PuntuacionJugador puntuacion, _) => puntuacion.porAzules/3,
-        id: '3',
-        data: puntuacionesronda1,
-        seriesCategory: '1',
-        fillPatternFn: (_, __) => charts.FillPatternType.solid,
-        fillColorFn: (PuntuacionJugador partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF33A7FF)),
-      ), 
-    );
-    */
   }
+  _generarDataR2() {
+    _seriesData2.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.cuantasAzules ,
+        id: '2',
+        data: partida.puntuacionesRonda2,
+        seriesCategory: '21',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (CRonda2 partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
+      ), 
+    );
+    _seriesData2.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.cuantasVerdes ,
+        id: '2',
+        data: partida.puntuacionesRonda2,
+        seriesCategory: '22',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (CRonda2 partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF33FF41)),
+      ), 
+    );
+  }
+  _generarDataR3() {
+    _seriesData3.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.cuantasAzules,
+        id: '3',
+        data: partida.puntuacionesRonda3,
+        seriesCategory: '31',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (CRonda3 partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
+      ), 
+    );
+    _seriesData3.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.cuantasVerdes,
+        id: '3',
+        data: partida.puntuacionesRonda3,
+        seriesCategory: '32',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (CRonda3 partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF33FF41)),
+      ), 
+    );
+    _seriesData3.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.cuantasRosas,
+        id: '3',
+        data: partida.puntuacionesRonda3,
+        seriesCategory: '33',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (CRonda3 partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF870039)),
+      ), 
+    );
+    _seriesData3.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.cuantasNegras,
+        id: '3',
+        data: partida.puntuacionesRonda3,
+        seriesCategory: '34',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (CRonda3 partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF555555)),
+      ), 
+    );
+  }
+
 
 
   @override
   Widget build(BuildContext context) {
-    
-    return 
-        Scaffold(
-          primary: true,
-          floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.my_library_add_outlined),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute( builder: (context) => NuevaPartida()));
-          }
-        ),
-          appBar: AppBar(
-            leading: IconButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute( builder: (context) => VistaListaPartidas()));
-            }, icon: Icon(Icons.arrow_back)),
-            backgroundColor: Colors.cyan,
-            title: Text("Detalle Partida"),
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 3,
+      child: Scaffold(
+      appBar: AppBar(
+        leading: IconButton(onPressed: (){
+          Navigator.push( context, MaterialPageRoute(builder: (context) => VistaListaPartidas()));
+        }, 
+        icon: Icon(Icons.arrow_back)),
+          title: const Text('Informacion de la Partida'),
+          bottom: const TabBar(
+            tabs: <Widget>[
+              Tab(
+                icon: Icon(Icons.looks_one),
+              ),
+              Tab(
+                icon: Icon(Icons.looks_two),
+              ),
+              Tab(
+                icon: Icon(Icons.looks_3),
+              ),
+            ],
           ),
-          body:Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Container(
-                      child: Center(
-                        child: Column(
-                          children:[
-                            Container(
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(partida.toString()),
-                                ),
-                              ),
-                            ),
-                            //posiciones(),
-                            Container(
-                              
-                              child: Text(
-                                  'Cartas',
-                                  style: TextStyle(
-                                    fontSize: 24.0,
-                                    fontWeight: 
-                                    FontWeight.bold),
-                                    ),
-                            ),
-                            Container(
-                              child: Expanded(
-                                child: charts.BarChart(
-                                  _seriesData,
-                                  animate: true,
-                                  barGroupingType: charts.BarGroupingType.groupedStacked,
-                                  animationDuration: Duration(seconds: 1),
-                                ),
-                              ),
-                            ),
-                            descripcion(),
-                          ],
-                        ),
-                      ),
-                    ),
+      ),
+      body:TabBarView(
+            children: <Widget>[
+              Column(
+                children: [
+                  Text(partida.toString()),
+                  Expanded(
+                    child: _graficaRonda1(),
                   ),
-    ); 
+                ],
+              ),
+              Center(
+                child: _graficaRonda2(),
+              ),
+              Center(
+                child: _graficaRonda3(),
+              ),
+            ],
+          ),
+      ),
+    );
+
   }
 
-Widget posiciones(){
+ _graficaRonda3(){
+   _generarDataR3();
   return Container(
-    child: Row(
-    children: [
-        Expanded(
-          flex: 1,
-          child: Container(
-            child:primerlugar('Alfonso', '62 pts', 'Primero')
-        ),
-        ),
-        SizedBox(
-          height: 1,
-          width: 1,
-        ),
-        Expanded(
-          flex: 1,
-          child: Container(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5.0))
-              ),
-              child: Column(
-                children: [
-                  perdedores('Pedro', '41 pts', 'segundo'),
-                ],
-              )
-                    ),
-                  ),
-                ),
-              ],
-            ),
-        ) 
-        ),
-      ],
+    child: charts.BarChart(
+      _seriesData3,
+      animate: true,
+      barGroupingType: charts.BarGroupingType.groupedStacked,
+      animationDuration: Duration(seconds: 1),
     ),
   );
 }
-}
-
-Widget primerlugar(String nombre, puntos, posicion){
+ _graficaRonda2(){
+   _generarDataR2();
   return Container(
-              decoration: BoxDecoration(
-                color: Colors.pink,
-                borderRadius: BorderRadius.all(Radius.circular(5.0))
-              ),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(nombre,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                          ),),
-                        )
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(puntos,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                        )
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            );
-}
-
-Widget perdedores(String nombre, puntos, posicion){
-  return                 Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.all(Radius.circular(5.0))
-                      ),
-                      child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(2.5),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(nombre,
-                      style: TextStyle(
-                        color: Colors.white
-                      ),),
-                    )
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(2.5),
-                    child: Text(puntos,
-                    style: TextStyle(
-                        color: Colors.white
-                    )
-                    ),
-                  ),
-                ],
-              )
-                    ),
-                  ),
-                );
-}
-
-
-Widget descripcion(){
-  return Container(
-    child: Column(
-      children: [
-        Table(
-
-          children: [
-            TableRow(
-              children:[
-              Text('Azules:'),
-              Row(
-                children: [
-              Container(
-                height: 20,
-                width: 20,
-                color: Color(0xFF060F32),
-              ),
-              Text('Ronda 1'),
-              ],
-              ),
-              Row(
-                children: [
-              Container(
-                height: 20,
-                width: 20,
-                color: Color(0xFF0F278A),
-              ),
-              Text('Ronda 2'),
-              ],
-              ),
-              Row(
-                children: [
-              Container(
-                height: 20,
-                width: 20,
-                color: Color(0xFF337CFF),
-              ),
-              Text('Ronda 3'),
-              ],
-              ),
-              ]
-            ),
-          ],
-        ),
-        Table(
-          children: [
-            TableRow(
-              children:[
-              Text('Verdes:'),
-              Row(
-                children: [
-              Container(
-                height: 20,
-                width: 20,
-                color: Color(0xFF044B00),
-              ),
-              Text('Ronda 2'),
-              ],
-              ),
-              Row(
-                children: [
-              Container(
-                height: 20,
-                width: 20,
-                color: Color(0xFF0BE700),
-              ),
-              Text('Ronda 3'),
-              ],
-              ),
-              Row(
-                children: [
-              Container(
-                height: 20,
-                width: 20,
-              ),
-              ],
-              ),
-              ]
-            ),
-          ],
-        ),
-        Table(
-          children: [
-            TableRow(
-              children:[
-              Text('Rosas:'),
-              Row(
-                children: [
-              Container(
-                height: 20,
-                width: 20,
-                color: Color(0xFFE42390),
-              ),
-              Text('Ronda 3'),
-              ],
-              ),
-              Row(
-                children: [
-              Container(
-                height: 20,
-                width: 20,
-              ),
-              ],
-              ),
-              Row(
-                children: [
-              Container(
-                height: 20,
-                width: 20,
-              ),
-              ],
-              ),
-              ]
-            ),
-          ],
-        ),
-        Table(
-          children: [
-            TableRow(
-              children:[
-              Text('Negras:'),
-              Row(
-                children: [
-              Container(
-                height: 20,
-                width: 20,
-                color: Color(0xFF4C4C4C),
-              ),
-              Text('Ronda 3'),
-              ],
-              ),
-              Row(
-                children: [
-              Container(
-                height: 20,
-                width: 20,
-              ),
-              ],
-              ),
-              Row(
-                children: [
-              Container(
-                height: 20,
-                width: 20,
-              ),
-              ],
-              ),
-              ]
-            ),
-          ],
-        ),
-      ],
+    child: charts.BarChart(
+      _seriesData2,
+      animate: true,
+      barGroupingType: charts.BarGroupingType.groupedStacked,
+      animationDuration: Duration(seconds: 1),
     ),
   );
+}
+ _graficaRonda1(){
+   _generarDataR1();
+  return Container(
+    child: charts.BarChart(
+      _seriesData1,
+      animate: true,
+      barGroupingType: charts.BarGroupingType.groupedStacked,
+      animationDuration: Duration(seconds: 1),
+    ),
+  );
+}
 }
