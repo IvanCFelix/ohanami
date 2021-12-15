@@ -3,6 +3,8 @@ import 'package:florescerezo/db/db_local.dart';
 import 'package:flutter/material.dart';
 import 'package:partida/partida.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:flutter/material.dart';
 
 import 'lista_partida.dart';
 import 'nuevapartida.dart';
@@ -16,9 +18,14 @@ class DetallePartida extends StatefulWidget {
 
 class _DetallePartidaState extends State<DetallePartida> {
   Partida partida;
-  List<charts.Series<Partida, String>> _infromacionPartida = [];
-  int i =0;
-
+  List<charts.Series<CRonda1, String>> _seriesData = [];
+  List<PuntuacionJugador> puntuacionesrondaDesenlace = [];
+  List<PuntuacionJugador> puntuacionesronda1 = [];
+  List<PuntuacionJugador> puntuacionesronda2 = [];
+  List<PuntuacionJugador> puntuacionesronda3 = [];
+  List<CRonda1> cartasRonda1 = [];
+  List<CRonda2> cartasRonda2 = [];
+  List<CRonda3> cartasRonda3 = [];
 
   _DetallePartidaState(this.partida);
 
@@ -27,16 +34,60 @@ class _DetallePartidaState extends State<DetallePartida> {
   void initState(){
     super.initState();
     calcularPuntuacionesPartida();
+    _generarData();
     
   }
   void calcularPuntuacionesPartida(){
-    List<PuntuacionJugador> j;
-    partida.puntos(ronda: FasePuntuacion.Ronda1);
-    partida.puntos(ronda: FasePuntuacion.Ronda2);
-    partida.puntos(ronda: FasePuntuacion.Ronda3);
-    j = partida.puntos(ronda: FasePuntuacion.desenlace);
-    //print(j[].total);
+    puntuacionesronda1 = partida.puntos(ronda: FasePuntuacion.Ronda1);
+    puntuacionesronda2 = partida.puntos(ronda: FasePuntuacion.Ronda2);
+    puntuacionesronda3 = partida.puntos(ronda: FasePuntuacion.Ronda3);
+    puntuacionesrondaDesenlace = partida.puntos(ronda: FasePuntuacion.desenlace);
   }
+
+
+  _generarData() {
+      
+    _seriesData.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.cuantasAzules ,
+        id: '1',
+        data: partida.puntuacionesRonda1,
+        seriesCategory: '1',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (CRonda1 partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
+      ), 
+    );
+    /*
+    _seriesData.add(
+      charts.Series(
+        domainFn: (PuntuacionJugador puntuacion, _) => puntuacion.jugador.nombre.toString(),
+        measureFn: (PuntuacionJugador puntuacion, _) => puntuacion.porAzules/3,
+        id: '2',
+        data: puntuacionesronda2,
+        seriesCategory: '1',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (PuntuacionJugador partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF2D98DA)),
+      ), 
+    );
+    _seriesData.add(
+      charts.Series(
+        domainFn: (PuntuacionJugador puntuacion, _) => puntuacion.jugador.nombre.toString(),
+        measureFn: (PuntuacionJugador puntuacion, _) => puntuacion.porAzules/3,
+        id: '3',
+        data: puntuacionesronda1,
+        seriesCategory: '1',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (PuntuacionJugador partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF33A7FF)),
+      ), 
+    );
+    */
+  }
+
+
   @override
   Widget build(BuildContext context) {
     
@@ -52,7 +103,7 @@ class _DetallePartidaState extends State<DetallePartida> {
           appBar: AppBar(
             leading: IconButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute( builder: (context) => VistaListaPartidas()));
-            }, icon: Icon(Icons.error)),
+            }, icon: Icon(Icons.arrow_back)),
             backgroundColor: Colors.cyan,
             title: Text("Detalle Partida"),
           ),
@@ -71,7 +122,7 @@ class _DetallePartidaState extends State<DetallePartida> {
                                 ),
                               ),
                             ),
-                            posiciones(),
+                            //posiciones(),
                             Container(
                               
                               child: Text(
@@ -85,7 +136,7 @@ class _DetallePartidaState extends State<DetallePartida> {
                             Container(
                               child: Expanded(
                                 child: charts.BarChart(
-                                  _infromacionPartida,
+                                  _seriesData,
                                   animate: true,
                                   barGroupingType: charts.BarGroupingType.groupedStacked,
                                   animationDuration: Duration(seconds: 1),
@@ -100,6 +151,7 @@ class _DetallePartidaState extends State<DetallePartida> {
                   ),
     ); 
   }
+
 Widget posiciones(){
   return Container(
     child: Row(

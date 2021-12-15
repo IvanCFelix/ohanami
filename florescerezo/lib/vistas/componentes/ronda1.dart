@@ -32,10 +32,13 @@ class _VistaRonda1State extends State<VistaRonda1> {
       }
       partida.cartasRonda1(lista); 
       context.read<OhanamiBloc>().add(SiguienteRonda2(partida: partida));
-  } on Exception catch (e){
-    _Mensaje(e.toString());
+  } on Exception catch (e) {
+      if (e.runtimeType == FormatException) {
+      return _Mensaje("Llene los campos correctamente.");
+      }
+        _Mensaje(e.toString());
+    }
   }
-}
 
 
   _VistaRonda1State(this.partida);
