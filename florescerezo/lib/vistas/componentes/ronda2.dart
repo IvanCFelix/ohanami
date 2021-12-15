@@ -20,6 +20,29 @@ List<TextEditingController> _cartasAzules = [];
   Partida partida;
 
   _VistaRonda2State(this.partida);
+    void validarNumeroDeCartas(index){
+      try {
+        List<CRonda2> lista = [];
+        for (var i = 0; i < index; i++) {
+          print("jugador " + (i + 1).toString());
+          int azules =int.parse(_cartasAzules[i].text);
+          int verdes =int.parse(_cartasVerdes[i].text);
+          CRonda2 cr1 = CRonda2(
+            jugador: partida.jugadores.elementAt(i), 
+            cuantasAzules: azules,
+            cuantasVerdes: verdes, 
+          );
+          lista.add(cr1);
+        }
+        partida.cartasRonda2(lista);
+        context.read<OhanamiBloc>().add(SiguienteRonda3(partida: partida));
+      } on Exception catch (e){
+        _Mensaje(e.toString());
+      }
+    }
+  void _Mensaje(String mensaje){
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(mensaje)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,38 +66,7 @@ List<TextEditingController> _cartasAzules = [];
                           child: Center(
                               child: ElevatedButton(
                                   onPressed: () {
-                                      List<CRonda2> lista = [];
-                                    for (var i = 0; i < index; i++) {
-
-                                      print("jugador " + (i + 1).toString());
-
-                                      //print(_cartasAzules[i].text.toString());
-                                      int azules =int.parse(_cartasAzules[i].text);
-                                      //print(_cartasVerdes[i].text.toString());
-                                      //print(azules);
-                                      int verdes =int.parse(_cartasVerdes[i].text);
-                                      //print(_cartasRosas[i].text.toString());
-                                      //print(verdes);
-
-                                      //int rosas =int.parse(_cartasRosas[i].text);
-
-                                      //print(_cartasGrises[i].text.toString());
-                                      //print(rosas);
-
-                                      //int grises =int.parse(_cartasGrises[i].text);
-
-                                      //print(grises);
-
-                                      //print(partida.jugadores.elementAt(i).nombre.toString());
-                                      CRonda2 cr1 = CRonda2(
-                                        jugador: partida.jugadores.elementAt(i), 
-                                        cuantasAzules: azules,
-                                        cuantasVerdes: verdes, 
-                                        );
-                                      lista.add(cr1);
-                                    }
-                                      partida.cartasRonda2(lista);
-                                      context.read<OhanamiBloc>().add(SiguienteRonda3(partida: partida));
+                                    validarNumeroDeCartas(index);
                                   },
                                   child: Text("data"))),
                         )
@@ -107,8 +99,6 @@ List<TextEditingController> _cartasAzules = [];
                                     children: [
                                       _campoDeTexto(_cartasAzules, Colors.blue, index, "Azules",),
                                       _campoDeTexto(_cartasVerdes, Colors.green, index, "Verdes"),
-                                      //_campoDeTexto(_cartasRosas, Colors.pink, index, "Rosas"),
-                                     // _campoDeTexto(_cartasGrises, Colors.grey, index, "Grises"),
                           ],
                         ),
                       ),

@@ -21,6 +21,39 @@ class _VistaRonda3State extends State<VistaRonda3> {
 
   _VistaRonda3State(this.partida);
 
+    Future<void> validarNumeroDeCartas(index) async {
+  try {
+      List<CRonda3> lista = [];
+  for (var i = 0; i < index; i++) {
+    print("jugador " + (i + 1).toString());
+    int azules =int.parse(_cartasAzules[i].text);
+    int verdes =int.parse(_cartasVerdes[i].text);
+    int rosas =int.parse(_cartasRosas[i].text);
+    int grises =int.parse(_cartasGrises[i].text);
+    CRonda3 cr1 = CRonda3(
+      jugador: partida.jugadores.elementAt(i), 
+      cuantasAzules: azules,
+      cuantasVerdes: verdes,
+      cuantasRosas: rosas,
+      cuantasNegras: grises, 
+      );
+    lista.add(cr1);
+  }
+  List<PuntuacionJugador> j;
+    partida.cartasRonda3(lista);
+    bool check = await actualizar(partida: partida);
+    if (check == true) {
+    Navigator.push(context, MaterialPageRoute( builder: (context) => DetallePartida(partida: partida,)));
+    }
+  } on Exception catch (e){
+    _Mensaje(e.toString());
+  }
+}
+
+void _Mensaje(String mensaje){
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(mensaje)));
+  }
+
   Future<bool> actualizar({required Partida partida})async{
     bool check = false;
     RepositorioLocal local = RepositorioLocal();
@@ -51,41 +84,8 @@ class _VistaRonda3State extends State<VistaRonda3> {
                           child: Center(
                               child: ElevatedButton(
                                   onPressed: () async {
-                                      List<CRonda3> lista = [];
-                                    for (var i = 0; i < index; i++) {
-
-                                      print("jugador " + (i + 1).toString());
-
-                                      //print(_cartasAzules[i].text.toString());
-                                      int azules =int.parse(_cartasAzules[i].text);
-                                      //print(_cartasVerdes[i].text.toString());
-                                      //print(azules);
-                                      int verdes =int.parse(_cartasVerdes[i].text);
-                                      //print(_cartasRosas[i].text.toString());
-                                      //print(verdes);
-                                      int rosas =int.parse(_cartasRosas[i].text);
-                                      //print(_cartasGrises[i].text.toString());
-                                      //print(rosas);
-                                      int grises =int.parse(_cartasGrises[i].text);
-
-                                      //print(grises);
-
-                                      //print(partida.jugadores.elementAt(i).nombre.toString());
-                                      CRonda3 cr1 = CRonda3(
-                                        jugador: partida.jugadores.elementAt(i), 
-                                        cuantasAzules: azules,
-                                        cuantasVerdes: verdes,
-                                        cuantasRosas: rosas,
-                                        cuantasNegras: grises, 
-                                        );
-                                      lista.add(cr1);
-                                    }
-                                    List<PuntuacionJugador> j;
-                                      partida.cartasRonda3(lista);
-                                      bool check = await actualizar(partida: partida);
-                                      if (check == true) {
-                                      Navigator.push(context, MaterialPageRoute( builder: (context) => DetallePartida(partida: partida,)));
-                                      }
+                                    validarNumeroDeCartas(index);
+                                    
                                   },
                                   child: Text("data"))),
                         )

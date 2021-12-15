@@ -17,6 +17,27 @@ class _VistaRonda1State extends State<VistaRonda1> {
   List<TextEditingController> _cartasRosas = [];
   List<TextEditingController> _cartasGrises = [];
   Partida partida;
+
+  void validarNumeroDeCartas(index){
+    try {
+      List<CRonda1> lista = [];
+      for (var i = 0; i < index; i++) {
+        print("jugador " + (i + 1).toString());
+        int azules =int.parse(_cartasAzules[i].text);
+        CRonda1 cr1 = CRonda1(
+          jugador: partida.jugadores.elementAt(i), 
+          cuantasAzules: azules, 
+        );
+        lista.add(cr1);
+      }
+      partida.cartasRonda1(lista); 
+      context.read<OhanamiBloc>().add(SiguienteRonda2(partida: partida));
+  } on Exception catch (e){
+    _Mensaje(e.toString());
+  }
+}
+
+
   _VistaRonda1State(this.partida);
   @override
   Widget build(BuildContext context) {
@@ -40,73 +61,38 @@ class _VistaRonda1State extends State<VistaRonda1> {
                           child: Center(
                               child: ElevatedButton(
                                   onPressed: () {
-                                      List<CRonda1> lista = [];
-                                    for (var i = 0; i < index; i++) {
-
-                                      print("jugador " + (i + 1).toString());
-                                      int azules =int.parse(_cartasAzules[i].text);
-                                      CRonda1 cr1 = CRonda1(
-                                        jugador: partida.jugadores.elementAt(i), 
-                                        cuantasAzules: azules, 
-                                        );
-                                      lista.add(cr1);
-                                    }
-                                    try {
-                                     partida.cartasRonda1(lista); 
-                                     }on ProblemaDemasiadasAzules {
-                                        return print('Sin conexion a internet');
-                                      } on ProblemaAzulesNegativas {
-                                        return print('No se pudo encontrar el post');
-                                      } on FormatException {
-                                        return print('Formato de respuesta incorrecto');
-                                      } catch (e){
-                                        return print('Problemas en la conexion al repositorio remoto');
-                                      }
-                                    /*
-                                    } on ProblemaDemasiadasAzules catch (e) {
-                                      print(e.mensaje());
-                                      rethrow;
-                                      
-                                    } finally{
-                                      print("object");
-                                    }*/
-                                    
-
-                                      context.read<OhanamiBloc>().add(SiguienteRonda2(partida: partida));
+                                    validarNumeroDeCartas(index);
                                   },
-                                  child: Text("data"))),
+                              child: Text("data"))),
                         )
-                      : Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Card(
-                            color: Colors.tealAccent,
-                            child: Column(
+                :Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    color: Colors.tealAccent,
+                    child: Column(
+                      children: [
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.error_outline),
-                                      Text(partida.jugadores
-                                          .elementAt(index)
-                                          .nombre
-                                          .toString()),
-                                    ],
+                                Icon(
+                                  Icons.error_outline
                                   ),
-                                ),
-                                Container(
-                                  child: Text("Cartas"),
-                                ),
-                                Container(
-                                  height: 80.0,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      _campoDeTexto(_cartasAzules, Colors.blue, index, "Azules",),
-                                      //_campoDeTexto(_cartasVerdes, Colors.green, index, "Verdes"),
-                                      //_campoDeTexto(_cartasRosas, Colors.pink, index, "Rosas"),
-                                      //_campoDeTexto(_cartasGrises, Colors.grey, index, "Grises"),
+                                Text(
+                                  partida.jugadores.elementAt(index).nombre.toString()),
+                              ],
+                          ),
+                        ),
+                      Container(
+                        child: Text("Cartas"),
+                      ),
+                      Container(
+                        height: 80.0,
+                        child: Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: [
+                           _campoDeTexto(_cartasAzules, Colors.blue, index, "Azules",),
                           ],
                         ),
                       ),
@@ -120,6 +106,9 @@ class _VistaRonda1State extends State<VistaRonda1> {
         ],
       ),
     );
+  }
+  void _Mensaje(String mensaje){
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(mensaje)));
   }
 }
 
@@ -141,3 +130,4 @@ _campoDeTexto(_var, _color, index, cartas) {
     ),
   );
 } 
+
