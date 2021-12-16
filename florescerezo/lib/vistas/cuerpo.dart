@@ -12,9 +12,9 @@ class Cuerpo extends StatelessWidget {
   Widget build(BuildContext context) {
     final estado = context.watch<OhanamiBloc>().state;
     return estado.map(
-      ronda1: (Ronda1) => VistaRonda1(partida: Ronda1.partida,), 
-      ronda2: (Ronda2) => VistaRonda2(partida: Ronda2.partida,), 
-      ronda3: (Ronda3) => VistaRonda3(partida: Ronda3.partida,),
+      ronda1: (Ronda1) => VistaRonda1(partida: Ronda1.partida, iconosJugadores: Ronda1.iconos, ), 
+      ronda2: (Ronda2) => VistaRonda2(partida: Ronda2.partida, iconosJugadores: Ronda2.iconos, ), 
+      ronda3: (Ronda3) => VistaRonda3(partida: Ronda3.partida, iconosJugadores: Ronda3.iconos,),
       );
   }
 }

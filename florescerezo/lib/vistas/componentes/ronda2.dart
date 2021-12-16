@@ -5,11 +5,12 @@ import 'package:florescerezo/bloc_ohanami/eventos.dart';
 import 'package:partida/partida.dart';
 import 'package:provider/src/provider.dart';
 class VistaRonda2 extends StatefulWidget {
-  const VistaRonda2({ Key? key, required this.partida}) : super(key: key);
+  const VistaRonda2({ Key? key, required this.partida, required this.iconosJugadores}) : super(key: key);
   final Partida partida; 
+  final List<IconData> iconosJugadores;
 
   @override
-  State<VistaRonda2> createState() => _VistaRonda2State(partida);
+  State<VistaRonda2> createState() => _VistaRonda2State(partida, iconosJugadores);
 }
 
 class _VistaRonda2State extends State<VistaRonda2> {
@@ -18,8 +19,9 @@ List<TextEditingController> _cartasAzules = [];
   List<TextEditingController> _cartasRosas = [];
   List<TextEditingController> _cartasGrises = [];
   Partida partida;
+  List<IconData> iconosJugadores;
 
-  _VistaRonda2State(this.partida);
+  _VistaRonda2State(this.partida, this.iconosJugadores);
     void validarNumeroDeCartas(index){
       try {
         List<CRonda2> lista = [];
@@ -35,7 +37,7 @@ List<TextEditingController> _cartasAzules = [];
           lista.add(cr1);
         }
         partida.cartasRonda2(lista);
-        context.read<OhanamiBloc>().add(SiguienteRonda3(partida: partida));
+        context.read<OhanamiBloc>().add(SiguienteRonda3(partida: partida, iconosJugadores: iconosJugadores));
       } on Exception catch (e){
         _Mensaje(e.toString());
       }

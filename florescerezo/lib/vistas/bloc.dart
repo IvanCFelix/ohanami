@@ -9,17 +9,16 @@ import '../main.dart';
 
 
 class Blocvista extends StatelessWidget {
-  const Blocvista({Key? key, required this.partida}) : super(key: key);
+  const Blocvista({Key? key, required this.partida, required this.iconosJugadores}) : super(key: key);
   final Partida partida;
+  final List<IconData> iconosJugadores;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OhanamiBloc(partida),
+      create: (context) => OhanamiBloc(partida, iconosJugadores ),
       child: MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text("Partida"),
-        ),
+        resizeToAvoidBottomInset: false,
         body: Cuerpo(),
       ),
     ),

@@ -45,7 +45,7 @@ class _NuevaPartidaState extends State<NuevaPartida> {
       iconos.add( FontAwesomeIcons.featherAlt);
       iconos.add(FontAwesomeIcons.dragon); 
       iconos.add(FontAwesomeIcons.hotdog);
-      iconos.add( FontAwesomeIcons.water);
+      iconos.add( FontAwesomeIcons.radiationAlt);
       iconos.add(FontAwesomeIcons.cat); 
       iconos.add(FontAwesomeIcons.dog);
       iconos.add(FontAwesomeIcons.robot); 
@@ -176,7 +176,7 @@ class _NuevaPartidaState extends State<NuevaPartida> {
                         jugadores.add(Jugador(nombre: _lista[i].text));
                       }
                       Partida partida = Partida(jugadores: jugadores);
-                      Navigator.push(context, MaterialPageRoute( builder: (context) => Blocvista(partida: partida,)));
+                      Navigator.push(context, MaterialPageRoute( builder: (context) => Blocvista(partida: partida, iconosJugadores: iconosJugadores, )));
                     },
       
                     child: const Text("Comenzar",

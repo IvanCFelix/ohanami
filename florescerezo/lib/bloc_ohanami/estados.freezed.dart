@@ -17,21 +17,24 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$Estados_ohanamiTearOff {
   const _$Estados_ohanamiTearOff();
 
-  Ronda1 ronda1(Partida partida) {
+  Ronda1 ronda1(Partida partida, List<IconData> iconos) {
     return Ronda1(
       partida,
+      iconos,
     );
   }
 
-  Ronda2 ronda2(Partida partida) {
+  Ronda2 ronda2(Partida partida, List<IconData> iconos) {
     return Ronda2(
       partida,
+      iconos,
     );
   }
 
-  Ronda3 ronda3(Partida partida) {
+  Ronda3 ronda3(Partida partida, List<IconData> iconos) {
     return Ronda3(
       partida,
+      iconos,
     );
   }
 }
@@ -42,26 +45,27 @@ const $Estados_ohanami = _$Estados_ohanamiTearOff();
 /// @nodoc
 mixin _$Estados_ohanami {
   Partida get partida => throw _privateConstructorUsedError;
+  List<IconData> get iconos => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Partida partida) ronda1,
-    required TResult Function(Partida partida) ronda2,
-    required TResult Function(Partida partida) ronda3,
+    required TResult Function(Partida partida, List<IconData> iconos) ronda1,
+    required TResult Function(Partida partida, List<IconData> iconos) ronda2,
+    required TResult Function(Partida partida, List<IconData> iconos) ronda3,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Partida partida)? ronda1,
-    TResult Function(Partida partida)? ronda2,
-    TResult Function(Partida partida)? ronda3,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda1,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda2,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda3,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Partida partida)? ronda1,
-    TResult Function(Partida partida)? ronda2,
-    TResult Function(Partida partida)? ronda3,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda1,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda2,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda3,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -98,7 +102,7 @@ abstract class $Estados_ohanamiCopyWith<$Res> {
   factory $Estados_ohanamiCopyWith(
           Estados_ohanami value, $Res Function(Estados_ohanami) then) =
       _$Estados_ohanamiCopyWithImpl<$Res>;
-  $Res call({Partida partida});
+  $Res call({Partida partida, List<IconData> iconos});
 }
 
 /// @nodoc
@@ -113,12 +117,17 @@ class _$Estados_ohanamiCopyWithImpl<$Res>
   @override
   $Res call({
     Object? partida = freezed,
+    Object? iconos = freezed,
   }) {
     return _then(_value.copyWith(
       partida: partida == freezed
           ? _value.partida
           : partida // ignore: cast_nullable_to_non_nullable
               as Partida,
+      iconos: iconos == freezed
+          ? _value.iconos
+          : iconos // ignore: cast_nullable_to_non_nullable
+              as List<IconData>,
     ));
   }
 }
@@ -128,7 +137,7 @@ abstract class $Ronda1CopyWith<$Res> implements $Estados_ohanamiCopyWith<$Res> {
   factory $Ronda1CopyWith(Ronda1 value, $Res Function(Ronda1) then) =
       _$Ronda1CopyWithImpl<$Res>;
   @override
-  $Res call({Partida partida});
+  $Res call({Partida partida, List<IconData> iconos});
 }
 
 /// @nodoc
@@ -143,12 +152,17 @@ class _$Ronda1CopyWithImpl<$Res> extends _$Estados_ohanamiCopyWithImpl<$Res>
   @override
   $Res call({
     Object? partida = freezed,
+    Object? iconos = freezed,
   }) {
     return _then(Ronda1(
       partida == freezed
           ? _value.partida
           : partida // ignore: cast_nullable_to_non_nullable
               as Partida,
+      iconos == freezed
+          ? _value.iconos
+          : iconos // ignore: cast_nullable_to_non_nullable
+              as List<IconData>,
     ));
   }
 }
@@ -156,14 +170,16 @@ class _$Ronda1CopyWithImpl<$Res> extends _$Estados_ohanamiCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Ronda1 implements Ronda1 {
-  const _$Ronda1(this.partida);
+  const _$Ronda1(this.partida, this.iconos);
 
   @override
   final Partida partida;
+  @override
+  final List<IconData> iconos;
 
   @override
   String toString() {
-    return 'Estados_ohanami.ronda1(partida: $partida)';
+    return 'Estados_ohanami.ronda1(partida: $partida, iconos: $iconos)';
   }
 
   @override
@@ -171,12 +187,15 @@ class _$Ronda1 implements Ronda1 {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Ronda1 &&
-            const DeepCollectionEquality().equals(other.partida, partida));
+            const DeepCollectionEquality().equals(other.partida, partida) &&
+            const DeepCollectionEquality().equals(other.iconos, iconos));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(partida));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(partida),
+      const DeepCollectionEquality().hash(iconos));
 
   @JsonKey(ignore: true)
   @override
@@ -186,33 +205,33 @@ class _$Ronda1 implements Ronda1 {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Partida partida) ronda1,
-    required TResult Function(Partida partida) ronda2,
-    required TResult Function(Partida partida) ronda3,
+    required TResult Function(Partida partida, List<IconData> iconos) ronda1,
+    required TResult Function(Partida partida, List<IconData> iconos) ronda2,
+    required TResult Function(Partida partida, List<IconData> iconos) ronda3,
   }) {
-    return ronda1(partida);
+    return ronda1(partida, iconos);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Partida partida)? ronda1,
-    TResult Function(Partida partida)? ronda2,
-    TResult Function(Partida partida)? ronda3,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda1,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda2,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda3,
   }) {
-    return ronda1?.call(partida);
+    return ronda1?.call(partida, iconos);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Partida partida)? ronda1,
-    TResult Function(Partida partida)? ronda2,
-    TResult Function(Partida partida)? ronda3,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda1,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda2,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda3,
     required TResult orElse(),
   }) {
     if (ronda1 != null) {
-      return ronda1(partida);
+      return ronda1(partida, iconos);
     }
     return orElse();
   }
@@ -253,10 +272,12 @@ class _$Ronda1 implements Ronda1 {
 }
 
 abstract class Ronda1 implements Estados_ohanami {
-  const factory Ronda1(Partida partida) = _$Ronda1;
+  const factory Ronda1(Partida partida, List<IconData> iconos) = _$Ronda1;
 
   @override
   Partida get partida;
+  @override
+  List<IconData> get iconos;
   @override
   @JsonKey(ignore: true)
   $Ronda1CopyWith<Ronda1> get copyWith => throw _privateConstructorUsedError;
@@ -267,7 +288,7 @@ abstract class $Ronda2CopyWith<$Res> implements $Estados_ohanamiCopyWith<$Res> {
   factory $Ronda2CopyWith(Ronda2 value, $Res Function(Ronda2) then) =
       _$Ronda2CopyWithImpl<$Res>;
   @override
-  $Res call({Partida partida});
+  $Res call({Partida partida, List<IconData> iconos});
 }
 
 /// @nodoc
@@ -282,12 +303,17 @@ class _$Ronda2CopyWithImpl<$Res> extends _$Estados_ohanamiCopyWithImpl<$Res>
   @override
   $Res call({
     Object? partida = freezed,
+    Object? iconos = freezed,
   }) {
     return _then(Ronda2(
       partida == freezed
           ? _value.partida
           : partida // ignore: cast_nullable_to_non_nullable
               as Partida,
+      iconos == freezed
+          ? _value.iconos
+          : iconos // ignore: cast_nullable_to_non_nullable
+              as List<IconData>,
     ));
   }
 }
@@ -295,14 +321,16 @@ class _$Ronda2CopyWithImpl<$Res> extends _$Estados_ohanamiCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Ronda2 implements Ronda2 {
-  const _$Ronda2(this.partida);
+  const _$Ronda2(this.partida, this.iconos);
 
   @override
   final Partida partida;
+  @override
+  final List<IconData> iconos;
 
   @override
   String toString() {
-    return 'Estados_ohanami.ronda2(partida: $partida)';
+    return 'Estados_ohanami.ronda2(partida: $partida, iconos: $iconos)';
   }
 
   @override
@@ -310,12 +338,15 @@ class _$Ronda2 implements Ronda2 {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Ronda2 &&
-            const DeepCollectionEquality().equals(other.partida, partida));
+            const DeepCollectionEquality().equals(other.partida, partida) &&
+            const DeepCollectionEquality().equals(other.iconos, iconos));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(partida));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(partida),
+      const DeepCollectionEquality().hash(iconos));
 
   @JsonKey(ignore: true)
   @override
@@ -325,33 +356,33 @@ class _$Ronda2 implements Ronda2 {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Partida partida) ronda1,
-    required TResult Function(Partida partida) ronda2,
-    required TResult Function(Partida partida) ronda3,
+    required TResult Function(Partida partida, List<IconData> iconos) ronda1,
+    required TResult Function(Partida partida, List<IconData> iconos) ronda2,
+    required TResult Function(Partida partida, List<IconData> iconos) ronda3,
   }) {
-    return ronda2(partida);
+    return ronda2(partida, iconos);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Partida partida)? ronda1,
-    TResult Function(Partida partida)? ronda2,
-    TResult Function(Partida partida)? ronda3,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda1,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda2,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda3,
   }) {
-    return ronda2?.call(partida);
+    return ronda2?.call(partida, iconos);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Partida partida)? ronda1,
-    TResult Function(Partida partida)? ronda2,
-    TResult Function(Partida partida)? ronda3,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda1,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda2,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda3,
     required TResult orElse(),
   }) {
     if (ronda2 != null) {
-      return ronda2(partida);
+      return ronda2(partida, iconos);
     }
     return orElse();
   }
@@ -392,10 +423,12 @@ class _$Ronda2 implements Ronda2 {
 }
 
 abstract class Ronda2 implements Estados_ohanami {
-  const factory Ronda2(Partida partida) = _$Ronda2;
+  const factory Ronda2(Partida partida, List<IconData> iconos) = _$Ronda2;
 
   @override
   Partida get partida;
+  @override
+  List<IconData> get iconos;
   @override
   @JsonKey(ignore: true)
   $Ronda2CopyWith<Ronda2> get copyWith => throw _privateConstructorUsedError;
@@ -406,7 +439,7 @@ abstract class $Ronda3CopyWith<$Res> implements $Estados_ohanamiCopyWith<$Res> {
   factory $Ronda3CopyWith(Ronda3 value, $Res Function(Ronda3) then) =
       _$Ronda3CopyWithImpl<$Res>;
   @override
-  $Res call({Partida partida});
+  $Res call({Partida partida, List<IconData> iconos});
 }
 
 /// @nodoc
@@ -421,12 +454,17 @@ class _$Ronda3CopyWithImpl<$Res> extends _$Estados_ohanamiCopyWithImpl<$Res>
   @override
   $Res call({
     Object? partida = freezed,
+    Object? iconos = freezed,
   }) {
     return _then(Ronda3(
       partida == freezed
           ? _value.partida
           : partida // ignore: cast_nullable_to_non_nullable
               as Partida,
+      iconos == freezed
+          ? _value.iconos
+          : iconos // ignore: cast_nullable_to_non_nullable
+              as List<IconData>,
     ));
   }
 }
@@ -434,14 +472,16 @@ class _$Ronda3CopyWithImpl<$Res> extends _$Estados_ohanamiCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Ronda3 implements Ronda3 {
-  const _$Ronda3(this.partida);
+  const _$Ronda3(this.partida, this.iconos);
 
   @override
   final Partida partida;
+  @override
+  final List<IconData> iconos;
 
   @override
   String toString() {
-    return 'Estados_ohanami.ronda3(partida: $partida)';
+    return 'Estados_ohanami.ronda3(partida: $partida, iconos: $iconos)';
   }
 
   @override
@@ -449,12 +489,15 @@ class _$Ronda3 implements Ronda3 {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Ronda3 &&
-            const DeepCollectionEquality().equals(other.partida, partida));
+            const DeepCollectionEquality().equals(other.partida, partida) &&
+            const DeepCollectionEquality().equals(other.iconos, iconos));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(partida));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(partida),
+      const DeepCollectionEquality().hash(iconos));
 
   @JsonKey(ignore: true)
   @override
@@ -464,33 +507,33 @@ class _$Ronda3 implements Ronda3 {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Partida partida) ronda1,
-    required TResult Function(Partida partida) ronda2,
-    required TResult Function(Partida partida) ronda3,
+    required TResult Function(Partida partida, List<IconData> iconos) ronda1,
+    required TResult Function(Partida partida, List<IconData> iconos) ronda2,
+    required TResult Function(Partida partida, List<IconData> iconos) ronda3,
   }) {
-    return ronda3(partida);
+    return ronda3(partida, iconos);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Partida partida)? ronda1,
-    TResult Function(Partida partida)? ronda2,
-    TResult Function(Partida partida)? ronda3,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda1,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda2,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda3,
   }) {
-    return ronda3?.call(partida);
+    return ronda3?.call(partida, iconos);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Partida partida)? ronda1,
-    TResult Function(Partida partida)? ronda2,
-    TResult Function(Partida partida)? ronda3,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda1,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda2,
+    TResult Function(Partida partida, List<IconData> iconos)? ronda3,
     required TResult orElse(),
   }) {
     if (ronda3 != null) {
-      return ronda3(partida);
+      return ronda3(partida, iconos);
     }
     return orElse();
   }
@@ -531,10 +574,12 @@ class _$Ronda3 implements Ronda3 {
 }
 
 abstract class Ronda3 implements Estados_ohanami {
-  const factory Ronda3(Partida partida) = _$Ronda3;
+  const factory Ronda3(Partida partida, List<IconData> iconos) = _$Ronda3;
 
   @override
   Partida get partida;
+  @override
+  List<IconData> get iconos;
   @override
   @JsonKey(ignore: true)
   $Ronda3CopyWith<Ronda3> get copyWith => throw _privateConstructorUsedError;

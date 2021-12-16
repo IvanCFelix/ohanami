@@ -108,17 +108,16 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
                   height: 1,
                   thickness: 1,
                 ),
-
                 snapshot.data!.nombre.isNotEmpty ?
                 _sesion()
-                : _registro(),
+
+                : 
+
+                _registro(),
                  Divider(
                   height: 1,
                   thickness: 1,
                 ),
-                Expanded(child: Container(
-                  color: Colors.amber,
-                )),
                 SizedBox(
                   height: 40,
                 ),

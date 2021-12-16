@@ -5,11 +5,12 @@ import 'package:partida/partida.dart';
 import '../detalle_partida.dart';
 
 class VistaRonda3 extends StatefulWidget {
-  const VistaRonda3({ Key? key, required this.partida}) : super(key: key);
+  const VistaRonda3({ Key? key, required this.partida ,required this.iconosJugadores}) : super(key: key);
   final Partida partida;
+  final List<IconData> iconosJugadores;
 
   @override
-  State<VistaRonda3> createState() => _VistaRonda3State(partida);
+  State<VistaRonda3> createState() => _VistaRonda3State(partida, iconosJugadores);
 }
 
 class _VistaRonda3State extends State<VistaRonda3> {
@@ -18,8 +19,9 @@ class _VistaRonda3State extends State<VistaRonda3> {
   List<TextEditingController> _cartasRosas = [];
   List<TextEditingController> _cartasGrises = [];
   Partida partida;
+  List<IconData> iconosJugadores;
 
-  _VistaRonda3State(this.partida);
+  _VistaRonda3State(this.partida, this.iconosJugadores);
 
     Future<void> validarNumeroDeCartas(index) async {
   try {
