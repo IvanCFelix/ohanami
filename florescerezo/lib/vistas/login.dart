@@ -15,7 +15,9 @@ class VistaLogin extends StatelessWidget {
     RepositorioMongo mongo = RepositorioMongo();
     
     void IniciarSesion() async{
+
       bool check = await mongo.inicializar();
+      
       if (check == true) {
         Usuario usuario = Usuario(nombre: nombre.text.toString() ,clave: clave.text.toString() , partidas: [], correo: "");
         bool sesionIniciada = await mongo.verificarInicioSesion(usuario: usuario);
@@ -38,7 +40,7 @@ class VistaLogin extends StatelessWidget {
     }
 
     void sinconexion() async{
-      Usuario usuario =Usuario(nombre: "", correo: "", clave: clave.text, partidas: []);
+      Usuario usuario =Usuario(nombre: "", correo: "", clave: "", partidas: []);
       local.registrarUsuario(usuario: usuario);
     }
 //gurdarUsuario

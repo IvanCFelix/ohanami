@@ -12,6 +12,7 @@ class OhanamiBloc extends Bloc<Evento, Estados_ohanami> {
   }
   
   Partida partida;
+  
 
   void _onPartida2 (SiguienteRonda2 evento, Emitter<Estados_ohanami> emit){
     partida = evento.partida;

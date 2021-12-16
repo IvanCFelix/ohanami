@@ -4,6 +4,7 @@ import 'package:partida/src/problemas.dart';
 
 class Jugador {
   final String nombre;
+  
 
   Jugador({
     required this.nombre,

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partida/partida.dart';
 
+import '../main.dart';
+
 
 class Blocvista extends StatelessWidget {
   const Blocvista({Key? key, required this.partida}) : super(key: key);

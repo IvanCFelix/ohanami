@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:florescerezo/db/db_local.dart';
 import 'package:florescerezo/vistas/detalle_partida.dart';
 import 'package:florescerezo/vistas/login.dart';
@@ -6,6 +8,8 @@ import 'package:florescerezo/vistas/registro.dart';
 import 'package:flutter/material.dart';
 import 'package:db_paquete/db_paquete.dart';
 import 'package:partida/partida.dart';
+
+import '../estilos.dart';
 
 class VistaListaPartidas extends StatefulWidget {
   const VistaListaPartidas({Key? key}) : super(key: key);
@@ -16,8 +20,8 @@ class VistaListaPartidas extends StatefulWidget {
 
 class VistaListaPartidasState extends State<VistaListaPartidas> {
   RepositorioLocal local = RepositorioLocal();
-
   late Future<Usuario> usuario;
+
   @override
   void initState() {
     usuario = local.recuperarUsuario();
@@ -43,121 +47,146 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
     }
   }
 
+  _imagenAleatoria(){
+    var rng = new Random();
+    int numero = rng.nextInt(3);
+    switch (numero) {
+      case 0: return Image.network("https://static.wikia.nocookie.net/monster-strike-enjp/images/6/6e/3279.png/revision/latest/scale-to-width-down/398?cb=20180401003316");
+      case 1: return Image.network("https://i.pinimg.com/originals/a0/50/92/a050921c3b4d7372b6fc77254c9ab283.jpg");
+      case 2: return Image.network("https://i.pinimg.com/564x/ea/fa/e2/eafae27c83386418a8ed895e02a23c8c.jpg");
+      case 3: return Image.network("https://i.pinimg.com/originals/bf/bd/db/bfbddb3f4810e2bc608ff2c86e64817c.jpg");
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.my_library_add_outlined),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const NuevaPartida()));
-            }),
-        drawer: FutureBuilder(
-          future: usuario,
-          builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
-            return snapshot.hasData
-                ? snapshot.hasError
-                    ? Text("Error")
-                    // vista error
-                    : Drawer(
-                        child: ListView(
-                          padding: EdgeInsets.zero,
-                          children: [
-                            DrawerHeader(
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                              ),
-                              child: Text(snapshot.data!.nombre.toString()),
-                            ),
-                            snapshot.data!.nombre.isNotEmpty
-                                ? Column(
-                                    children: [
-                                      ListTile(
-                                        title: Text("Cerrar Sesion"),
-                                        onTap: () async {
-                                          print(
-                                              "Estas seguro de eliminar el usuario");
-                                          print(
-                                              "Se eliminara todo si no sincronizaste al db");
-                                          bool check =
-                                              await local.eliminarUsuario();
-                                          if (check == true) {
-                                            print("Se elimino el usuario");
-                                          }
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const VistaLogin()));
-                                        },
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: ElevatedButton(
-                                            onPressed: () {
-                                              sincronizarDB();
-                                            },
-                                            child: Text("Sincronizar DB")),
-                                      ),
-                                    ],
-                                  )
-                                : ListTile(
-                                    title: Text("Registrarse"),
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const VistaRegistro()));
-                                    },
-                                  ),
-                          ],
-                        ),
-                      )
-                //Lista
-                : CircularProgressIndicator();
-            // cargando
-          },
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: secondaryDarkColor,
+        child: const Icon(
+          Icons.my_library_add_outlined,
+          color: secondaryTextColor,
         ),
-        appBar: AppBar(),
-        body: Center(
-            child: FutureBuilder<Usuario>(
-                future: local.recuperarUsuario(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
-                  return snapshot.hasData
-                      ?
-                      // data SÍ, entonces
-                      // preguntar si tiene error
-                      snapshot.hasError
-                          ?
-                          // error sí
-                          // vista error
-                          Text("error al obtener datos")
-                          :
-                          // error no
-                          // vista lista
-                          snapshot.data!.partidas.isEmpty
-                              ?
-                              // data sí, pero
-                              // está vacía
-                              Text("no hay partidas")
-                              :
-                              // data sí, pero
-                              // tiene datos
-                              _listaDatos(snapshot)
-                      :
-                      // data NO, entonces
-                      // vista cargando
-                      const CircularProgressIndicator();
-                })),
+        onPressed: () {
+          Navigator.push(context,MaterialPageRoute(builder: (context) => const NuevaPartida()));
+            }
       ),
-    );
-  }
+      drawer: FutureBuilder(
+        future: usuario,
+        builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
+          return snapshot.hasData ? snapshot.hasError ? 
+          const Text("Error")
+          // vista error
 
+          : Drawer(
+            child: ListView(
+              // Important: Remove any padding from the ListView.
+              padding: EdgeInsets.zero,
+              children: [
+                Container(
+                  height: 24,
+                  color: secondaryDarkColor,
+                ),
+                DrawerHeader(
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage("http://mercurio.com.es/images/cabecero_ohanami_2018.jpg?crc=391650972"),
+                    ),
+                    color: secondaryDarkColor,
+                  ),
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(snapshot.data!.nombre.toString(),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                    ),
+                  ), 
+                ),
+                const Divider(
+                  height: 1,
+                  thickness: 1,
+                ),
+
+                snapshot.data!.nombre.isNotEmpty ?
+                _sesion()
+                : _registro(),
+                 Divider(
+                  height: 1,
+                  thickness: 1,
+                ),
+                Expanded(child: Container(
+                  color: Colors.amber,
+                )),
+                SizedBox(
+                  height: 40,
+                ),
+                Image.network("http://mercurio.com.es/images/logo-mercurio-2015-u357336.png?crc=113239139")
+              ],
+            ),
+          )
+
+        //Lista /* */
+        : CircularProgressIndicator();
+        // cargando
+        },
+      ),
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+      ),
+      body: Center(
+        child: FutureBuilder<Usuario>(
+        future: local.recuperarUsuario(),
+        builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
+          return snapshot.hasData ?
+          // data SÍ, entonces
+          // preguntar si tiene error
+          snapshot.hasError ?
+          // error sí
+          // vista error
+          const Text("error al obtener datos")
+          :
+          // error no
+          // vista lista
+          snapshot.data!.partidas.isEmpty ?
+          // data sí, pero
+          // está vacía
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                _imagenAleatoria(),
+                //Image.network("https://static.wikia.nocookie.net/monster-strike-enjp/images/6/6e/3279.png/revision/latest/scale-to-width-down/398?cb=20180401003316"),
+                SizedBox(
+                  height: 20,
+                ),
+                const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child:Text("No tienes partidas guardadas",
+                        style: TextStyle(
+                          fontSize: 25,
+                      )
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+          :
+          // data sí, pero
+          // tiene datos
+          _listaDatos(snapshot)
+          :
+          // data NO, entonces
+          // vista cargando
+          const CircularProgressIndicator();
+        }
+      )
+    ),
+  );
+}
   _listaDatos(snapshot) {
     return ListView.builder(
         itemCount: snapshot.data!.partidas.length,
@@ -234,6 +263,53 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
               ],
             ),
           );
-        });
+        }
+      );
+  }
+
+  _registro(){
+return ListTile(
+  enableFeedback: true,
+  title: const Text("Registrarse",
+  style: TextStyle(
+    fontSize: 15
+  ),
+  ),
+  leading: const Icon(
+    Icons.person_add,
+    color: secondaryDarkColor,
+  ),
+  onTap: () {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const VistaRegistro()));
+  },
+  );
+}
+
+  _sesion(){
+    return Column(
+      children: [
+        ListTile(
+          leading: Icon(Icons.cloud_upload),
+          title: Text("Guardar partidas en la nube"),
+          onTap: () async {
+            sincronizarDB();
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const VistaLogin()));
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.logout),
+          title: Text("Cerrar sesion"),
+          onTap: () async {
+            print("Estas seguro de eliminar el usuario");
+            print("Se eliminara todo si no sincronizaste al db");
+            bool check = await local.eliminarUsuario();
+            if (check == true) {
+              print("Se elimino el usuario");
+            }
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const VistaLogin()));
+          },
+        ),
+      ],
+    );
   }
 }

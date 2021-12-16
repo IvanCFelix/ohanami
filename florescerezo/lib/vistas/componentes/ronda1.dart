@@ -31,6 +31,7 @@ class _VistaRonda1State extends State<VistaRonda1> {
         lista.add(cr1);
       }
       partida.cartasRonda1(lista); 
+      partida.puntuacionesRonda1[0].cuantasAzules.toString();
       context.read<OhanamiBloc>().add(SiguienteRonda2(partida: partida));
   } on Exception catch (e) {
       if (e.runtimeType == FormatException) {
