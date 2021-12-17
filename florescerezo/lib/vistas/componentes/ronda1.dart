@@ -3,7 +3,6 @@ import 'package:florescerezo/bloc_ohanami/eventos.dart';
 import 'package:florescerezo/estilos.dart';
 import 'package:flutter/material.dart';
 import 'package:partida/partida.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/src/provider.dart';
 
 class VistaRonda1 extends StatefulWidget {
@@ -21,7 +20,9 @@ class _VistaRonda1State extends State<VistaRonda1> {
   List<TextEditingController> _cartasGrises = [];
   Partida partida;
   List<IconData> iconosJugadores;
-
+  void _Mensaje(String mensaje){
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(mensaje)));
+  }
   void validarNumeroDeCartas(index){
     try {
       List<CRonda1> lista = [];
@@ -44,9 +45,9 @@ class _VistaRonda1State extends State<VistaRonda1> {
         _Mensaje(e.toString());
     }
   }
-
-
   _VistaRonda1State(this.partida, this.iconosJugadores);
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,9 +100,6 @@ class _VistaRonda1State extends State<VistaRonda1> {
                           Row(
                             children: [
                           _campoDeTexto(_cartasAzules, Colors.blue, index, "Azules"),
-                          _campoDeTexto(_cartasVerdes, Colors.green, index, "Verdes"),
-                          _campoDeTexto(_cartasRosas, Colors.pink, index, "Rosas"),
-                          _campoDeTexto(_cartasGrises, Colors.black, index, "Negras")
                             ],
                           ),
                         ],
@@ -116,9 +114,6 @@ class _VistaRonda1State extends State<VistaRonda1> {
       ),
     );
   }
-  void _Mensaje(String mensaje){
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(mensaje)));
-  }
 }
 
 _campoDeTexto(_var, _color, index, cartas) {
@@ -129,6 +124,7 @@ _campoDeTexto(_var, _color, index, cartas) {
       height: 80,
       width: 80,
       child: TextFormField(
+        onChanged: (_){},
         controller: _var[index],
        maxLength: 2,
        decoration: InputDecoration(

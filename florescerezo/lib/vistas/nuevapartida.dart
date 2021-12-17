@@ -201,6 +201,7 @@ class _NuevaPartidaState extends State<NuevaPartida> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        maxLength: 10,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: "Jugador $numero",
