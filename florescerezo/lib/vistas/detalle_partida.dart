@@ -387,7 +387,7 @@ class _DetallePartidaState extends State<DetallePartida> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Text("Cantidad de cartas de la ronda 1",
+                    child: Text("Cantidad de puntos de la ronda 1",
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -590,7 +590,7 @@ _vista(puntos, color, nombre, icon){
           ),
         duration: Duration(milliseconds:1000),
         width: 200,
-        height: puntos <= 30 ? 30 : puntos.toDouble()*0.5,
+        height: puntos <= 50 ? 30 : puntos.toDouble()*0.5,
         curve: Curves.easeOutCirc,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

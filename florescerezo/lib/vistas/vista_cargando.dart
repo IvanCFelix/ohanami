@@ -37,6 +37,7 @@ class _VistaCargandoState extends State<VistaCargando> {
   Future validacion() async{
     RepositorioMongo mongo = RepositorioMongo();
     RepositorioLocal local = RepositorioLocal();
+    //local.eliminarUsuario();
     bool mongoconsultar = await mongo.inicializar();
     bool checkv = await local.registradoUsuario();
 

@@ -10,146 +10,7 @@ import 'usuario.dart';
 class RepositorioMongo extends Repositorio {
   late Db db;
   RepositorioMongo(){}
-/*
-  @override
-  Future<bool> eliminarUsuario({required Usuario usuario}) async {
-    bool check = false;
-    db = await Db.create(link);
-    await db.open();
-    var colexion = db.collection('usuarios');
-    colexion.find(await colexion.remove(where.eq('nombre', usuario.nombre.toString())).then((value) => check = true));
-    db.close();
-    return check;
-  }
 
-  @override
-  Future<List<Partida>> recuperarPartidas({ required Usuario usuario}) async {
-    List<Partida> partidas;
-    db = await Db.create(link);
-    await db.open();
-    var colexion = db.collection('usuarios');
-    var val = await colexion.findOne(where.eq('nombre', usuario.nombre.toString()));
-    await db.close();
-    val!.remove('_id');
-    Usuario x = Usuario.fromMap(val);
-    partidas = x.partidas;
-
-    print(partidas.toString());
-    return partidas;
-  }
-
-  @override
-  Future<bool> registradoUsuario({ required Usuario usuario}) async {
-    db = await Db.create(link);
-    await db.open();
-    var colexion = db.collection('usuarios');
-    var val = await colexion.find(where.eq('nombre', usuario.nombre.toString())).toList();
-    db.close();
-    if (val.isEmpty) {
-      return false; 
-    }
-    return true;
-  }
-
-  @override
-  Future<bool> registrarPartida({ required Partida partida, required Usuario usuario}) async {
-    bool check = false;
-    List<Partida> lista = await recuperarPartidas(usuario: usuario);
-    var partidas = jsonDecode(partida.toJson());
-    var index = lista.length;
-    db = await Db.create(link);
-    await db.open();
-    var colexion = db.collection('usuarios');
-  
-    if (lista.isEmpty) {
-    await colexion.update(await colexion.findOne(where.eq('nombre', usuario.nombre.toString())), 
-    SetStage({
-      'partidas': [partidas],
-    }).build()).then((value) => check = true);
-    }
-    await colexion.update(await colexion.findOne(where.eq('nombre', usuario.nombre.toString())), 
-    Push({'partidas': partidas}
-      ).build()).then((value) => check = true);
-    db.close();
-
-    return check;
-  }
-
-  @override
-  Future<bool> registrarUsuario({ required Usuario usuario}) async {
-    bool check = false;
-    db = await Db.create(link);
-    await db.open();
-    var colexion = db.collection('usuarios');
-    await colexion.insert(jsonDecode(usuario.toJson())).then((value) => check = true);
-    db.close();
-    return check;
-  }
-
-  @override
-  Future<bool> verificarInicioSesion({required Usuario usuario}) async {
-    db = await Db.create(link);
-    await db.open();
-    var conexion = db.collection('usuarios');
-    var val = await conexion.findOne(
-      where.eq('nombre', usuario.nombre.toString()).and(where.eq('clave', usuario.clave.toString())));
-    db.close();
-    if (val == null) {
-      return false;
-    }
-    return true;
-  }
-
-} 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
   Future<bool> inicializar() async{
     bool consultar = false;
     try {
@@ -208,7 +69,7 @@ class RepositorioMongo extends Repositorio {
     }
     return true;
   }
-  //despues del de arriba
+
   @override
   Future<bool> registrarUsuario({ required Usuario usuario}) async {
     bool consultar = false;

@@ -82,9 +82,9 @@ _campoDeTexto(_var, _color, index, cartas) {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:secondaryLightColor, //secondaryTextColor,
+      backgroundColor:secondaryLightColor,
       appBar: AppBar(
-        backgroundColor: primaryColor,//primaryColor,
+        backgroundColor: primaryColor,
         title: Text("Ronda 1",
         style: TextStyle(
           color: Colors.white

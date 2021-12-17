@@ -89,14 +89,3 @@ class RepositorioLocal{
     return consultar;
   } 
 }
-
-/*
-  Future<List<Partida>> recuperarPartidas() async {
-    List<Partida> partidas;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var respuesta =  prefs.getString('usuario');
-    var usuarioJson = jsonDecode(respuesta!);
-    Usuario usuario = Usuario.fromJson(usuarioJson);
-    return partidas = usuario.partidas;
-  }
-*/

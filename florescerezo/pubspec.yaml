@@ -33,3 +33,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/imagenes/akita_.jpg
+    - assets/imagenes/akita_flor.jpg
+    - assets/imagenes/akita_flores.jpg
+    - assets/imagenes/kawai.png
+    - assets/imagenes/logo_mercurio.png
+    - assets/imagenes/ohanami_logo.jpg

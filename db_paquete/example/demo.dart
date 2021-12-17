@@ -1,7 +1,5 @@
 import 'package:db_paquete/db_paquete.dart';
 import 'package:partida/partida.dart';
-import 'dart:convert';
-import 'package:mongo_dart/mongo_dart.dart';
 
 void main(List<String> args) async{
   RepositorioMongo mongo = RepositorioMongo();

@@ -1,10 +1,11 @@
 import 'dart:math';
 
+import 'package:florescerezo/bloc_ohanami/constantes.dart';
 import 'package:florescerezo/db/db_local.dart';
 import 'package:florescerezo/vistas/detalle_partida.dart';
 import 'package:florescerezo/vistas/vista_login.dart';
 import 'package:florescerezo/vistas/vista_nuevapartida.dart';
-import 'package:florescerezo/vistas/registro.dart';
+import 'package:florescerezo/vistas/vista_registro.dart';
 import 'package:flutter/material.dart';
 import 'package:db_paquete/db_paquete.dart';
 import 'package:partida/partida.dart';
@@ -37,13 +38,19 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
       check = await mongo.registradoUsuario(usuario: usuarioLocal);
       if (check == true) {
         bool checo = await mongo.reescribirPartidas(usuario: usuarioLocal);
-        print("Si se pudo");
+        print("Se guardaron las partidas exitosamente");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Se guardaron las partidas exitosamente")));
+
       } else {
         bool check2 = await mongo.registrarUsuario(usuario: usuarioLocal);
         print("Se pudo mejor");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Es tu primera partida?")));
+
       }
     } else {
       print("No hay conexion");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No hay conexion a la nube")));
+
     }
   }
 
@@ -51,10 +58,10 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
     var rng = new Random();
     int numero = rng.nextInt(3);
     switch (numero) {
-      case 0: return Image.network("https://static.wikia.nocookie.net/monster-strike-enjp/images/6/6e/3279.png/revision/latest/scale-to-width-down/398?cb=20180401003316");
-      case 1: return Image.network("https://i.pinimg.com/originals/a0/50/92/a050921c3b4d7372b6fc77254c9ab283.jpg");
-      case 2: return Image.network("https://i.pinimg.com/564x/ea/fa/e2/eafae27c83386418a8ed895e02a23c8c.jpg");
-      case 3: return Image.network("https://i.pinimg.com/originals/bf/bd/db/bfbddb3f4810e2bc608ff2c86e64817c.jpg");
+      case 0: return Image.asset(kawai);
+      case 1: return Image.asset(akita_flor);
+      case 2: return Image.asset(akita_flores);
+      case 3: return Image.asset(akita);
     }
   }
   @override
@@ -87,7 +94,7 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
                 DrawerHeader(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage("http://mercurio.com.es/images/cabecero_ohanami_2018.jpg?crc=391650972"),
+                      image: AssetImage(ohanami_logo),
                     ),
                     color: secondaryDarkColor,
                   ),
@@ -107,9 +114,7 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
                 ),
                 snapshot.data!.nombre.isNotEmpty ?
                 _sesion()
-
                 : 
-
                 _registro(),
                  const Divider(
                   height: 1,
@@ -118,14 +123,11 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
                 const SizedBox(
                   height: 40,
                 ),
-                Image.network("http://mercurio.com.es/images/logo-mercurio-2015-u357336.png?crc=113239139")
+                Image.asset(logo_mrecurio)
               ],
             ),
           )
-
-        //Lista /* */
         : CircularProgressIndicator();
-        // cargando
         },
       ),
       appBar: AppBar(
@@ -145,7 +147,6 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
             child: Column(
               children: [
                 _imagenAleatoria(),
-                //Image.network("https://static.wikia.nocookie.net/monster-strike-enjp/images/6/6e/3279.png/revision/latest/scale-to-width-down/398?cb=20180401003316"),
                 SizedBox(
                   height: 20,
                 ),
@@ -233,7 +234,6 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        // print(index);
                         await local
                             .eliminarPartida(indice: reverseIndex)
                             .whenComplete(() {
@@ -278,24 +278,42 @@ return ListTile(
           leading: Icon(Icons.cloud_upload),
           title: Text("Guardar partidas en la nube"),
           onTap: () async {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Iniciando..")));
             sincronizarDB();
-            Navigator.push(context, MaterialPageRoute(builder: (context) =>  VistaLogin()));
           },
         ),
         ListTile(
           leading: Icon(Icons.logout),
           title: Text("Cerrar sesion"),
-          onTap: () async {
-            print("Estas seguro de eliminar el usuario");
-            print("Se eliminara todo si no sincronizaste al db");
-            bool check = await local.eliminarUsuario();
-            if (check == true) {
-              print("Se elimino el usuario");
-            }
-            Navigator.push(context, MaterialPageRoute(builder: (context) =>  VistaLogin()));
-          },
+          onTap: () => alertDialog(context),
         ),
       ],
     );
   }
+  void alertDialog(BuildContext context) {
+  var alert = AlertDialog(
+      title: Text('¿Estas seguro de cerrar la sesion?'),
+      content:
+          Text("Se eliminarán todas las partidas que no estén en la nube"),
+      actions: <Widget>[
+        ElevatedButton(
+            child: Text("Aceptar"),
+            onPressed: () async {
+              bool check = await local.eliminarUsuario();
+            if (check == true) {
+              print("Se elimino el usuario");
+            }
+            Navigator.push(context, MaterialPageRoute(builder: (context) =>  VistaLogin()));
+            }),
+
+        ElevatedButton(
+            child: Text("Cancelar"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
+      ],
+    );
+ showDialog(context: context, builder: (BuildContext context) => alert);
+}
+
 }

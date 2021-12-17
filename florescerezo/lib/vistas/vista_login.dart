@@ -1,8 +1,9 @@
 import 'package:db_paquete/db_paquete.dart';
+import 'package:florescerezo/bloc_ohanami/constantes.dart';
 import 'package:florescerezo/db/db_local.dart';
 import 'package:florescerezo/estilos.dart';
 import 'package:florescerezo/vistas/lista_partida.dart';
-import 'package:florescerezo/vistas/registro.dart';
+import 'package:florescerezo/vistas/vista_registro.dart';
 import 'package:florescerezo/vistas/vista_cargando.dart';
 import 'package:flutter/material.dart';
 class VistaLogin extends StatelessWidget {
@@ -57,7 +58,7 @@ VistaLogin({ Key? key }) : super(key: key);
               children: [
                   Container(
                     padding: const EdgeInsets.all(10.0),
-                    child: Image.network('http://mercurio.com.es/images/cabecero_ohanami_2018.jpg?crc=391650972',
+                    child: Image.asset(ohanami_logo,
                     height: 100.0,
                     ),
                   ),
@@ -69,8 +70,7 @@ VistaLogin({ Key? key }) : super(key: key);
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             icon: Icon(Icons.account_circle),
-                            hintText: 'ejemplo@correo.com',
-                            labelText: 'Correo electronico',
+                            labelText: 'Nombre de usuario',
                           ),
                           onChanged:(vaule){
           
@@ -87,7 +87,6 @@ VistaLogin({ Key? key }) : super(key: key);
                           keyboardType: TextInputType.visiblePassword,
                           decoration: InputDecoration(
                             icon: Icon(Icons.password),
-                            hintText: 'Contraseña',
                             labelText: 'Contraseña',
                           ),
                           onChanged:(vaule){
@@ -100,7 +99,9 @@ VistaLogin({ Key? key }) : super(key: key);
                   padding: const EdgeInsets.all(8.0),
                   child:ElevatedButton(
                         onPressed: () async{
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Iniciando conexion")));
                           IniciarSesion(context);
+                          
                         },
                         child: Container(
                           padding: EdgeInsets.all(15.0),
@@ -152,6 +153,7 @@ VistaLogin({ Key? key }) : super(key: key);
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                         onPressed: () async {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Bienvenido")));
                           sinconexion();
                           Navigator.push(context,
                           MaterialPageRoute(builder: (context) => VistaListaPartidas()));

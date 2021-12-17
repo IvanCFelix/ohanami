@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:db_paquete/db_paquete.dart';
+import 'package:florescerezo/bloc_ohanami/constantes.dart';
 import 'package:florescerezo/db/db_local.dart';
 import 'package:florescerezo/estilos.dart';
 import 'package:florescerezo/vistas/lista_partida.dart';
@@ -61,9 +62,15 @@ class _VistaRegistroState extends State<VistaRegistro> {
     }
     if (consultar == false) {
       Usuario nuevoUsuario = Usuario(nombre: nombre.text, correo: correo.text, clave: clave.text, partidas: []);
+      bool usuariomongo = await mongo.registradoUsuario(usuario: nuevoUsuario);
+      
+      if (usuariomongo) {  
       bool consultar2 = await local.registrarUsuario(usuario: nuevoUsuario);
+      
       if (consultar2 == true) {
         bool usuarioRegistradoConExito= await mongo.registrarUsuario(usuario: nuevoUsuario);
+      }
+
       }
     }
   }
@@ -75,6 +82,8 @@ class _VistaRegistroState extends State<VistaRegistro> {
     bool nombreUsuarioEnUso = await mongo.registradoUsuario(usuario:nuevoUsuario);
     if (nombreUsuarioEnUso == true) {
       print("Este nombre de usuario ya esta registrado");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Este nombre de usuario ya esta registrado")));  
+
     }
     if(nombreUsuarioEnUso == false)
     {
@@ -86,7 +95,15 @@ class _VistaRegistroState extends State<VistaRegistro> {
         RepositorioMongo mongo=RepositorioMongo();
 
         bool usuarioRegistradoConExito= await mongo.registrarUsuario(usuario: usuarioLocal);
-            usuarioRegistradoConExito == true ? print("usuario registrado en mongo") : print("hubo un error al registrar");
+            if (usuarioRegistradoConExito == true) {
+            print("usuario registrado en mongo");
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Usuario registrado en mongo")));  
+            }
+            if (usuarioRegistradoConExito == false) {
+            print("hubo un error al registrar");
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error al registrar")));  
+              
+            }
       Navigator.push( context, MaterialPageRoute(builder: (context) => VistaListaPartidas()));
       }
     }
@@ -104,6 +121,8 @@ class _VistaRegistroState extends State<VistaRegistro> {
             child: Column(
               children:
                [
+                Image.asset(logo_mrecurio),
+
                  TextFormField(
                     keyboardType: TextInputType.name,
                    controller: nombre,
@@ -156,6 +175,7 @@ class _VistaRegistroState extends State<VistaRegistro> {
                   onPressed: (){
                     print("empezo");
                     validarLocal();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Iniciando conexion")));
                   }, 
                   child:const Text("Registrarse",
                   style: TextStyle(
