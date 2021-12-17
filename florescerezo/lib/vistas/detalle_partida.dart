@@ -17,9 +17,14 @@ class DetallePartida extends StatefulWidget {
 class _DetallePartidaState extends State<DetallePartida> {
   _DetallePartidaState(this.partida);
   Partida partida;
-  List<charts.Series<CRonda1, String>> _seriesData1 = [];
-  List<charts.Series<CRonda2, String>> _seriesData2 = [];
-  List<charts.Series<CRonda3, String>> _seriesData3 = [];
+  List<charts.Series<CRonda1, String>> _seriesCartas1 = [];
+  List<charts.Series<CRonda2, String>> _seriesCartas2 = [];
+  List<charts.Series<CRonda3, String>> _seriesCartas3 = [];
+  List<charts.Series<PuntuacionJugador, String>> _seriesPuntosTotales = [];
+  List<charts.Series<PuntuacionJugador, String>> _seriesPuntos1 = [];
+  List<charts.Series<PuntuacionJugador, String>> _seriesPuntos2 = [];
+  List<charts.Series<PuntuacionJugador, String>> _seriesPuntos3 = [];
+  
   List<PuntuacionJugador> prDesenlace = [];
   List<PuntuacionJugador> puntuacionesRondaDesenlace = [];
   List<PuntuacionJugador> puntuacionesronda1 = [];
@@ -29,7 +34,7 @@ class _DetallePartidaState extends State<DetallePartida> {
   List<CRonda2> cartasRonda2 = [];
   List<CRonda3> cartasRonda3 = [];
 
-  List<int> puntos = [50,50,50,50];
+  List<int> puntos = [30,30,30,30];
   List<Color> colores = [Colors.grey,Colors.grey,Colors.grey,Colors.grey];
   List<String> nombres = [" ? "," ? "," ? "," ? ",];
 
@@ -42,6 +47,10 @@ class _DetallePartidaState extends State<DetallePartida> {
     _generarDataR1();
     _generarDataR2();
     _generarDataR3();
+    _puntosTotales();
+    _puntosRonda1();
+    _puntosRonda2();
+    _puntosRonda3();
   }
 
   void calcularPuntuacionesPartida(){
@@ -67,7 +76,7 @@ class _DetallePartidaState extends State<DetallePartida> {
 
 
   _generarDataR1() {
-    _seriesData1.add(
+    _seriesCartas1.add(
       charts.Series(
         domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
         measureFn: (partida, _) =>partida.cuantasAzules ,
@@ -81,7 +90,7 @@ class _DetallePartidaState extends State<DetallePartida> {
     );
   }
   _generarDataR2() {
-    _seriesData2.add(
+    _seriesCartas2.add(
       charts.Series(
         domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
         measureFn: (partida, _) =>partida.cuantasAzules ,
@@ -93,7 +102,7 @@ class _DetallePartidaState extends State<DetallePartida> {
             charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
       ), 
     );
-    _seriesData2.add(
+    _seriesCartas2.add(
       charts.Series(
         domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
         measureFn: (partida, _) =>partida.cuantasVerdes ,
@@ -107,7 +116,7 @@ class _DetallePartidaState extends State<DetallePartida> {
     );
   }
   _generarDataR3() {
-    _seriesData3.add(
+    _seriesCartas3.add(
       charts.Series(
         domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
         measureFn: (partida, _) =>partida.cuantasAzules,
@@ -119,7 +128,7 @@ class _DetallePartidaState extends State<DetallePartida> {
             charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
       ), 
     );
-    _seriesData3.add(
+    _seriesCartas3.add(
       charts.Series(
         domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
         measureFn: (partida, _) =>partida.cuantasVerdes,
@@ -131,7 +140,7 @@ class _DetallePartidaState extends State<DetallePartida> {
             charts.ColorUtil.fromDartColor(Color(0xFF33FF41)),
       ), 
     );
-    _seriesData3.add(
+    _seriesCartas3.add(
       charts.Series(
         domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
         measureFn: (partida, _) =>partida.cuantasRosas,
@@ -143,7 +152,7 @@ class _DetallePartidaState extends State<DetallePartida> {
             charts.ColorUtil.fromDartColor(Color(0xFFBE2A7C)),
       ), 
     );
-    _seriesData3.add(
+    _seriesCartas3.add(
       charts.Series(
         domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
         measureFn: (partida, _) =>partida.cuantasNegras,
@@ -156,6 +165,151 @@ class _DetallePartidaState extends State<DetallePartida> {
       ), 
     );
   }
+
+  _puntosTotales(){
+    _seriesPuntosTotales.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.porAzules ,
+        id: '1',
+        data: puntuacionesronda1,
+        seriesCategory: '1',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (PuntuacionJugador partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
+      ), 
+    );
+    _seriesPuntosTotales.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.porVerdes ,
+        id: '1',
+        data: puntuacionesronda2,
+        seriesCategory: '2',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (PuntuacionJugador partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF33FF41)),
+      ), 
+    );
+    _seriesPuntosTotales.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.porRosas ,
+        id: '1',
+        data: puntuacionesronda3,
+        seriesCategory: '3',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (PuntuacionJugador partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFFBE2A7C)),
+      ), 
+    );
+    _seriesPuntosTotales.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.porNegras ,
+        id: '1',
+        data: puntuacionesronda3,
+        seriesCategory: '4',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (PuntuacionJugador partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF555555)),
+      ), 
+    );
+  }
+
+  _puntosRonda1(){
+    _seriesPuntos1.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.porAzules,
+        id: '1',
+        data: puntuacionesronda1,
+        seriesCategory: '1',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (PuntuacionJugador partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
+      ), 
+    );
+  }
+
+  _puntosRonda2(){
+    _seriesPuntos2.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.porAzules,
+        id: '1',
+        data: puntuacionesronda2,
+        seriesCategory: '1',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (PuntuacionJugador partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
+      ), 
+    );
+    _seriesPuntos2.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) => partida.porVerdes,
+        id: '1',
+        data: puntuacionesronda2,
+        seriesCategory: '2',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (PuntuacionJugador partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF33FF41)),
+      ), 
+    );
+  }
+
+  _puntosRonda3(){
+    _seriesPuntos3.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.porAzules,
+        id: '1',
+        data: puntuacionesronda3,
+        seriesCategory: '1',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (PuntuacionJugador partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
+      ), 
+    );
+    _seriesPuntos3.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) => partida.porVerdes,
+        id: '1',
+        data: puntuacionesronda3,
+        seriesCategory: '2',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (PuntuacionJugador partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF33FF41)),
+      ), 
+    );
+    _seriesPuntos3.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.porRosas ,
+        id: '1',
+        data: puntuacionesronda3,
+        seriesCategory: '3',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (PuntuacionJugador partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFFBE2A7C)),
+      ), 
+    );
+    _seriesPuntos3.add(
+      charts.Series(
+        domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
+        measureFn: (partida, _) =>partida.porNegras ,
+        id: '1',
+        data: puntuacionesronda3,
+        seriesCategory: '4',
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (PuntuacionJugador partida, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xFF555555)),
+      ), 
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -210,7 +364,8 @@ class _DetallePartidaState extends State<DetallePartida> {
                     color: Colors.yellowAccent,
                     child: Column(
                       children: [
-
+                        Expanded(child: _graficaPuntosTotales()
+                        )
                       ],
                     ),
                   ))
@@ -228,7 +383,19 @@ class _DetallePartidaState extends State<DetallePartida> {
                   ),
                   Container(
                     height: 200,
-                    child: _graficaRonda1(),
+                    child: _graficaCartasRonda1(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text("Cantidad de cartas de la ronda 1",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                    ),
+                  ),
+                  Container(
+                    height: 200,
+                    child: _graficaPuntosRonda1(),
                   ),
                 ],
               ),
@@ -244,7 +411,19 @@ class _DetallePartidaState extends State<DetallePartida> {
                   ),
                   Container(
                     height: 200,
-                    child: _graficaRonda2(),
+                    child: _graficaCartasRonda2(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text("Cantidad de puntos de la ronda 2",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                    ),
+                  ),
+                  Container(
+                    height: 200,
+                    child: _graficaPuntosRonda2(),
                   ),
                 ],
               ),
@@ -260,9 +439,20 @@ class _DetallePartidaState extends State<DetallePartida> {
                   ),
                   Container(
                     height: 200,
-                    child: _graficaRonda3(),
+                    child: _graficaCartasRonda3(),
                   ),
-                  
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text("Cantidad de puntos de la ronda 3",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                    ),
+                  ),
+                  Container(
+                    height: 200,
+                    child: _graficaPuntosRonda3(),
+                  ),
                 ],
               ),
             ],
@@ -271,34 +461,36 @@ class _DetallePartidaState extends State<DetallePartida> {
     );
   }
 
-_graficaRonda3(){
+_graficaCartasRonda3(){
   return Container(
     color: Colors.white,
     child: charts.BarChart(
-      _seriesData3,
+      _seriesCartas3,
       animate: true,
       barGroupingType: charts.BarGroupingType.grouped,
       animationDuration: Duration(seconds: 1),
     ),
   );
 }
-_graficaRonda2(){
+
+_graficaCartasRonda2(){
   return Container(
     color: Colors.white,
     child: charts.BarChart(
-      _seriesData2,
+      _seriesCartas2,
       animate: true,
       barGroupingType: charts.BarGroupingType.grouped,
       animationDuration: Duration(seconds: 1),
     ),
   );
 }
-_graficaRonda1(){
+
+_graficaCartasRonda1(){
   return Container(
     color: Colors.white,
     height: 60,
     child: charts.BarChart(
-      _seriesData1,
+      _seriesCartas1,
       animate: true,
       vertical: true,
       barGroupingType: charts.BarGroupingType.grouped,
@@ -306,6 +498,63 @@ _graficaRonda1(){
     ),
   );
 }
+
+_graficaPuntosTotales(){
+    return Container(
+    color: Colors.white,
+    height: 60,
+    child: charts.BarChart(
+      _seriesPuntosTotales,
+      animate: true,
+      vertical: true,
+      barGroupingType: charts.BarGroupingType.grouped,
+      animationDuration: Duration(seconds: 5),
+    ),
+  );
+}
+
+_graficaPuntosRonda1(){
+    return Container(
+    color: Colors.white,
+    height: 60,
+    child: charts.BarChart(
+      _seriesPuntos1,
+      animate: true,
+      vertical: true,
+      barGroupingType: charts.BarGroupingType.grouped,
+      animationDuration: Duration(seconds: 1),
+    ),
+  );
+}
+
+_graficaPuntosRonda2(){
+    return Container(
+    color: Colors.white,
+    height: 60,
+    child: charts.BarChart(
+      _seriesPuntos2,
+      animate: true,
+      vertical: true,
+      barGroupingType: charts.BarGroupingType.grouped,
+      animationDuration: Duration(seconds: 1),
+    ),
+  );
+}
+
+_graficaPuntosRonda3(){
+    return Container(
+    color: Colors.white,
+    height: 60,
+    child: charts.BarChart(
+      _seriesPuntos3,
+      animate: true,
+      vertical: true,
+      barGroupingType: charts.BarGroupingType.grouped,
+      animationDuration: Duration(seconds: 1),
+    ),
+  );
+}
+
 _vista(puntos, color, nombre, icon){
     return Center(
       child: AnimatedContainer(
@@ -328,21 +577,21 @@ _vista(puntos, color, nombre, icon){
               ),
               Expanded(child: Container(
                 child: Center(
-                  child: Text(puntos == 50? "0" : puntos.toString()+" pts",
+                  child: Text(puntos == 30? "0" : puntos.toString(),
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.white
                   ),
                   ),
                 ),
-              )
+                )
               )
             ]
           ),
         duration: Duration(milliseconds:1000),
         width: 200,
-        height: puntos <= 50 ? 60 : puntos.toDouble()*0.5,
-        curve: Curves.ease,
+        height: puntos <= 30 ? 30 : puntos.toDouble()*0.5,
+        curve: Curves.easeOutCirc,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: color
@@ -351,6 +600,7 @@ _vista(puntos, color, nombre, icon){
       ),
     );
   }
+
 _perdedores(perdedores){
     switch (perdedores) {
       case 1: 

@@ -2,6 +2,7 @@ import 'package:db_paquete/db_paquete.dart';
 import 'package:florescerezo/db/db_local.dart';
 import 'package:florescerezo/estilos.dart';
 import 'package:florescerezo/vistas/lista_partida.dart';
+import 'package:florescerezo/vistas/registro.dart';
 import 'package:florescerezo/vistas/vista_cargando.dart';
 import 'package:flutter/material.dart';
 class VistaLogin extends StatelessWidget {
@@ -28,11 +29,13 @@ VistaLogin({ Key? key }) : super(key: key);
         else
         {
         print("Datos de inicio de sesion incorrectos");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Datos de inicio de sesion incorrectos")));
         }
       }
       else
       {
         print("No hay conexion");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No hay conexion")));
 
       }
     }
@@ -118,6 +121,33 @@ VistaLogin({ Key? key }) : super(key: key);
                             ),
                         )
                   ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                        onPressed: () async {
+                          sinconexion();
+                          Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => VistaRegistro()));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(15.0),
+                          child: Text('Registrarse',
+                          style: TextStyle(
+                            color: secondaryTextColor,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          ),
+                        ),
+                        style:ElevatedButton.styleFrom(
+                          elevation: 10.0, 
+                          textStyle: const TextStyle(
+                            fontSize: 20,
+                            
+                      )
+                    ),
+                  )
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(

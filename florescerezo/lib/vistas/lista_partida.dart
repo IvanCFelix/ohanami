@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:florescerezo/db/db_local.dart';
 import 'package:florescerezo/vistas/detalle_partida.dart';
-import 'package:florescerezo/vistas/login.dart';
+import 'package:florescerezo/vistas/vista_login.dart';
 import 'package:florescerezo/vistas/vista_nuevapartida.dart';
 import 'package:florescerezo/vistas/registro.dart';
 import 'package:flutter/material.dart';
@@ -137,7 +137,7 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
         builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
           return snapshot.hasData ?
           snapshot.hasError ?
-          const Text("error al obtener datos")
+          const Text("Error al obtener datos")
           :
           snapshot.data!.partidas.isEmpty ?
           Padding(
@@ -175,6 +175,7 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
     return ListView.builder(
         itemCount: snapshot.data!.partidas.length,
         itemBuilder: (BuildContext context, int index) {
+          int partida =index+1;
           int reverseIndex = snapshot.data!.partidas.length - 1 - index;
           print(reverseIndex);
           FasePuntuacion.Ronda1;
@@ -201,7 +202,7 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
               children: [
                 ListTile(
                   leading: Icon(Icons.auto_awesome),
-                  title: const Text('Nombre de la partida (Opcional)'),
+                  title:  Text('Partida '+partida.toString()),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

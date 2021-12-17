@@ -58,7 +58,7 @@ class _Vista_NuevaPartidaState extends State<Vista_NuevaPartida> {
       iconos.add( FontAwesomeIcons.microchip);
       iconos.add(FontAwesomeIcons.code); 
       iconos.add(FontAwesomeIcons.bug);
-      iconos.add(FontAwesomeIcons.heartbeat);
+      iconos.add(FontAwesomeIcons.heart);
       iconos.add(FontAwesomeIcons.chessPawn);
       iconos.add( FontAwesomeIcons.featherAlt);
       iconos.add(FontAwesomeIcons.dragon); 

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:db_paquete/db_paquete.dart';
 import 'package:florescerezo/db/db_local.dart';
 import 'package:florescerezo/vistas/lista_partida.dart';
-import 'package:florescerezo/vistas/login.dart';
+import 'package:florescerezo/vistas/vista_login.dart';
 import 'package:flutter/material.dart';
 
 

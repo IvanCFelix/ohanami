@@ -156,9 +156,12 @@ class _VistaRegistroState extends State<VistaRegistro> {
                   onPressed: (){
                     print("empezo");
                     validarLocal();
-                    //validarRegistro();
                   }, 
-                  child:Text("Registrar"),
+                  child:const Text("Registrarse",
+                  style: TextStyle(
+                    color: secondaryTextColor
+                  ),
+                  ),
                   )
               ],
             ),
