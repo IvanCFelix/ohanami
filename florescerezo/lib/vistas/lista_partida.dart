@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:florescerezo/db/db_local.dart';
 import 'package:florescerezo/vistas/detalle_partida.dart';
 import 'package:florescerezo/vistas/login.dart';
-import 'package:florescerezo/vistas/nuevapartida.dart';
+import 'package:florescerezo/vistas/vista_nuevapartida.dart';
 import 'package:florescerezo/vistas/registro.dart';
 import 'package:flutter/material.dart';
 import 'package:db_paquete/db_paquete.dart';
@@ -68,7 +68,7 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
           color: secondaryTextColor,
         ),
         onPressed: () {
-          Navigator.push(context,MaterialPageRoute(builder: (context) => const NuevaPartida()));
+          Navigator.push(context,MaterialPageRoute(builder: (context) => const Vista_NuevaPartida()));
             }
       ),
       drawer: FutureBuilder(
@@ -76,11 +76,8 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
         builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
           return snapshot.hasData ? snapshot.hasError ? 
           const Text("Error")
-          // vista error
-
           : Drawer(
             child: ListView(
-              // Important: Remove any padding from the ListView.
               padding: EdgeInsets.zero,
               children: [
                 Container(
@@ -114,11 +111,11 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
                 : 
 
                 _registro(),
-                 Divider(
+                 const Divider(
                   height: 1,
                   thickness: 1,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Image.network("http://mercurio.com.es/images/logo-mercurio-2015-u357336.png?crc=113239139")
@@ -139,18 +136,10 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
         future: local.recuperarUsuario(),
         builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
           return snapshot.hasData ?
-          // data SÍ, entonces
-          // preguntar si tiene error
           snapshot.hasError ?
-          // error sí
-          // vista error
           const Text("error al obtener datos")
           :
-          // error no
-          // vista lista
           snapshot.data!.partidas.isEmpty ?
-          // data sí, pero
-          // está vacía
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
@@ -174,12 +163,8 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
             ),
           )
           :
-          // data sí, pero
-          // tiene datos
           _listaDatos(snapshot)
           :
-          // data NO, entonces
-          // vista cargando
           const CircularProgressIndicator();
         }
       )
@@ -191,7 +176,7 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
         itemCount: snapshot.data!.partidas.length,
         itemBuilder: (BuildContext context, int index) {
           int reverseIndex = snapshot.data!.partidas.length - 1 - index;
-          print(reverseIndex); // verificador
+          print(reverseIndex);
           FasePuntuacion.Ronda1;
           FasePuntuacion.Ronda2;
           FasePuntuacion.Ronda3;
@@ -210,6 +195,7 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
           } while (nombres.length < 4);
 
           return Card(
+            elevation: 10.0,
             clipBehavior: Clip.antiAlias,
             child: Column(
               children: [
@@ -292,7 +278,7 @@ return ListTile(
           title: Text("Guardar partidas en la nube"),
           onTap: () async {
             sincronizarDB();
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const VistaLogin()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) =>  VistaLogin()));
           },
         ),
         ListTile(
@@ -305,7 +291,7 @@ return ListTile(
             if (check == true) {
               print("Se elimino el usuario");
             }
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const VistaLogin()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) =>  VistaLogin()));
           },
         ),
       ],

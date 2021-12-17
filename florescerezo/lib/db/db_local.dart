@@ -5,51 +5,42 @@ import 'package:shared_preferences/shared_preferences.dart';
 class RepositorioLocal{
   
   Future<bool> eliminarUsuario() async {
-    bool check = false;
+    late bool consultar;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    check = await prefs.clear().then((bool success) {
+    consultar = await prefs.clear().then((bool success) {
         return success;
       });
-    return check;
-  }
-
-  Future<List<Partida>> recuperarPartidas() async {
-    List<Partida> partidas;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var respuesta =  prefs.getString('usuario');
-    var usuarioJson = jsonDecode(respuesta!);
-    Usuario usuario = Usuario.fromJson(usuarioJson);
-    return partidas = usuario.partidas;
+    return consultar;
   }
 
   Future<bool> registradoUsuario() async {
-    late bool check;
+    late bool consultar;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var respuesta =  prefs.getString('usuario');
     if (respuesta == null){
-     return check = false;
+     return consultar = false;
     }
-    return check = true;
+    return consultar = true;
   }
 
   Future<bool> registrarPartida({required Partida partida}) async {
-    bool check;
+    late bool consultar;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var respuesta =  prefs.getString('usuario');
-    var usuarioJson = jsonDecode(respuesta!);
-    Usuario usuario = Usuario.fromJson(usuarioJson);
+    var respuestaJson = jsonDecode(respuesta!);
+    Usuario usuario = Usuario.fromJson(respuestaJson);
     usuario.partidas.add(partida);
-    check = await registrarUsuario(usuario: usuario);
-    return check;
+    consultar = await registrarUsuario(usuario: usuario);
+    return consultar;
   }
 
   Future<bool> registrarUsuario({required Usuario usuario}) async {
+    late bool consultar;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool check;
-    check = await prefs.setString('usuario', jsonEncode(usuario.toJson())).then((bool success) {
-        return success;
+    consultar = await prefs.setString('usuario', jsonEncode(usuario.toJson())).then((bool logro) {
+        return logro;
       });
-    return check;
+    return consultar;
   }
   
   Future<Usuario> recuperarUsuario() async {
@@ -60,44 +51,52 @@ class RepositorioLocal{
     return usuario;
   }
     
-  Future<bool> 
-  reescribirUsuario({required Usuario usuario})async{
-    bool check = false;
+  Future<bool> reescribirUsuario({required Usuario usuario})async{
+    bool consultar;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    check = await prefs.clear().then((bool success) {
-        return success;
+    consultar = await prefs.clear().then((bool logro) {
+        return logro;
       });
-    if(check == true){
-      check = await prefs.setString('usuario', jsonEncode(usuario.toJson())).then((bool success){
-        return success;
+    if(consultar == true){
+      consultar = await prefs.setString('usuario', jsonEncode(usuario.toJson())).then((bool logro){
+        return logro;
       });
     }
-    return check;
+    return consultar;
   }
-// cuando te registras
-  Future<bool> actualizarDatosUsuario(
-    {required Usuario usuarioNuevo}
-    ) async{
-    bool check = false;
+
+  Future<bool> actualizarDatosUsuario({required Usuario usuarioNuevo}) async{
+    late bool consultar;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var respuesta =  prefs.getString('usuario');
-    var usuarioJson = jsonDecode(respuesta!);
-    Usuario usuarioViejo = Usuario.fromJson(usuarioJson);
+    var respuestaJson = jsonDecode(respuesta!);
+    Usuario usuarioViejo = Usuario.fromJson(respuestaJson);
     usuarioViejo.nombre = usuarioNuevo.nombre;
     usuarioViejo.clave = usuarioNuevo.clave;
     usuarioViejo.correo = usuarioNuevo.correo;
-    check = await  reescribirUsuario(usuario: usuarioViejo);
-    return check;
+    consultar = await  reescribirUsuario(usuario: usuarioViejo);
+    return consultar;
   }
 
   Future<bool> eliminarPartida({required int indice}) async{
-    bool check = false;
+    late bool consultar;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var respuesta =  prefs.getString('usuario');
+    var respuestaJson = jsonDecode(respuesta!);
+    Usuario usuarioViejo = Usuario.fromJson(respuestaJson);
+    usuarioViejo.partidas.removeAt(indice);
+    consultar = await  reescribirUsuario(usuario: usuarioViejo);
+    return consultar;
+  } 
+}
+
+/*
+  Future<List<Partida>> recuperarPartidas() async {
+    List<Partida> partidas;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var respuesta =  prefs.getString('usuario');
     var usuarioJson = jsonDecode(respuesta!);
-    Usuario usuarioViejo = Usuario.fromJson(usuarioJson);
-    usuarioViejo.partidas.removeAt(indice);
-    check = await  reescribirUsuario(usuario: usuarioViejo);
-    return check;
-  } 
-}
+    Usuario usuario = Usuario.fromJson(usuarioJson);
+    return partidas = usuario.partidas;
+  }
+*/

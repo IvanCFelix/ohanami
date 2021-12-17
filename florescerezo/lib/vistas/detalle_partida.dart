@@ -21,6 +21,7 @@ class _DetallePartidaState extends State<DetallePartida> {
   List<charts.Series<CRonda2, String>> _seriesData2 = [];
   List<charts.Series<CRonda3, String>> _seriesData3 = [];
   List<PuntuacionJugador> prDesenlace = [];
+  List<PuntuacionJugador> puntuacionesRondaDesenlace = [];
   List<PuntuacionJugador> puntuacionesronda1 = [];
   List<PuntuacionJugador> puntuacionesronda2 = [];
   List<PuntuacionJugador> puntuacionesronda3 = [];
@@ -38,17 +39,22 @@ class _DetallePartidaState extends State<DetallePartida> {
     super.initState();
     calcularPuntuacionesPartida();  
     ordenar();
+    _generarDataR1();
+    _generarDataR2();
+    _generarDataR3();
   }
+
   void calcularPuntuacionesPartida(){
     puntuacionesronda1 = partida.puntos(ronda: FasePuntuacion.Ronda1);
     puntuacionesronda2 = partida.puntos(ronda: FasePuntuacion.Ronda2);
     puntuacionesronda3 = partida.puntos(ronda: FasePuntuacion.Ronda3);
     prDesenlace = partida.puntos(ronda: FasePuntuacion.desenlace);
+    puntuacionesRondaDesenlace = partida.puntos(ronda: FasePuntuacion.desenlace);
   }
 
    void  ordenar(){
-     prDesenlace.sort((a, b) => a.total.compareTo(b.total));
-     var listaRevez = prDesenlace.reversed;
+     puntuacionesRondaDesenlace.sort((a, b) => a.total.compareTo(b.total));
+     var listaRevez = puntuacionesRondaDesenlace.reversed;
      print(listaRevez.elementAt(0).total);
      Future.delayed(Duration(seconds: 2)).then((value) => setState(() {
      for (var i = 0; i < listaRevez.length; i++) {
@@ -91,7 +97,7 @@ class _DetallePartidaState extends State<DetallePartida> {
       charts.Series(
         domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
         measureFn: (partida, _) =>partida.cuantasVerdes ,
-        id: '2',
+        id: '3',
         data: partida.puntuacionesRonda2,
         seriesCategory: '22',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
@@ -105,7 +111,7 @@ class _DetallePartidaState extends State<DetallePartida> {
       charts.Series(
         domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
         measureFn: (partida, _) =>partida.cuantasAzules,
-        id: '3',
+        id: '4',
         data: partida.puntuacionesRonda3,
         seriesCategory: '31',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
@@ -117,7 +123,7 @@ class _DetallePartidaState extends State<DetallePartida> {
       charts.Series(
         domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
         measureFn: (partida, _) =>partida.cuantasVerdes,
-        id: '3',
+        id: '5',
         data: partida.puntuacionesRonda3,
         seriesCategory: '32',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
@@ -129,19 +135,19 @@ class _DetallePartidaState extends State<DetallePartida> {
       charts.Series(
         domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
         measureFn: (partida, _) =>partida.cuantasRosas,
-        id: '3',
+        id: '6',
         data: partida.puntuacionesRonda3,
         seriesCategory: '33',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (CRonda3 partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF870039)),
+            charts.ColorUtil.fromDartColor(Color(0xFFBE2A7C)),
       ), 
     );
     _seriesData3.add(
       charts.Series(
         domainFn: (partida, _) =>  partida.jugador.nombre.toString(),
         measureFn: (partida, _) =>partida.cuantasNegras,
-        id: '3',
+        id: '7',
         data: partida.puntuacionesRonda3,
         seriesCategory: '34',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
@@ -150,8 +156,6 @@ class _DetallePartidaState extends State<DetallePartida> {
       ), 
     );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +210,7 @@ class _DetallePartidaState extends State<DetallePartida> {
                     color: Colors.yellowAccent,
                     child: Column(
                       children: [
-                        
+
                       ],
                     ),
                   ))
@@ -216,7 +220,11 @@ class _DetallePartidaState extends State<DetallePartida> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Text("Cantidad de cartas de la ronda 1"),
+                    child: Text("Cantidad de cartas de la ronda 1",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                    ),
                   ),
                   Container(
                     height: 200,
@@ -224,11 +232,38 @@ class _DetallePartidaState extends State<DetallePartida> {
                   ),
                 ],
               ),
-              Center(
-                child: _graficaRonda2(),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text("Cantidad de cartas de la ronda 2",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                    ),
+                  ),
+                  Container(
+                    height: 200,
+                    child: _graficaRonda2(),
+                  ),
+                ],
               ),
-              Center(
-                child: _graficaRonda3(),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text("Cantidad de cartas de la ronda 3",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                    ),
+                  ),
+                  Container(
+                    height: 200,
+                    child: _graficaRonda3(),
+                  ),
+                  
+                ],
               ),
             ],
           ),
@@ -236,42 +271,42 @@ class _DetallePartidaState extends State<DetallePartida> {
     );
   }
 
- _graficaRonda3(){
-   _generarDataR3();
+_graficaRonda3(){
   return Container(
+    color: Colors.white,
     child: charts.BarChart(
       _seriesData3,
       animate: true,
-      barGroupingType: charts.BarGroupingType.groupedStacked,
+      barGroupingType: charts.BarGroupingType.grouped,
       animationDuration: Duration(seconds: 1),
     ),
   );
 }
- _graficaRonda2(){
-   _generarDataR2();
+_graficaRonda2(){
   return Container(
+    color: Colors.white,
     child: charts.BarChart(
       _seriesData2,
       animate: true,
-      barGroupingType: charts.BarGroupingType.groupedStacked,
+      barGroupingType: charts.BarGroupingType.grouped,
       animationDuration: Duration(seconds: 1),
     ),
   );
 }
- _graficaRonda1(){
-  _generarDataR1();
+_graficaRonda1(){
   return Container(
+    color: Colors.white,
     height: 60,
     child: charts.BarChart(
       _seriesData1,
       animate: true,
-      barGroupingType: charts.BarGroupingType.groupedStacked,
+      vertical: true,
+      barGroupingType: charts.BarGroupingType.grouped,
       animationDuration: Duration(seconds: 1),
     ),
   );
 }
-  
-  _vista(puntos, color, nombre, icon){
+_vista(puntos, color, nombre, icon){
     return Center(
       child: AnimatedContainer(
           child: Row(
@@ -293,7 +328,7 @@ class _DetallePartidaState extends State<DetallePartida> {
               ),
               Expanded(child: Container(
                 child: Center(
-                  child: Text(puntos == 50? "0" : puntos.toString(),
+                  child: Text(puntos == 50? "0" : puntos.toString()+" pts",
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.white
@@ -316,8 +351,7 @@ class _DetallePartidaState extends State<DetallePartida> {
       ),
     );
   }
-
-  _perdedores(perdedores){
+_perdedores(perdedores){
     switch (perdedores) {
       case 1: 
       return Column(

@@ -14,15 +14,13 @@ class VistaRonda1 extends StatefulWidget {
 }
 
 class _VistaRonda1State extends State<VistaRonda1> {
+  _VistaRonda1State(this.partida, this.iconosJugadores);
   List<TextEditingController> _cartasAzules = [];
   List<TextEditingController> _cartasVerdes = [];
   List<TextEditingController> _cartasRosas = [];
   List<TextEditingController> _cartasGrises = [];
   Partida partida;
   List<IconData> iconosJugadores;
-  void _Mensaje(String mensaje){
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(mensaje)));
-  }
   void validarNumeroDeCartas(index){
     try {
       List<CRonda1> lista = [];
@@ -40,14 +38,47 @@ class _VistaRonda1State extends State<VistaRonda1> {
       context.read<OhanamiBloc>().add(SiguienteRonda2(partida: partida, iconosJugadores: iconosJugadores));
   } on Exception catch (e) {
       if (e.runtimeType == FormatException) {
-      return _Mensaje("Llene los campos correctamente.");
+      return _MensajeScaffol("Llene los campos correctamente.");
       }
-        _Mensaje(e.toString());
+        _MensajeScaffol(e.toString());
     }
   }
-  _VistaRonda1State(this.partida, this.iconosJugadores);
+void _MensajeScaffol(String mensaje){
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(mensaje)));
+  }
 
-
+_campoDeTexto(_var, _color, index, cartas) {
+  _var.add(TextEditingController());
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Container(
+      height: 80,
+      width: 80,
+      child: TextFormField(
+        onChanged: (_){},
+        controller: _var[index],
+       maxLength: 2,
+       decoration: InputDecoration(
+         counterText: "",
+         focusColor: _color,
+         focusedBorder: OutlineInputBorder(
+           borderSide: BorderSide(color: _color
+           )
+          ),
+         labelText:cartas,
+         labelStyle: TextStyle(
+         color: _color,
+           fontSize: 20
+         ),
+         border: OutlineInputBorder(),
+         enabledBorder: UnderlineInputBorder(
+         borderSide: BorderSide(color: _color),
+         ),
+        ),
+      ),
+    ),
+  );
+} 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,39 +146,3 @@ class _VistaRonda1State extends State<VistaRonda1> {
     );
   }
 }
-
-_campoDeTexto(_var, _color, index, cartas) {
-  _var.add(TextEditingController());
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
-      height: 80,
-      width: 80,
-      child: TextFormField(
-        onChanged: (_){},
-        controller: _var[index],
-       maxLength: 2,
-       decoration: InputDecoration(
-         counterText: "",
-         focusColor: _color,
-         focusedBorder: OutlineInputBorder(
-           borderSide: BorderSide(color: _color
-           )
-          ),
-         labelText:cartas,
-         labelStyle: TextStyle(
-         color: _color,
-           fontSize: 20
-         ),
-         border: OutlineInputBorder(),
-         enabledBorder: UnderlineInputBorder(
-        
-         borderSide: BorderSide(color: _color),
-         ),
-
-       ),
- ),
-    ),
-  );
-} 
-

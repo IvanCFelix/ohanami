@@ -9,6 +9,4 @@ abstract class Repositorio{
   Future<List<Partida>> recuperarPartidas({required Usuario usuario});
   Future<bool> eliminarUsuario({required Usuario usuario});
   Future<bool> verificarInicioSesion({required Usuario usuario});
-  //Future<bool> reescribirPartidas({ required Usuario usuario});
-
 }

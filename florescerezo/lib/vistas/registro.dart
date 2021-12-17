@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:db_paquete/db_paquete.dart';
 import 'package:florescerezo/db/db_local.dart';
-import 'package:florescerezo/main.dart';
+import 'package:florescerezo/estilos.dart';
 import 'package:florescerezo/vistas/lista_partida.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class VistaRegistro extends StatefulWidget {
   const VistaRegistro({ Key? key,}) : super(key: key);
@@ -51,17 +52,34 @@ class _VistaRegistroState extends State<VistaRegistro> {
     }
   }
 
-  void validarRegistro() async{
+  void validarLocal() async{
     RepositorioMongo mongo = RepositorioMongo();
-    Usuario u = Usuario(nombre: nombre.text, correo: correo.text, clave: clave.text, partidas: []);
-    bool nombreUsuarioEnUso = await mongo.registradoUsuario(usuario:u);
+    RepositorioLocal local = RepositorioLocal();
+    bool consultar = await local.registradoUsuario();
+    if (consultar == true) {
+      validarRegistro();
+    }
+    if (consultar == false) {
+      Usuario nuevoUsuario = Usuario(nombre: nombre.text, correo: correo.text, clave: clave.text, partidas: []);
+      bool consultar2 = await local.registrarUsuario(usuario: nuevoUsuario);
+      if (consultar2 == true) {
+        bool usuarioRegistradoConExito= await mongo.registrarUsuario(usuario: nuevoUsuario);
+      }
+    }
+  }
+
+  void validarRegistro() async{
+
+    RepositorioMongo mongo = RepositorioMongo();
+    Usuario nuevoUsuario = Usuario(nombre: nombre.text, correo: correo.text, clave: clave.text, partidas: []);
+    bool nombreUsuarioEnUso = await mongo.registradoUsuario(usuario:nuevoUsuario);
     if (nombreUsuarioEnUso == true) {
       print("Este nombre de usuario ya esta registrado");
     }
-    else
+    if(nombreUsuarioEnUso == false)
     {
       RepositorioLocal local = RepositorioLocal();
-      bool usuarioLocalActualizado = await local.actualizarDatosUsuario(usuarioNuevo:u);
+      bool usuarioLocalActualizado = await local.actualizarDatosUsuario(usuarioNuevo:nuevoUsuario);
       if (usuarioLocalActualizado == true) {
         Usuario usuarioLocal= await  local.recuperarUsuario();
         print("Usuario actualizado en local");
@@ -76,33 +94,69 @@ class _VistaRegistroState extends State<VistaRegistro> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: primaryColor,
+        ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children:
                [
-                TextFormField(
-                  controller: nombre,
-
+                 TextFormField(
+                    keyboardType: TextInputType.name,
+                   controller: nombre,
+                  maxLength: 20,
+                  decoration: const InputDecoration(
+                    icon: Icon(FontAwesomeIcons.user),
+                    labelStyle: TextStyle(
+                      color: primaryColor,
+                    ),
+                    helperText: 'Nombre de usuario',
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color:primaryColor),
+                    ),
+                  ),
                 ),
                 TextFormField(
-                  controller: correo,
-                  
-                ),
-                TextFormField( 
-                  controller: clave,
+                   keyboardType: TextInputType.emailAddress,
+                   controller: correo,
+                  maxLength: 20,
+                  decoration: const InputDecoration(
 
+                    icon: Icon(FontAwesomeIcons.mailBulk),
+                    labelStyle: TextStyle(
+                      color: primaryColor,
+                    ),
+                    helperText: 'Correo',
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: primaryColor),
+                    ),
+                  ),
+                ),
+                TextFormField(
+                  obscureText: true,
+                   keyboardType: TextInputType.visiblePassword,
+                   controller: clave,
+                  maxLength: 20,
+                  decoration: const InputDecoration(
+                    icon: Icon(Icons.password),
+                    labelStyle: TextStyle(
+                      color:primaryColor,
+                    ),
+                    helperText: 'Contraseña',
+
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: primaryColor),
+                    ),
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: (){
-
                     print("empezo");
-
-                    validarRegistro();
-
+                    validarLocal();
+                    //validarRegistro();
                   }, 
                   child:Text("Registrar"),
                   )
@@ -110,7 +164,6 @@ class _VistaRegistroState extends State<VistaRegistro> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

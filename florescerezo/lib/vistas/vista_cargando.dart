@@ -7,15 +7,15 @@ import 'package:florescerezo/vistas/login.dart';
 import 'package:flutter/material.dart';
 
 
-class Splash extends StatefulWidget {
-  const Splash({ Key? key,}) : super(key: key);
+class VistaCargando extends StatefulWidget {
+  const VistaCargando({ Key? key,}) : super(key: key);
 
 
   @override
-  State<Splash> createState() => _SplashState();
+  State<VistaCargando> createState() => _VistaCargandoState();
 }
 
-class _SplashState extends State<Splash> {
+class _VistaCargandoState extends State<VistaCargando> {
   bool check = false;
   TextEditingController nombre = TextEditingController();
   TextEditingController correo = TextEditingController();
@@ -37,31 +37,16 @@ class _SplashState extends State<Splash> {
   Future validacion() async{
     RepositorioMongo mongo = RepositorioMongo();
     RepositorioLocal local = RepositorioLocal();
-    //local.eliminarUsuario();
-    bool mongocheck = await mongo.inicializar();
+    bool mongoconsultar = await mongo.inicializar();
     bool checkv = await local.registradoUsuario();
 
-    if (mongocheck == true && checkv == true) {
+    if (mongoconsultar == true && checkv == true) {
       Usuario usuario = await local.recuperarUsuario();
-      /*
-      //checkv = await mongo.registradoUsuario(usuario: usuario);
-
-      if (checkv == true) {
-        print("Sos");
-        /*
-        //Usuario u = await mongo.recuperarUsuario(usuario: usuario);
-        checkv = await local.registrarUsuario(usuario: u);
-        setState(() {
-          check = checkv;
-        });*/
-    }
-      print("No se ");*/
-      
       setState(() {
         check = true;
       });
     }
-    if (mongocheck == false && checkv == true) {
+    if (mongoconsultar == false && checkv == true) {
       setState(() {
         check = checkv;
       });

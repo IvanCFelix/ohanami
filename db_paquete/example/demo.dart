@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:mongo_dart/mongo_dart.dart';
 
 void main(List<String> args) async{
-  //RepositorioMemoria r = RepositorioMemoria();
   RepositorioMongo mongo = RepositorioMongo();
   late Jugador j1, j2, j3;
   late CRonda1 p11, p12, p13;
@@ -27,10 +26,8 @@ void main(List<String> args) async{
   p31 = CRonda3(jugador: j1, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
   p32 = CRonda3(jugador: j2, cuantasAzules: 3, cuantasVerdes: 3, cuantasRosas: 3, cuantasNegras: 3);
   p33 = CRonda3(jugador: j3, cuantasAzules: 2, cuantasVerdes: 2, cuantasRosas: 2, cuantasNegras: 2);
-  //bool check = await db.inicializar();
- // print(check);
+  bool consultar = await mongo.inicializar();
   Partida p = Partida(jugadores: {j1,j2});
-  
   p.cartasRonda1([p11,p12]);
   p.cartasRonda2([p21,p22]);
   p.cartasRonda3([p31,p32]);
@@ -38,10 +35,10 @@ void main(List<String> args) async{
   p.puntos(ronda:FasePuntuacion.Ronda2);
   p.puntos(ronda:FasePuntuacion.Ronda3);
   print('Empezando');
-  Usuario u = Usuario(nombre: 'Pedro', correo: "anal@hotmail.com", clave: "145268", partidas: []);
-  //await mongo.registrarUsuario(usuario: u);
-  u = Usuario(nombre: 'Pedro', correo: "anal@hotmail.com", clave: "145268", partidas: [p,p,p,p,p,p]);
+  Usuario u = Usuario(nombre: 'Hansel', correo: "@hotmail.com", clave: "145268", partidas: []);
+  await mongo.eliminarUsuario(usuario: u);
+  await mongo.verificarInicioSesion(usuario: u);
+  u = Usuario(nombre: 'Hansel', correo: "@hotmail.com", clave: "145268", partidas: [p,p,p,p,p,p]);
   await mongo.reescribirPartidas(usuario: u);
-  //await db.recuperarPartidas(usuario: hansel);
   print("Termino");
 }

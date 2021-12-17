@@ -1,18 +1,17 @@
 import 'dart:math';
 import 'package:florescerezo/estilos.dart';
-import 'package:florescerezo/vistas/bloc.dart';
+import 'package:florescerezo/vistas/vista_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:partida/partida.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class NuevaPartida extends StatefulWidget {
-  const NuevaPartida({Key? key}) : super(key: key);
-
+class Vista_NuevaPartida extends StatefulWidget {
+  const Vista_NuevaPartida({Key? key}) : super(key: key);
   @override
-  _NuevaPartidaState createState() => _NuevaPartidaState();
+  _Vista_NuevaPartidaState createState() => _Vista_NuevaPartidaState();
 }
 
-class _NuevaPartidaState extends State<NuevaPartida> {
+class _Vista_NuevaPartidaState extends State<Vista_NuevaPartida> {
   late String _resultado;
   late int _contador;
   late bool aumentarNJugador, eliminarJugador, comenzar;
@@ -33,6 +32,25 @@ class _NuevaPartidaState extends State<NuevaPartida> {
     iconosParaJugadores();
   }
   
+    _campoDeTexto(int index , icon) {
+    int numero = index+1;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        maxLength: 10,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: "Jugador $numero",
+          suffixIcon: Icon(icon) 
+        ),
+        controller: _lista[index],
+        onChanged: (_) {
+          validacionBotones();
+        }
+      ),
+    );
+  }
+
   llenarLitaIconos(){
       iconos.add(FontAwesomeIcons.gamepad);
       iconos.add(FontAwesomeIcons.chessRook);
@@ -68,7 +86,7 @@ class _NuevaPartidaState extends State<NuevaPartida> {
 
   }
 
-  void checar(){
+  void validacionBotones(){
     bool check = true;  
     for (var i = 0; i < _contador; i++) {
       print(_lista[i].text.isEmpty);
@@ -94,16 +112,14 @@ class _NuevaPartidaState extends State<NuevaPartida> {
           padding: const EdgeInsets.all(15),
           child: Column(
             children: [
-              Text("Ingrese los jugadores"),
+              const Text("Ingrese los jugadores"),
               ListView.builder(
                 shrinkWrap: true,
                 itemCount: _contador,
                 itemBuilder: (context, index) {
-      
                   return _campoDeTexto(index, iconosJugadores[index]); 
                 }
               ),
-      
               const SizedBox(height: 15),
               Row(
                 children: [
@@ -130,12 +146,10 @@ class _NuevaPartidaState extends State<NuevaPartida> {
                     style: TextStyle(
                       color: secondaryTextColor
                     ),
-      
                     ),
                   ),
                   const SizedBox(width: 5),
                   _contador == 2 ? const 
-                  
                   ElevatedButton(
                     onPressed: null,
                     child: Text("Eliminar Jugador"),
@@ -151,7 +165,7 @@ class _NuevaPartidaState extends State<NuevaPartida> {
                           _contador--;
                         }
                         ),
-                        checar()
+                        validacionBotones()
                       },
                     },
                     child: const Text("Eliminar Jugador",
@@ -176,9 +190,8 @@ class _NuevaPartidaState extends State<NuevaPartida> {
                         jugadores.add(Jugador(nombre: _lista[i].text));
                       }
                       Partida partida = Partida(jugadores: jugadores);
-                      Navigator.push(context, MaterialPageRoute( builder: (context) => Blocvista(partida: partida, iconosJugadores: iconosJugadores, )));
+                      Navigator.push(context, MaterialPageRoute( builder: (context) => Vista_Bloc(partida: partida, iconosJugadores: iconosJugadores)));
                     },
-      
                     child: const Text("Comenzar",
                     style: TextStyle(
                       color: secondaryTextColor
@@ -187,30 +200,10 @@ class _NuevaPartidaState extends State<NuevaPartida> {
                   ),
                 ],
               ),
-      
             Text(_resultado),
             ],
           )
         ),
-      ),
-    );
-  }
-
-  _campoDeTexto(int index , icon) {
-    int numero = index+1;
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextFormField(
-        maxLength: 10,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Jugador $numero",
-          suffixIcon: Icon(icon) 
-        ),
-        controller: _lista[index],
-        onChanged: (_) {
-          checar();
-        }
       ),
     );
   }

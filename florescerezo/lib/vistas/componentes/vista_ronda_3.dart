@@ -1,60 +1,111 @@
+import 'package:florescerezo/db/db_local.dart';
 import 'package:florescerezo/estilos.dart';
 import 'package:flutter/material.dart';
-import 'package:florescerezo/bloc_ohanami/bloc_ohanami.dart';
-import 'package:florescerezo/bloc_ohanami/eventos.dart';
-
 import 'package:partida/partida.dart';
-import 'package:provider/src/provider.dart';
-class VistaRonda2 extends StatefulWidget {
-  const VistaRonda2({ Key? key, required this.partida, required this.iconosJugadores}) : super(key: key);
-  final Partida partida; 
+
+import '../detalle_partida.dart';
+
+class VistaRonda3 extends StatefulWidget {
+  const VistaRonda3({ Key? key, required this.partida ,required this.iconosJugadores}) : super(key: key);
+  final Partida partida;
   final List<IconData> iconosJugadores;
 
   @override
-  State<VistaRonda2> createState() => _VistaRonda2State(partida, iconosJugadores);
+  State<VistaRonda3> createState() => _VistaRonda3State(partida, iconosJugadores);
 }
 
-class _VistaRonda2State extends State<VistaRonda2> {
-List<TextEditingController> _cartasAzules = [];
+class _VistaRonda3State extends State<VistaRonda3> {
+  List<TextEditingController> _cartasAzules = [];
   List<TextEditingController> _cartasVerdes = [];
   List<TextEditingController> _cartasRosas = [];
   List<TextEditingController> _cartasGrises = [];
-  
   Partida partida;
   List<IconData> iconosJugadores;
 
-  _VistaRonda2State(this.partida, this.iconosJugadores);
-    void validarNumeroDeCartas(index){
-      try {
-        List<CRonda2> lista = [];
-        for (var i = 0; i < index; i++) {
-          print("jugador " + (i + 1).toString());
-          int azules =int.parse(_cartasAzules[i].text);
-          int verdes =int.parse(_cartasVerdes[i].text);
-          CRonda2 cr1 = CRonda2(
-            jugador: partida.jugadores.elementAt(i), 
-            cuantasAzules: azules,
-            cuantasVerdes: verdes, 
-          );
-          lista.add(cr1);
-        }
-        partida.cartasRonda2(lista);
-        context.read<OhanamiBloc>().add(SiguienteRonda3(partida: partida, iconosJugadores: iconosJugadores));
-      } on Exception catch (e){
-        _Mensaje(e.toString());
-      }
+  _VistaRonda3State(this.partida, this.iconosJugadores);
+
+    Future<void> validarNumeroDeCartas(index) async {
+  try {
+      List<CRonda3> lista = [];
+  for (var i = 0; i < index; i++) {
+    print("jugador " + (i + 1).toString());
+    int azules =int.parse(_cartasAzules[i].text);
+    int verdes =int.parse(_cartasVerdes[i].text);
+    int rosas =int.parse(_cartasRosas[i].text);
+    int grises =int.parse(_cartasGrises[i].text);
+    CRonda3 cr1 = CRonda3(
+      jugador: partida.jugadores.elementAt(i), 
+      cuantasAzules: azules,
+      cuantasVerdes: verdes,
+      cuantasRosas: rosas,
+      cuantasNegras: grises, 
+      );
+    lista.add(cr1);
+  }
+  List<PuntuacionJugador> j;
+    partida.cartasRonda3(lista);
+    bool check = await actualizar(partida: partida);
+    if (check == true) {
+    Navigator.push(context, MaterialPageRoute( builder: (context) => DetallePartida(partida: partida,)));
     }
-  void _Mensaje(String mensaje){
+  } on Exception catch (e){
+    _MensajeScaffol(e.toString());
+  }
+}
+
+void _MensajeScaffol(String mensaje){
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(mensaje)));
   }
-  
+
+  Future<bool> actualizar({required Partida partida})async{
+    bool check = false;
+    RepositorioLocal local = RepositorioLocal();
+    check = await local.registrarPartida(partida: partida);
+    return check;
+  }
+
+_campoDeTexto(_var, _color, index, cartas) {
+  _var.add(TextEditingController());
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Container(
+      height: 80,
+      width: 80,
+      child: TextFormField(
+        onChanged: (_){},
+        controller: _var[index],
+       maxLength: 2,
+       decoration: InputDecoration(
+         counterText: "",
+         focusColor: _color,
+         focusedBorder: OutlineInputBorder(
+           borderSide: BorderSide(color: _color
+           )
+          ),
+         labelText:cartas,
+         labelStyle: TextStyle(
+         color: _color,
+           fontSize: 20
+         ),
+         border: OutlineInputBorder(),
+         enabledBorder: UnderlineInputBorder(
+         borderSide: BorderSide(color: _color),
+         ),
+       ),
+      ),
+    ),
+  );
+} 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:secondaryLightColor, //secondaryTextColor,
       appBar: AppBar(
         backgroundColor: primaryColor,//primaryColor,
-        title: Text("Ronda 2",
+        title: Text("Ronda 3",
         style: TextStyle(
           color: Colors.white
         ),
@@ -101,6 +152,8 @@ List<TextEditingController> _cartasAzules = [];
                             children: [
                           _campoDeTexto(_cartasAzules, Colors.blue, index, "Azules"),
                           _campoDeTexto(_cartasVerdes, Colors.green, index, "Verdes"),
+                          _campoDeTexto(_cartasRosas, Colors.pink, index, "Rosas"),
+                          _campoDeTexto(_cartasGrises, Colors.black, index, "Negras")
                             ],
                           ),
                         ],
@@ -116,38 +169,3 @@ List<TextEditingController> _cartasAzules = [];
     );
   }
 }
-
-_campoDeTexto(_var, _color, index, cartas) {
-  _var.add(TextEditingController());
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
-      height: 80,
-      width: 80,
-      child: TextFormField(
-        onChanged: (_){},
-        controller: _var[index],
-       maxLength: 2,
-       decoration: InputDecoration(
-         counterText: "",
-         focusColor: _color,
-         focusedBorder: OutlineInputBorder(
-           borderSide: BorderSide(color: _color
-           )
-          ),
-         labelText:cartas,
-         labelStyle: TextStyle(
-         color: _color,
-           fontSize: 20
-         ),
-         border: OutlineInputBorder(),
-         enabledBorder: UnderlineInputBorder(
-        
-         borderSide: BorderSide(color: _color),
-         ),
-
-       ),
-      ),
-    ),
-  );
-} 
