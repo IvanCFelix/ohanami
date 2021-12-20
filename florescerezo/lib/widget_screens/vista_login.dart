@@ -49,35 +49,43 @@ VistaLogin({ Key? key }) : super(key: key);
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: secondaryLightColor,
-        appBar: AppBar(
-          backgroundColor: primaryDarkColor,
-        ),
+        backgroundColor: Colors.white,
+       
         body: SingleChildScrollView(
             child: Column(
               children: [
                   Container(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.only(top: 
+                    80),
                     child: Image.asset(ohanami_logo,
                     height: 100.0,
                     ),
                   ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                        child: TextField(
+                  Card(
+                  margin: EdgeInsets.all(20),  
+                  elevation: 11,
+                  
+                  child: Column(children: [
+                   Container(
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: TextField(
                           controller: nombre,
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
-                            icon: Icon(Icons.account_circle),
+                            prefixIcon: Icon(Icons.person),
                             labelText: 'Nombre de usuario',
+                            iconColor: Colors.pink.shade200,
+                            fillColor: Colors.pink.shade200
                           ),
                           onChanged:(vaule){
           
                           },
                         ),
+                        ),
+                        
                   ),
-                ),
+             
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child:Container(
@@ -86,7 +94,7 @@ VistaLogin({ Key? key }) : super(key: key);
                           obscureText: true,
                           keyboardType: TextInputType.visiblePassword,
                           decoration: InputDecoration(
-                            icon: Icon(Icons.password),
+                            prefixIcon: Icon(Icons.lock),
                             labelText: 'Contraseña',
                           ),
                           onChanged:(vaule){
@@ -124,7 +132,7 @@ VistaLogin({ Key? key }) : super(key: key);
                   ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
+                  child: TextButton(
                         onPressed: () async {
                           sinconexion();
                           Navigator.push(context,
@@ -134,20 +142,23 @@ VistaLogin({ Key? key }) : super(key: key);
                           padding: EdgeInsets.all(15.0),
                           child: Text('Registrarse',
                           style: TextStyle(
-                            color: secondaryTextColor,
+                            color: Colors.black,
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline
                           ),
                           ),
                         ),
-                        style:ElevatedButton.styleFrom(
-                          elevation: 10.0, 
+                        style:TextButton.styleFrom(
+                          
                           textStyle: const TextStyle(
                             fontSize: 20,
                             
                       )
                     ),
                   )
+                ),],
+                ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),

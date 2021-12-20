@@ -41,6 +41,7 @@ class _Vista_NuevaPartidaState extends State<Vista_NuevaPartida> {
                 decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(40.0)),
           hintText: "Jugador $numero",
+          prefixIcon: Icon(Icons.person),
          hintStyle: TextStyle(color: Colors.grey[400])
           
         ),
@@ -105,7 +106,11 @@ class _Vista_NuevaPartidaState extends State<Vista_NuevaPartida> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: const Text("Nueva Partida"),
+        title: const Text("Nueva Partida",style: TextStyle(color: Colors.black),),
+       leading: IconButton(
+    icon: Icon(Icons.arrow_back, color: Colors.black),
+    onPressed: () => Navigator.of(context).pop(),
+  ), 
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -113,7 +118,7 @@ class _Vista_NuevaPartidaState extends State<Vista_NuevaPartida> {
           padding: const EdgeInsets.all(15),
           child: Column(
             children: [
-              const Text("Ingrese los jugadores"),
+              const Text("Ingrese los jugadores",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 19),),
               ListView.builder(
                 shrinkWrap: true,
                 itemCount: _contador,

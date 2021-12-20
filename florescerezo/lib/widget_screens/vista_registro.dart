@@ -121,7 +121,7 @@ class _VistaRegistroState extends State<VistaRegistro> {
             child: Column(
               children:
                [
-                Image.asset(logo_mrecurio),
+               
 
                  TextFormField(
                     keyboardType: TextInputType.name,

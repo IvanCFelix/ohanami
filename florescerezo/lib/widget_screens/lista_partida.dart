@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:florescerezo/bloc_ohanami/constantes.dart';
 import 'package:florescerezo/db/db_helper.dart';
 import 'package:florescerezo/widget_screens/display_stats.dart';
@@ -75,14 +74,11 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
           return snapshot.hasData ? snapshot.hasError ? 
           const Text("Error")
           : Drawer(
+            
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                Container(
-                  height: 24,
-                  color: primaryColor,
-                ),
-                DrawerHeader(
+                                DrawerHeader(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(ohanami_logo),
@@ -106,14 +102,20 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
                 snapshot.data!.nombre.isNotEmpty ?
                 _sesion()
                 : 
-                _registro(),
+                Column(children: [_registro(),
+                 const Divider(
+                  height: 0.9,
+                  thickness: 1,
+                ),
+               
+                _login(),
                  const Divider(
                   height: 1,
                   thickness: 1,
                 ),
                 const SizedBox(
                   height: 40,
-                ),
+                ),],)
                
               ],
             ),
@@ -123,6 +125,7 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
       ),
       appBar: AppBar(
         backgroundColor: primaryColor,
+          iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Center(
         child: FutureBuilder<Usuario>(
@@ -193,21 +196,24 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
             child: Column(
               children: [
                 ListTile(
-                  leading: Icon(Icons.auto_awesome),
-                  title:  Text('Partida '+partida.toString()),
+                 
+                  title:  Text('Partida '+partida.toString(),style: TextStyle(fontSize: 25),),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Jugadores',
-                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                        style: TextStyle(color: Colors.black.withOpacity(0.8),fontSize: 15),
                       ),
-                      Text(nombres[0]),
-                      Text(nombres[1]),
-                      Text(nombres[2]),
-                      Text(nombres[3]),
+                      Text(nombres[0],style: TextStyle(fontSize: 15)),
+                      Text(nombres[1],style: TextStyle(fontSize: 15)),
+                      Text(nombres[2],style: TextStyle(fontSize: 15)),
+                      Text(nombres[3],style: TextStyle(fontSize: 15)),
                     ],
+                    
                   ),
+                  
+                  
                 ),
                 ButtonBar(
                   alignment: MainAxisAlignment.start,
@@ -237,7 +243,9 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
                     ),
                   ],
                 ),
+                
               ],
+              
             ),
           );
         }
@@ -261,6 +269,25 @@ return ListTile(
   },
   );
 }
+
+ _login(){
+return ListTile(
+  enableFeedback: true,
+  title: const Text("Iniciar Sesion",
+  style: TextStyle(
+    fontSize: 15
+  ),
+  ),
+  leading: const Icon(
+    Icons.person,
+    color: secondaryDarkColor,
+  ),
+  onTap: () {
+    Navigator.push(context, MaterialPageRoute(builder: (context) =>  VistaLogin()));
+  },
+  );
+}
+
 
   _sesion(){
     return Column(
@@ -292,9 +319,9 @@ return ListTile(
             onPressed: () async {
               bool check = await local.eliminarUsuario();
             if (check == true) {
-              print("Se elimino el usuario");
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  VistaLogin()),(route) => false);
             }
-            Navigator.push(context, MaterialPageRoute(builder: (context) =>  VistaLogin()));
+
             }),
 
         ElevatedButton(

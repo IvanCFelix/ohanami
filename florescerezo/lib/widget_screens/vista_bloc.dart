@@ -25,3 +25,4 @@ class Vista_Bloc extends StatelessWidget {
     );
   }
 }
+
