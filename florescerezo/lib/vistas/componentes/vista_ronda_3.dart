@@ -1,9 +1,9 @@
-import 'package:florescerezo/db/db_local.dart';
+import 'package:florescerezo/db/db_helper.dart';
 import 'package:florescerezo/estilos.dart';
 import 'package:flutter/material.dart';
 import 'package:partida/partida.dart';
 
-import '../detalle_partida.dart';
+import '../display_stats.dart';
 
 class VistaRonda3 extends StatefulWidget {
   const VistaRonda3({ Key? key, required this.partida ,required this.iconosJugadores}) : super(key: key);

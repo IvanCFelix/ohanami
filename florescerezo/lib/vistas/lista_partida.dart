@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:florescerezo/bloc_ohanami/constantes.dart';
-import 'package:florescerezo/db/db_local.dart';
-import 'package:florescerezo/vistas/detalle_partida.dart';
+import 'package:florescerezo/db/db_helper.dart';
+import 'package:florescerezo/vistas/display_stats.dart';
 import 'package:florescerezo/vistas/vista_login.dart';
 import 'package:florescerezo/vistas/vista_nuevapartida.dart';
 import 'package:florescerezo/vistas/vista_registro.dart';
@@ -54,16 +54,7 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
     }
   }
 
-  _imagenAleatoria(){
-    var rng = new Random();
-    int numero = rng.nextInt(3);
-    switch (numero) {
-      case 0: return Image.asset(kawai);
-      case 1: return Image.asset(akita_flor);
-      case 2: return Image.asset(akita_flores);
-      case 3: return Image.asset(akita);
-    }
-  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +63,7 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
         backgroundColor: secondaryDarkColor,
         child: const Icon(
           Icons.my_library_add_outlined,
-          color: secondaryTextColor,
+          color: primaryTextColor,
         ),
         onPressed: () {
           Navigator.push(context,MaterialPageRoute(builder: (context) => const Vista_NuevaPartida()));
@@ -146,18 +137,19 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: [
-                _imagenAleatoria(),
-                SizedBox(
+                               SizedBox(
                   height: 20,
                 ),
-                const Center(
+                 Center(
                   child: Padding(
                     padding: EdgeInsets.all(10.0),
-                    child:Text("No tienes partidas guardadas",
+                   child: Container(margin: EdgeInsets.only(top: 200.0), child:Text("No tienes partidas guardadas", textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 25,
-                      )
+                          fontSize: 25, 
+                      ),
+                    
                     ),
+                    decoration: BoxDecoration(image: DecorationImage(image: AssetImage(cerezo),fit: BoxFit.cover,)),),
                   ),
                 ),
               ],
@@ -178,7 +170,6 @@ class VistaListaPartidasState extends State<VistaListaPartidas> {
         itemBuilder: (BuildContext context, int index) {
           int partida =index+1;
           int reverseIndex = snapshot.data!.partidas.length - 1 - index;
-          print(reverseIndex);
           FasePuntuacion.Ronda1;
           FasePuntuacion.Ronda2;
           FasePuntuacion.Ronda3;

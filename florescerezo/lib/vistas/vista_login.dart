@@ -1,10 +1,10 @@
 import 'package:db_paquete/db_paquete.dart';
 import 'package:florescerezo/bloc_ohanami/constantes.dart';
-import 'package:florescerezo/db/db_local.dart';
+import 'package:florescerezo/db/db_helper.dart';
 import 'package:florescerezo/estilos.dart';
 import 'package:florescerezo/vistas/lista_partida.dart';
 import 'package:florescerezo/vistas/vista_registro.dart';
-import 'package:florescerezo/vistas/vista_cargando.dart';
+import 'package:florescerezo/vistas/loading_widget.dart';
 import 'package:flutter/material.dart';
 class VistaLogin extends StatelessWidget {
 VistaLogin({ Key? key }) : super(key: key);

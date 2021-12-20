@@ -1,7 +1,7 @@
 name: florescerezo
 description: A new Flutter project.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -38,5 +38,4 @@ flutter:
     - assets/imagenes/akita_flor.jpg
     - assets/imagenes/akita_flores.jpg
     - assets/imagenes/kawai.png
-    - assets/imagenes/logo_mercurio.png
     - assets/imagenes/ohanami_logo.jpg
