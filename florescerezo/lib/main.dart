@@ -1,5 +1,5 @@
 
-import 'package:florescerezo/vistas/loading_widget.dart';
+import 'package:florescerezo/widget_screens/loading_widget.dart';
 import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 

@@ -1,1 +1,1 @@
-String link = 'mongodb+srv://root:root@cluster0.bigji.mongodb.net/ejemplo?retryWrites=true&w=majority';
+String link = 'mongodb+srv://Ohanami_user:XYKAzc77pFqf5SH@ohanamicluster.ecr7d.mongodb.net/ohanami_db?retryWrites=true&w=majority';
