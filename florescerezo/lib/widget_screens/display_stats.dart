@@ -85,7 +85,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '1',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (CRonda1 partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
+            charts.ColorUtil.fromDartColor(Colors.blue),
       ), 
     );
   }
@@ -99,7 +99,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '21',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (CRonda2 partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
+            charts.ColorUtil.fromDartColor(Colors.blue),
       ), 
     );
     _seriesCartas2.add(
@@ -111,7 +111,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '22',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (CRonda2 partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF33FF41)),
+            charts.ColorUtil.fromDartColor(Colors.green),
       ), 
     );
   }
@@ -125,7 +125,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '31',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (CRonda3 partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
+            charts.ColorUtil.fromDartColor(Colors.blue),
       ), 
     );
     _seriesCartas3.add(
@@ -137,7 +137,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '32',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (CRonda3 partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF33FF41)),
+            charts.ColorUtil.fromDartColor(Colors.green),
       ), 
     );
     _seriesCartas3.add(
@@ -149,7 +149,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '33',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (CRonda3 partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFFBE2A7C)),
+            charts.ColorUtil.fromDartColor(Colors.pink.shade200),
       ), 
     );
     _seriesCartas3.add(
@@ -161,7 +161,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '34',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (CRonda3 partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF555555)),
+            charts.ColorUtil.fromDartColor(Colors.black),
       ), 
     );
   }
@@ -176,7 +176,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '1',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (PuntuacionJugador partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
+            charts.ColorUtil.fromDartColor(Colors.blue),
       ), 
     );
     _seriesPuntosTotales.add(
@@ -188,7 +188,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '2',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (PuntuacionJugador partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF33FF41)),
+            charts.ColorUtil.fromDartColor(Colors.green),
       ), 
     );
     _seriesPuntosTotales.add(
@@ -200,7 +200,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '3',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (PuntuacionJugador partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFFBE2A7C)),
+            charts.ColorUtil.fromDartColor(Colors.pink.shade200),
       ), 
     );
     _seriesPuntosTotales.add(
@@ -212,7 +212,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '4',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (PuntuacionJugador partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF555555)),
+            charts.ColorUtil.fromDartColor(Colors.black),
       ), 
     );
   }
@@ -227,7 +227,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '1',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (PuntuacionJugador partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
+            charts.ColorUtil.fromDartColor(Colors.blue),
       ), 
     );
   }
@@ -242,7 +242,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '1',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (PuntuacionJugador partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
+            charts.ColorUtil.fromDartColor(Colors.blue),
       ), 
     );
     _seriesPuntos2.add(
@@ -269,7 +269,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '1',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (PuntuacionJugador partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF337CFF)),
+            charts.ColorUtil.fromDartColor(Colors.blue),
       ), 
     );
     _seriesPuntos3.add(
@@ -293,7 +293,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '3',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (PuntuacionJugador partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFFBE2A7C)),
+            charts.ColorUtil.fromDartColor(Colors.pink.shade200),
       ), 
     );
     _seriesPuntos3.add(
@@ -305,7 +305,7 @@ class _DetallePartidaState extends State<DetallePartida> {
         seriesCategory: '4',
         fillPatternFn: (_, __) => charts.FillPatternType.solid,
         fillColorFn: (PuntuacionJugador partida, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xFF555555)),
+            charts.ColorUtil.fromDartColor(Colors.black),
       ), 
     );
   }

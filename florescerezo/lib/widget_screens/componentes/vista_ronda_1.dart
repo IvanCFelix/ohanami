@@ -85,7 +85,7 @@ _campoDeTexto(_var, _color, index, cartas) {
         backgroundColor: primaryColor,
         title: Text("Ronda 1",
         style: TextStyle(
-          color: Colors.white
+          color: Colors.black
         ),
         ),
       ),

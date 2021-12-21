@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class VistaRegistro extends StatefulWidget {
-  const VistaRegistro({ Key? key,}) : super(key: key);
+  const VistaRegistro({
+    Key? key,
+  }) : super(key: key);
   @override
   State<VistaRegistro> createState() => _VistaRegistroState();
 }
@@ -24,11 +26,11 @@ class _VistaRegistroState extends State<VistaRegistro> {
     super.initState();
   }
 
-  Future validacion() async{
+  Future validacion() async {
     RepositorioMongo mongo = RepositorioMongo();
     RepositorioLocal local = RepositorioLocal();
     local.eliminarUsuario();
-    
+
     bool mongocheck = await mongo.inicializar();
     bool checkv = await local.registradoUsuario();
 
@@ -53,140 +55,158 @@ class _VistaRegistroState extends State<VistaRegistro> {
     }
   }
 
-  void validarLocal() async{
+  void validarLocal() async {
     RepositorioMongo mongo = RepositorioMongo();
     RepositorioLocal local = RepositorioLocal();
     bool consultar = await local.registradoUsuario();
     if (consultar == true) {
       validarRegistro();
+      print("entre al consultar");
     }
     if (consultar == false) {
-      Usuario nuevoUsuario = Usuario(nombre: nombre.text, correo: correo.text, clave: clave.text, partidas: []);
+      Usuario nuevoUsuario = Usuario(
+          nombre: nombre.text,
+          correo: correo.text,
+          clave: clave.text,
+          partidas: []);
       bool usuariomongo = await mongo.registradoUsuario(usuario: nuevoUsuario);
-      
-      if (usuariomongo) {  
-      bool consultar2 = await local.registrarUsuario(usuario: nuevoUsuario);
-      
-      if (consultar2 == true) {
-        bool usuarioRegistradoConExito= await mongo.registrarUsuario(usuario: nuevoUsuario);
-      }
 
+      if (usuariomongo) {
+        bool consultar2 = await local.registrarUsuario(usuario: nuevoUsuario);
+
+        if (consultar2 == true) {
+          bool usuarioRegistradoConExito =
+              await mongo.registrarUsuario(usuario: nuevoUsuario);
+        }
       }
     }
   }
 
-  void validarRegistro() async{
-
+  void validarRegistro() async {
     RepositorioMongo mongo = RepositorioMongo();
-    Usuario nuevoUsuario = Usuario(nombre: nombre.text, correo: correo.text, clave: clave.text, partidas: []);
-    bool nombreUsuarioEnUso = await mongo.registradoUsuario(usuario:nuevoUsuario);
+    Usuario nuevoUsuario = Usuario(
+        nombre: nombre.text,
+        correo: correo.text,
+        clave: clave.text,
+        partidas: []);
+    bool nombreUsuarioEnUso =
+        await mongo.registradoUsuario(usuario: nuevoUsuario);
     if (nombreUsuarioEnUso == true) {
       print("Este nombre de usuario ya esta registrado");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Este nombre de usuario ya esta registrado")));  
-
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Este nombre de usuario ya esta registrado")));
     }
-    if(nombreUsuarioEnUso == false)
-    {
+    if (nombreUsuarioEnUso == false) {
       RepositorioLocal local = RepositorioLocal();
-      bool usuarioLocalActualizado = await local.actualizarDatosUsuario(usuarioNuevo:nuevoUsuario);
+      bool usuarioLocalActualizado =
+          await local.actualizarDatosUsuario(usuarioNuevo: nuevoUsuario);
       if (usuarioLocalActualizado == true) {
-        Usuario usuarioLocal= await  local.recuperarUsuario();
+        Usuario usuarioLocal = await local.recuperarUsuario();
         print("Usuario actualizado en local");
-        RepositorioMongo mongo=RepositorioMongo();
+        RepositorioMongo mongo = RepositorioMongo();
 
-        bool usuarioRegistradoConExito= await mongo.registrarUsuario(usuario: usuarioLocal);
-            if (usuarioRegistradoConExito == true) {
-            print("usuario registrado en mongo");
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Usuario registrado en mongo")));  
-            }
-            if (usuarioRegistradoConExito == false) {
-            print("hubo un error al registrar");
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error al registrar")));  
-              
-            }
-      Navigator.push( context, MaterialPageRoute(builder: (context) => VistaListaPartidas()));
+        bool usuarioRegistradoConExito =
+            await mongo.registrarUsuario(usuario: usuarioLocal);
+        if (usuarioRegistradoConExito == true) {
+          print("usuario registrado en mongo");
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Usuario registrado en mongo")));
+        }
+        if (usuarioRegistradoConExito == false) {
+          print("hubo un error al registrar");
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text("Error al registrar")));
+        }
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => VistaListaPartidas()));
       }
     }
-  }  
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: primaryColor,
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        title: Text(
+          'Registrarse',
+          style: TextStyle(color: Colors.black),
         ),
-        body: Center(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
+      body: Center(
+        child: Card(
+          margin: EdgeInsets.all(10),
           child: Padding(
-            padding: const EdgeInsets.all(5.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
-              children:
-               [
-               
-
-                 TextFormField(
-                    keyboardType: TextInputType.name,
-                   controller: nombre,
+              children: [
+                TextFormField(
+                  keyboardType: TextInputType.name,
+                  controller: nombre,
                   maxLength: 20,
                   decoration: const InputDecoration(
-                    icon: Icon(FontAwesomeIcons.user),
+                    prefixIcon: Icon(FontAwesomeIcons.user),
                     labelStyle: TextStyle(
-                      color: primaryColor,
+                      color: Colors.black,
                     ),
                     helperText: 'Nombre de usuario',
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color:primaryColor),
+                      borderSide: BorderSide(color: Colors.black),
                     ),
                   ),
                 ),
                 TextFormField(
-                   keyboardType: TextInputType.emailAddress,
-                   controller: correo,
-                  maxLength: 20,
+                  keyboardType: TextInputType.emailAddress,
+                  controller: correo,
+                  maxLength: 100,
                   decoration: const InputDecoration(
-
-                    icon: Icon(FontAwesomeIcons.mailBulk),
+                    prefixIcon: Icon(Icons.mail),
                     labelStyle: TextStyle(
-                      color: primaryColor,
+                      color: Colors.black,
                     ),
                     helperText: 'Correo',
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: primaryColor),
+                      borderSide: BorderSide(color: Colors.black),
                     ),
                   ),
                 ),
                 TextFormField(
                   obscureText: true,
-                   keyboardType: TextInputType.visiblePassword,
-                   controller: clave,
+                  keyboardType: TextInputType.visiblePassword,
+                  controller: clave,
                   maxLength: 20,
                   decoration: const InputDecoration(
-                    icon: Icon(Icons.password),
+                    prefixIcon: Icon(Icons.lock),
                     labelStyle: TextStyle(
-                      color:primaryColor,
+                      color: Colors.black,
                     ),
                     helperText: 'Contraseña',
-
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: primaryColor),
+                      borderSide: BorderSide(color: Colors.black),
                     ),
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: (){
+                  onPressed: () {
                     print("empezo");
                     validarLocal();
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Iniciando conexion")));
-                  }, 
-                  child:const Text("Registrarse",
-                  style: TextStyle(
-                    color: secondaryTextColor
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Iniciando conexion")));
+                  },
+                  child: const Text(
+                    "Registrarse",
+                    style: TextStyle(color: secondaryTextColor),
                   ),
-                  ),
-                  )
+                )
               ],
             ),
           ),
         ),
-      );
+      ),
+    );
   }
 }
